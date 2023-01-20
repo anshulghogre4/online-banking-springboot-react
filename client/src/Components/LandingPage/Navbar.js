@@ -4,7 +4,7 @@ import yolo from "../../assets/images/yolo.jpeg"
 
 const Navbar = () => {
   return (
-    <nav className='navbar  flex flex-row justify-between mx-auto items-center h-[15vh] bg-gray-300 px-[2rem]'>
+    <nav className='navbar  flex flex-row justify-between mx-auto items-center h-[15vh] bg-gray-300 mx-auto px-[7rem]'>
         <div><img src={yolo} className="logo w-[8rem]" alt="yolobank" /></div>
         <div>
             
