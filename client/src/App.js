@@ -5,6 +5,7 @@ import './App.css';
 import Login from './Components/Registration/Login';
 import Register from './Components/Registration/Register';
 import Dashboard from './Components/Dashboard/Dashboard';
+import Profile from './Components/Profile/Profile';
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       <Route path="/home" element = {<LandingPage/>}/>
       <Route path='/login' element={<Login/>}/>
       <Route path='/signup' element={<Register/>}/>
-      <Route path='/' element={<Dashboard/>}/>
+      <Route path='/dashboard' element={<Dashboard/>}/>
+      <Route path='/' element={<Profile/>}/>
       </Routes>
   );
 }
