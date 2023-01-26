@@ -138,44 +138,44 @@ const Profile = () => {
         <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:bg-white hover:bg-gray-100" type="text" value={panCard} onChange={(e) => setPanCard(e.target.value)} />
     </label>
 
-      <label className="block font-medium text-lg mb-2">
-        Gender:
-        <div className="inline-block">
-          <label className="mr-3">
-            <input type="radio" value="male" checked={gender === 'male'} onChange={(e) => setGender(e.target.value)} />
-            Male
-          </label>
-          <label className="mr-3">
-            <input type="radio" value="female" checked={gender === 'female'} onChange={(e) => setGender(e.target.value)} />
-            Female
-          </label>
-          <label className="mr-3">
-            <input type="radio" value="others" checked={gender === 'others'} onChange={(e) => setGender(e.target.value)} />
-            Others
-          </label>
-        </div>
-      </label>
+    <label className="block font-medium text-lg mb-2">
+  Gender:
+  <div className="inline-block">
+    <label className="mr-3">
+      <input type="radio" value="male" checked={gender === 'male'} onChange={(e) => setGender(e.target.value)} className="form-radio focus:outline-none focus:shadow-outline-indigo" />
+      Male
+    </label>
+    <label className="mr-3">
+      <input type="radio" value="female" checked={gender === 'female'} onChange={(e) => setGender(e.target.value)} className="form-radio focus:outline-none focus:shadow-outline-indigo" />
+      Female
+    </label>
+    <label className="mr-3">
+      <input type="radio" value="others" checked={gender === 'others'} onChange={(e) => setGender(e.target.value)} className="form-radio focus:outline-none focus:shadow-outline-indigo" />
+      Others
+    </label>
+  </div>
+</label>
 
-      <label className="block font-medium text-lg mb-2">
-        Phone Number:
-        <input className="bg-gray-200 p-2 rounded-lg w-full" type="tel" pattern="[+][9][1][0-9]{10}" value={`+91${phone}`} onChange={(e) => setPhone(e.target.value.substring(3))} placeholder="+91" />
-      </label>
-      <br />
+<label className="block font-medium text-lg mb-2">
+  Phone Number:
+  <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:shadow-outline-indigo" type="tel" pattern="[+][9][1][0-9]{10}" value={`+91${phone}`} onChange={(e) => setPhone(e.target.value.substring(3))} placeholder="+91" />
+</label>
+<br />
 
-      <label className="block font-medium text-lg mb-2">
-        Date of Birth:
-        <input className="bg-gray-200 p-2 rounded-lg w-full" type="date" value={dob} onChange={(e) => setDob(e.target.value)} />
-      </label>
-      <br />
+<label className="block font-medium text-lg mb-2">
+  Date of Birth:
+  <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:shadow-outline-indigo" type="date" value={dob} onChange={(e) => setDob(e.target.value)} />
+</label>
+<br />
 
-      <div>
-      <label className="block font-medium text-lg mb-2">
-        Profile Picture:
-        <input className="bg-gray-200 p-2 rounded-lg w-full" type="file" onChange={handleImageChange} accept="image/*" />
-      </label>
-      <br />
-      {imagePreviewUrl && <img src={imagePreviewUrl} alt="Preview" width="200" height="200" />}
-    </div>
+<div>
+  <label className="block font-medium text-lg mb-2">
+    Profile Picture:
+    <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:shadow-outline-indigo" type="file" onChange={handleImageChange} accept="image/*" />
+  </label>
+  <br />
+  {imagePreviewUrl && <img src={imagePreviewUrl} alt="Preview" className="w-16 h-16 rounded-full object-cover" />}
+</div>
       <div className=' flex flex-row justify-center items-center space-x-4'>
       <button className="bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600">
         Submit
