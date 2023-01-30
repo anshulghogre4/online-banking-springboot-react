@@ -5,7 +5,7 @@ import { Modal,Button } from 'flowbite-react'
 
 
 const DashboardMain = () => {
-  let accountNo =null;
+  let accountNo =1;
 
   const [show, setShow] = useState(false);
 
@@ -74,6 +74,33 @@ if (accountNo===null) {
 
     </section>
   )
+} else{
+  return (
+  <section className='h-[80vh] bg-gray-600 border pt-[2rem]'>
+
+      <h2 className='text-[1.5rem] text-[#f1f2f6] font-semibold text-center'>DashBoard</h2>
+    <div className=' flex flex-row justify-around items-center'>
+
+      <div className=' flex flex-col justify-center items-center gap-4'>
+            <h3 className='text-[1.2rem] text-[#f1f2f6]'>Operations</h3>
+            <button className='w-[10rem] p-2 bg-[#f1f2f6] font-semibold rounded '>Check balance</button>
+            <button className='w-[10rem] p-2 bg-[#f1f2f6] font-semibold rounded '>Transfer Amount</button>
+            <button className='w-[10rem] p-2 bg-[#f1f2f6] font-semibold rounded '>Statements</button>
+
+      </div>
+
+
+
+
+      <div>
+         <h2 className='text-[2rem] text-[#f1f2f6]'>Congratulations your bank account has been created!</h2>
+      </div>
+    </div>
+  </section>
+  )
+
+
+
 }
   
 }
