@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import dashimg from "../../assets/images/Welcome_dashboard.png"
 import {HiOutlineExclamationCircle} from "react-icons/hi"
 import { Modal,Button } from 'flowbite-react'
+import { NavLink } from 'react-router-dom'
+
 
 
 const DashboardMain = () => {
@@ -83,7 +85,7 @@ if (accountNo===null) {
 
       <div className=' flex flex-col justify-center items-center gap-4'>
             <h3 className='text-[1.2rem] text-[#f1f2f6]'>Operations</h3>
-            <button className='w-[10rem] p-2 bg-[#f1f2f6] font-semibold rounded '>Check balance</button>
+            <NavLink to={"/dashboard/balance"} ><button className='w-[10rem] p-2 bg-[#f1f2f6] font-semibold rounded '>Check balance</button></NavLink>
             <button className='w-[10rem] p-2 bg-[#f1f2f6] font-semibold rounded '>Transfer Amount</button>
             <button className='w-[10rem] p-2 bg-[#f1f2f6] font-semibold rounded '>Statements</button>
 
@@ -93,7 +95,7 @@ if (accountNo===null) {
 
 
       <div>
-         <h2 className='text-[2rem] text-[#f1f2f6]'>Congratulations your bank account has been created!</h2>
+         <h2 className='text-[2rem] text-[#f1f2f6]  w-[35rem]'>Congratulations your bank account has been created!</h2>
       </div>
     </div>
   </section>
