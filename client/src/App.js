@@ -10,6 +10,7 @@ import AboutUs from './Components/AboutUs/AboutUs';
 import ErrorPage from './Components/ErrorPage/ErrorPage';
 import DashBoardBalance from './Components/Dashboard/DashBoardBalance';
 import DashBoardTransactions from './Components/Dashboard/DashBoardTransactions';
+import DashboardTransferMoney from './Components/Dashboard/DashboardTransferMoney';
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
       <Route path='/signup' element={<Register/>}/>
       <Route path='/dashboard' element={<Dashboard/>}/>
       <Route path='/dashboard/balance' element={<DashBoardBalance/>}/>
-      <Route path='/dashboard/trx' element={<DashBoardTransactions/>}/>
+      <Route path='/dashboard/Stmt' element={<DashBoardTransactions/>}/>
+      <Route path='/dashboard/trx' element={<DashboardTransferMoney/>}/>
       <Route path='/profile' element={<Profile/>}/>
       <Route path='/about' element={<AboutUs/>}/>
       <Route path='/error'element={<ErrorPage/>}/>
