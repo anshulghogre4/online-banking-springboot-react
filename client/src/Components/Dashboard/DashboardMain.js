@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom'
 
 
 const DashboardMain = () => {
-  let accountNo =1;
+  let accountNo =null;
 
   const [show, setShow] = useState(false);
 

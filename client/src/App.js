@@ -15,7 +15,7 @@ import DashboardTransferMoney from './Components/Dashboard/DashboardTransferMone
 function App() {
   return (
     <Routes>
-      <Route path="/home" element = {<LandingPage/>}/>
+      <Route path="/" element = {<LandingPage/>}/>
       <Route path='/login' element={<Login/>}/>
       <Route path='/signup' element={<Register/>}/>
       <Route path='/dashboard' element={<Dashboard/>}/>

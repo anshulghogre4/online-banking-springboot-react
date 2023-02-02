@@ -22,37 +22,37 @@ const DashboardTransferMoney = () => {
 
 
 
-<div className='w-[50rem]'>
-        <h2>Amount transfer</h2>
-   <div>
-            <button>Add beneficiaries</button>
-            <button>See all beneficiaries</button>
+<div className='w-[50rem] '>
+        <h2 className='text-[#f1f2f6] text-[1.3rem] '>Amount transfer</h2>
+   <div className='flex flex-row justify-around p-4 ml-[2rem] '>
+            <button className='bg-[#f1f2f6] font-semibold p-1 rounded'>Add beneficiaries</button>
+            <button className='bg-[#f1f2f6] font-semibold p-1 rounded'>See all beneficiaries</button>
 
    </div>
 
     <div>
 
         <form >
-        <div>
-            <label htmlFor="fromAccount">From Account:
+        <div className='flex flex-row justify-around p-4 '>
+            <label  className='text-[#f1f2f6]' htmlFor="fromAccount">From Account:
                 <input type="number" name='fromAccount' id='fromAccount' />
             </label>
 
-            <label htmlFor="toAccount">to Account:
+            <label className='text-[#f1f2f6]'  htmlFor="toAccount">to Account:
                 <input type="number" name='toAccount' id='toAccount' />
             </label>
         </div>
 
-        <div>
-        <label htmlFor="amount">Amount
+        <div className='flex flex-row justify-around p-4 ml-[4rem] '>
+        <label className='text-[#f1f2f6] relative right-[1rem]'  htmlFor="amount">Amount
                 <input type="number" name='amount' id='amount' />
             </label>
-            <label htmlFor="Remark">Remark
+            <label className='text-[#f1f2f6]'  htmlFor="Remark">Remark
                 <input type="text" name='Remark' id='Remark' />
             </label>
-        </div>
-
-        <button className='bg-[#f1f2f6]'>Send</button>
+        </div  >
+            <div className='flex flex-row justify-center items center'><button className='bg-[#f1f2f6] font-semibold px-[2rem] py-[0.5rem] rounded'>Send</button></div>
+        
         </form>
     </div>
 </div>
