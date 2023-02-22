@@ -15,8 +15,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.beans.factory.annotation.Required;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -36,7 +38,10 @@ public class User {
 
     private String firstname;
     private String lastname;
+
+    @Column(unique = true)
     private String email;
+
     private String password;
 
     @Enumerated(EnumType.STRING)
