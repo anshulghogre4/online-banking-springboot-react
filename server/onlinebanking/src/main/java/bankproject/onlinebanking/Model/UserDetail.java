@@ -15,13 +15,15 @@ import javax.persistence.Table;
 import org.hibernate.annotations.ColumnTransformer;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Table(name = "userdetails")
-public class UserDetails {
+public class UserDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
