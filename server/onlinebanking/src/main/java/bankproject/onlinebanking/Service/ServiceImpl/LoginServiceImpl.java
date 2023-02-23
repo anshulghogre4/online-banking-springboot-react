@@ -16,15 +16,7 @@ public class LoginServiceImpl implements LoginService {
 
         User user = userRepository.findByEmail(email);
 
-        if (user == null)
-            throw new UserNotFoundException(ConstantMessages.getEmailNotRegisteredMessage());
-        if (user.isEmailVerified() == false)
-            throw new UserNotFoundException("Email Not Verified");
-        boolean iscorrect = passwordEncoder.matches(login.getPassword(), user.getPassword());
-        if (iscorrect == false)
-            throw new UserNotFoundException(ConstantMessages.getPasswordincorrectmessage());
-        else
-            return user;
+        return user;
 
     }
 

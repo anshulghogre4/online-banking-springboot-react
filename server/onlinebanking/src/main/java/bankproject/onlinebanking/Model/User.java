@@ -1,6 +1,8 @@
 package bankproject.onlinebanking.Model;
 
 import java.sql.Date;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,17 +21,24 @@ import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@EqualsAndHashCode
+@NoArgsConstructor
 @Table(name = "userdata")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -38,23 +47,24 @@ public class User {
 
     private String firstname;
     private String lastname;
+    private String username;
 
     @Column(unique = true)
     private String email;
-
     private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     public Role role;
-
     private boolean accountopenningreq;
+    private boolean locked;
+    private boolean enabled;
 
     @Column(name = "createdate")
     private Date createdDate;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private UserDetails userdetails;
+    private UserDetail userdetails;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference(value = "user-account")
@@ -62,6 +72,59 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Beneficiaries> beneficiaries;
+
+    public User(String firstname, String lastname, String username, String email, String password, Role role,
+            boolean accountopenningreq, boolean locked, boolean enabled, Date createdDate, UserDetail userdetails) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.accountopenningreq = accountopenningreq;
+        this.locked = locked;
+        this.enabled = enabled;
+        this.createdDate = createdDate;
+        this.userdetails = userdetails;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
+
+        return Collections.singleton(authority);
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return !locked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
 
     // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     // @JsonManagedReference(value = "user-loan")

@@ -1,4 +1,4 @@
-package bankproject.onlinebanking.Service;
+package bankproject.onlinebanking.Service.ServiceImpl;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -9,17 +9,17 @@ import org.springframework.stereotype.Service;
 import bankproject.onlinebanking.Model.BankAccount;
 import bankproject.onlinebanking.Model.User;
 import bankproject.onlinebanking.Repository.BankAccountRepository;
+import bankproject.onlinebanking.Service.AccountService;
 
 @Service
-public class AccountServiceImpl implements AccountService{
-    
+public class AccountServiceImpl implements AccountService {
+
     @Autowired
     private BankAccountRepository bankAccountRepository;
 
-
     @Override
     public BankAccount findByAccountNo(long accountNo) {
-       return bankAccountRepository.findByAccountNo(accountNo);
+        return bankAccountRepository.findByAccountNo(accountNo);
     }
 
     @Override
@@ -42,9 +42,7 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public void deleteAccount(BankAccount bankAccount) {
-       bankAccountRepository.deleteById(bankAccount.getAccountno());
+        bankAccountRepository.deleteById(bankAccount.getAccountno());
     }
-
-
 
 }

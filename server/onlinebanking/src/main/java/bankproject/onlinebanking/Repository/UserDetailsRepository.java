@@ -6,11 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import bankproject.onlinebanking.Model.UserDetails;
+import bankproject.onlinebanking.Model.UserDetail;
 
 @Repository
-public interface UserDetailsRepository extends JpaRepository<UserDetails, Integer> {
-
-   
+public interface UserDetailsRepository extends JpaRepository<UserDetail, Integer> {
 
 }
