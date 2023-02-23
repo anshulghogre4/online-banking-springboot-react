@@ -20,10 +20,10 @@ public class Transactions {
     private int transactionId;
 
     @Column
-    private int fromAccount;
+    private long fromAccount;
 
     @Column
-    private int toAccount;
+    private long toAccount;
 
     @Column
     private Double amount;
