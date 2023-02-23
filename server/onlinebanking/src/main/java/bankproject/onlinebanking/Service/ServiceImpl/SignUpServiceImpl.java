@@ -5,16 +5,25 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import bankproject.onlinebanking.Model.User;
 
 import bankproject.onlinebanking.Repository.UserRepository;
+import bankproject.onlinebanking.Requests.SignUpRequest;
 import bankproject.onlinebanking.Service.SignUpService;
 
+@Service
 public class SignUpServiceImpl implements SignUpService {
 
     @Autowired
     private UserRepository userRepo;
+
+    @Override
+    public String createUser(SignUpRequest user) {
+        System.out.println("it sucks");
+        return "IT ++++++ works";
+    }
 
     @Override
     public User createUser(User user) {

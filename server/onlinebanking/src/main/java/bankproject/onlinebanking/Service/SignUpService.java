@@ -6,11 +6,13 @@ import java.util.List;
 import java.util.Optional;
 
 import bankproject.onlinebanking.Model.User;
+import bankproject.onlinebanking.Requests.SignUpRequest;
 
-@Service
 public interface SignUpService {
 
     public User createUser(User user);
+
+    public String createUser(SignUpRequest user);
 
     public Optional<User> getAUser(UUID userId);
 

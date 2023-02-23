@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import bankproject.onlinebanking.Model.LoanAccount;
 
 //@Repository
-public interface LoanRepository extends JpaRepository<LoanAccount, Long> {
+public interface LoanRepository {
 
 }

@@ -19,7 +19,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public BankAccount findByAccountNo(long accountNo) {
-        return bankAccountRepository.findByAccountNo(accountNo);
+        // return bankAccountRepository.findByAccountNo(accountNo);
+        return null;
+
     }
 
     @Override
@@ -35,9 +37,10 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void updateAccount(BankAccount bankAccount) {
 
-        BankAccount account = bankAccountRepository.findByAccountNo(bankAccount.getAccountno());
-        account.setUser(bankAccount.getUser());
-        bankAccountRepository.save(account);// **need to add query**
+        // BankAccount account =
+        // bankAccountRepository.findByAccountNo(bankAccount.getAccountno());
+        // account.setUser(bankAccount.getUser());
+        // bankAccountRepository.save(account);// **need to add query**
     }
 
     @Override
