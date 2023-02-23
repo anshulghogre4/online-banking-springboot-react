@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import bankproject.onlinebanking.Model.User;
@@ -19,6 +20,9 @@ public class SignUpServiceImpl implements SignUpService {
     @Autowired
     private UserRepository userRepo;
 
+    @Autowired
+    PasswordEncoder passwordEncoded;
+
     @Override
     public String createUser(SignUpRequest user) {
         System.out.println("it sucks");
@@ -29,6 +33,7 @@ public class SignUpServiceImpl implements SignUpService {
     public User createUser(User user) {
 
         if (!userRepo.existsById(user.getUserid())) {
+            user.setPassword(passwordEncoded.encode(user.getPassword()));
             userRepo.save(user);
         }
         return user;

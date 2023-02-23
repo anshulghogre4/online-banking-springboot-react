@@ -34,10 +34,7 @@ public class WebSecurityConfig {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/v*/registration/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated().and()
-                .formLogin();
+                .permitAll();
 
         DefaultSecurityFilterChain defaultSecurityFilterChain = http.build();
         return defaultSecurityFilterChain;

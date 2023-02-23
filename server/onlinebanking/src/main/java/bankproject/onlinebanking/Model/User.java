@@ -47,7 +47,6 @@ public class User implements UserDetails {
 
     private String firstname;
     private String lastname;
-    private String username;
 
     @Column(unique = true)
     private String email;
@@ -77,7 +76,6 @@ public class User implements UserDetails {
             boolean accountopenningreq, boolean locked, boolean enabled, Date createdDate, UserDetail userdetails) {
         this.firstname = firstname;
         this.lastname = lastname;
-        this.username = username;
         this.email = email;
         this.password = password;
         this.role = role;
@@ -103,7 +101,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
