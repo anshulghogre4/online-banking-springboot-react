@@ -33,7 +33,7 @@ public class WebSecurityConfig {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v*/registration/**")
+                .antMatchers()
                 .permitAll();
 
         DefaultSecurityFilterChain defaultSecurityFilterChain = http.build();

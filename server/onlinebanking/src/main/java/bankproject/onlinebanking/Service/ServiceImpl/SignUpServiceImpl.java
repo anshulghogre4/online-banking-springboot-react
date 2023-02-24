@@ -1,10 +1,14 @@
 package bankproject.onlinebanking.Service.ServiceImpl;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +25,10 @@ public class SignUpServiceImpl implements SignUpService {
     private UserRepository userRepo;
 
     @Autowired
-    PasswordEncoder passwordEncoded;
+    private JavaMailSender mailSender;
 
-    @Override
-    public String createUser(SignUpRequest user) {
-        System.out.println("it sucks");
-        return "IT ++++++ works";
-    }
+    @Autowired
+    PasswordEncoder passwordEncoded;
 
     @Override
     public User createUser(User user) {
@@ -55,6 +56,57 @@ public class SignUpServiceImpl implements SignUpService {
         users = userRepo.getAllUsers();
 
         return users;
+    }
+
+    @Override
+    public boolean checkEmail(String email) {
+        if (userRepo.findByEmail(email) != null)
+            return true;
+        return false;
+    }
+
+    @Override
+    public User findByResetPasswordToken(String token) {
+        return userRepo.findByResetPasswordToken(token);
+    }
+
+    @Override
+    public void updateResetPasswordToken(String token, String email) {
+        User theUser = userRepo.findByEmail(email);
+        theUser.setResetPasswordToken(token);
+        userRepo.save(theUser);
+    }
+
+    @Override
+    public void updatePassword(String password, String token) {
+        User theUser = userRepo.findByResetPasswordToken(token);
+        theUser.setPassword(passwordEncoded.encode(password));
+        theUser.setResetPasswordToken(null);
+        userRepo.save(theUser);
+    }
+
+    @Override
+    public User findByOTP(String otp) {
+        return userRepo.findByotp(otp);
+    }
+
+    // @Override
+    // public void updateStatus(String otp) {
+    // // TODO Auto-generated method stub
+    // throw new UnsupportedOperationException("Unimplemented method
+    // 'updateStatus'");
+    // }
+
+    @Override
+    public void updateOtp(String otp, String email) {
+        User theUser = userRepo.findByEmail(email);
+        theUser.setOtp(otp);
+        userRepo.save(theUser);
+    }
+
+    @Override
+    public void deleteAccount(String email) {
+        userRepo.deleteUser(email);
     }
 
 }

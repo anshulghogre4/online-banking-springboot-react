@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -45,22 +46,41 @@ public class User implements UserDetails {
     @GenericGenerator(name = "userid", strategy = "uuid2")
     private UUID userid;
 
+    @Column(name = "firstname")
     private String firstname;
+
+    @Column(name = "lastname")
     private String lastname;
 
-    @Column(unique = true)
+    @Column(name = "email", unique = true)
     private String email;
+    @Column(name = "password")
     private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     public Role role;
+
+    @Column(name = "accountreq")
     private boolean accountopenningreq;
+
     private boolean locked;
     private boolean enabled;
 
     @Column(name = "createdate")
     private Date createdDate;
+
+    @Column(name = "resetPasswordToken")
+    private String resetPasswordToken;
+
+    // @Column
+    // private boolean emailVerified;
+
+    @Column(name = "otp")
+    public String otp;
+
+    @Transient
+    public String token;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserDetail userdetails;
@@ -123,6 +143,14 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return enabled;
     }
+
+    // public boolean isEmailVerified() {
+    // return emailVerified;
+    // }
+
+    // public void setEmailverified(boolean emailVerified) {
+    // this.emailVerified = emailVerified;
+    // }
 
     // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     // @JsonManagedReference(value = "user-loan")

@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import bankproject.onlinebanking.Requests.SignUpRequest;
+import bankproject.onlinebanking.Model.User;
+
 import bankproject.onlinebanking.Service.SignUpService;
 import lombok.AllArgsConstructor;
 
@@ -19,7 +20,7 @@ public class SignUpController {
     private SignUpService signUpService;
 
     @PostMapping
-    public String Signup(@RequestBody SignUpRequest user) {
+    public User Signup(@RequestBody User user) {
 
         return signUpService.createUser(user);
 
