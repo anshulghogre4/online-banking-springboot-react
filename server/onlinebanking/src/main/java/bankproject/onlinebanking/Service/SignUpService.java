@@ -17,7 +17,7 @@ public interface SignUpService {
 
     public User createUser(User user);
 
-    public Optional<User> getAUser(UUID userId);
+    public Optional<User> getAUser(String userId);
 
     public List<User> GetAllUsers();
 

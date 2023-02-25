@@ -12,8 +12,8 @@ import bankproject.onlinebanking.Model.BankAccount;
 @EnableJpaRepositories
 public interface BankAccountRepository extends JpaRepository<BankAccount, Long> {
 
-    BankAccount findByAccountNo(long accountNo);
+    // BankAccount findByAccountNo(long accountNo);
 
-    void deleteByEmail(String email);
+    // void deleteByEmail(String email);
 
 }

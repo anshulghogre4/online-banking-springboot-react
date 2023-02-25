@@ -10,12 +10,12 @@ import bankproject.onlinebanking.Model.Transactions;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transactions, Integer> {
 
-    public List<Transactions> getDetailsByAccountNo(Long accountno);
+    // public List<Transactions> getDetailsByAccountNo(Long accountno);
 
-    public Transactions getCurrentTransaction(long fromAccount);
+    // public Transactions getCurrentTransaction(long fromAccount);
 
-    public Transactions getTransactionsByFromAccount(Long accountno);
+    // public Transactions getTransactionsByFromAccount(Long accountno);
 
-    public List<Transactions> getTransactionsByToAccount(long toAccount);
+    // public List<Transactions> getTransactionsByToAccount(long toAccount);
 
 }

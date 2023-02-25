@@ -33,13 +33,15 @@ public class SignUpServiceImpl implements SignUpService {
     @Override
     public User createUser(User user) {
 
+        String userId = UUID.randomUUID().toString();
+        user.setUserId(userId);
         user.setPassword(passwordEncoded.encode(user.getPassword()));
         return userRepo.save(user);
 
     }
 
     @Override
-    public Optional<User> getAUser(UUID userId) {
+    public Optional<User> getAUser(String userId) {
 
         Optional<User> user = userRepo.findById(userId);
 

@@ -38,10 +38,9 @@ import lombok.Setter;
 public class User {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "userid", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(unique = true, updatable = false, nullable = false)
-    private UUID userid;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "userid")
+    private String userId;
 
     @Column(name = "firstname")
     private String firstname;
@@ -51,6 +50,7 @@ public class User {
 
     @Column(name = "email", unique = true)
     private String email;
+
     @Column(name = "password")
     private String password;
 

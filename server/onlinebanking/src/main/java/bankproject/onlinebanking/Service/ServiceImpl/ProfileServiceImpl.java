@@ -14,7 +14,10 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public User updateUser(User user) {
 
-        if (userRepo.existsById(user.getUserid())) {
+        System.out.println("i'm here above check");
+        System.out.println("dekho ye h Id" + user.getUserId());
+        if (userRepo.existsById(user.getUserId())) {
+            System.out.println("i'm here aftercheck");
             userRepo.save(user);
         }
 

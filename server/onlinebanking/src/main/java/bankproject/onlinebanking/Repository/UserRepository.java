@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import bankproject.onlinebanking.Model.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, UUID> {
+public interface UserRepository extends JpaRepository<User, String> {
 
     // @Query(value = "select * from userdata where userid =:userid", nativeQuery =
     // true)
