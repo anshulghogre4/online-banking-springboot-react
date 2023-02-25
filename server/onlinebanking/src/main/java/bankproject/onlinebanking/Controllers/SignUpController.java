@@ -17,6 +17,7 @@ import bankproject.onlinebanking.Service.SignUpService;
 import lombok.AllArgsConstructor;
 
 @RestController
+@RequestMapping("/api/v1")
 @AllArgsConstructor
 public class SignUpController {
 
