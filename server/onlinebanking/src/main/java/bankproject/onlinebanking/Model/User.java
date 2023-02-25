@@ -18,13 +18,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.hibernate.annotations.Type;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -39,11 +35,12 @@ import lombok.Setter;
 @EqualsAndHashCode
 @NoArgsConstructor
 @Table(name = "userdata")
-public class User implements UserDetails {
+public class User {
 
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "userid", strategy = "uuid2")
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "userid", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(unique = true, updatable = false, nullable = false)
     private UUID userid;
 
     @Column(name = "firstname")
@@ -62,22 +59,22 @@ public class User implements UserDetails {
     public Role role;
 
     @Column(name = "accountreq")
-    private boolean accountopenningreq;
+    private boolean accountopenningreq = false;
 
-    private boolean locked;
-    private boolean enabled;
+    private boolean locked = false;
+    private boolean enabled = true;
 
     @Column(name = "createdate")
     private Date createdDate;
 
-    @Column(name = "resetPasswordToken")
-    private String resetPasswordToken;
+    // @Column(name = "resetPasswordToken")
+    // private String resetPasswordToken;
 
     // @Column
     // private boolean emailVerified;
 
-    @Column(name = "otp")
-    public String otp;
+    // @Column(name = "otp")
+    // public String otp;
 
     @Transient
     public String token;
@@ -91,58 +88,6 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Beneficiaries> beneficiaries;
-
-    public User(String firstname, String lastname, String username, String email, String password, Role role,
-            boolean accountopenningreq, boolean locked, boolean enabled, Date createdDate, UserDetail userdetails) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.accountopenningreq = accountopenningreq;
-        this.locked = locked;
-        this.enabled = enabled;
-        this.createdDate = createdDate;
-        this.userdetails = userdetails;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
-
-        return Collections.singleton(authority);
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return !locked;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
 
     // public boolean isEmailVerified() {
     // return emailVerified;

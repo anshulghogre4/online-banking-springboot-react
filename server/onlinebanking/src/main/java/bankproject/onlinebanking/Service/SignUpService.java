@@ -23,18 +23,20 @@ public interface SignUpService {
 
     public boolean checkEmail(String email);
 
-    public User findByResetPasswordToken(String token);
+    // // public User findByResetPasswordToken(String token);
 
-    public void updateResetPasswordToken(String token, String email);
+    // // public void updateResetPasswordToken(String token, String email);
 
-    public void updatePassword(String password, String token);
+    // // public void updatePassword(String password, String token);
 
-    public User findByOTP(String otp);
+    // // public User findByOTP(String otp);
 
-    // public void updateStatus(String otp);
+    // // public void updateStatus(String otp);
 
-    void updateOtp(String otp, String email);
+    // // void updateOtp(String otp, String email);
 
     void deleteAccount(String email);
+
+    public User findByEmail(String email);
 
 }

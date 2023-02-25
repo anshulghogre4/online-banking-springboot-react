@@ -20,9 +20,6 @@ import lombok.NoArgsConstructor;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-    @Autowired
-    private UserDetailsService userDetailsService;
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -31,17 +28,10 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers()
-                .permitAll();
+                .csrf().disable();
 
         DefaultSecurityFilterChain defaultSecurityFilterChain = http.build();
         return defaultSecurityFilterChain;
-    }
-
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
     }
 
     // @Override

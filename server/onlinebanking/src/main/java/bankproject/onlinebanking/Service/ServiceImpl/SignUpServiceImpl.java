@@ -33,11 +33,9 @@ public class SignUpServiceImpl implements SignUpService {
     @Override
     public User createUser(User user) {
 
-        if (!userRepo.existsById(user.getUserid())) {
-            user.setPassword(passwordEncoded.encode(user.getPassword()));
-            userRepo.save(user);
-        }
-        return user;
+        user.setPassword(passwordEncoded.encode(user.getPassword()));
+        return userRepo.save(user);
+
     }
 
     @Override
@@ -65,30 +63,30 @@ public class SignUpServiceImpl implements SignUpService {
         return false;
     }
 
-    @Override
-    public User findByResetPasswordToken(String token) {
-        return userRepo.findByResetPasswordToken(token);
-    }
+    // @Override
+    // public User findByResetPasswordToken(String token) {
+    // return userRepo.findByResetPasswordToken(token);
+    // }
 
-    @Override
-    public void updateResetPasswordToken(String token, String email) {
-        User theUser = userRepo.findByEmail(email);
-        theUser.setResetPasswordToken(token);
-        userRepo.save(theUser);
-    }
+    // @Override
+    // public void updateResetPasswordToken(String token, String email) {
+    // User theUser = userRepo.findByEmail(email);
+    // theUser.setResetPasswordToken(token);
+    // userRepo.save(theUser);
+    // }
 
-    @Override
-    public void updatePassword(String password, String token) {
-        User theUser = userRepo.findByResetPasswordToken(token);
-        theUser.setPassword(passwordEncoded.encode(password));
-        theUser.setResetPasswordToken(null);
-        userRepo.save(theUser);
-    }
+    // @Override
+    // public void updatePassword(String password, String token) {
+    // User theUser = userRepo.findByResetPasswordToken(token);
+    // theUser.setPassword(passwordEncoded.encode(password));
+    // theUser.setResetPasswordToken(null);
+    // userRepo.save(theUser);
+    // }
 
-    @Override
-    public User findByOTP(String otp) {
-        return userRepo.findByotp(otp);
-    }
+    // @Override
+    // public User findByOTP(String otp) {
+    // return userRepo.findByotp(otp);
+    // }
 
     // @Override
     // public void updateStatus(String otp) {
@@ -97,16 +95,21 @@ public class SignUpServiceImpl implements SignUpService {
     // 'updateStatus'");
     // }
 
-    @Override
-    public void updateOtp(String otp, String email) {
-        User theUser = userRepo.findByEmail(email);
-        theUser.setOtp(otp);
-        userRepo.save(theUser);
-    }
+    // @Override
+    // public void updateOtp(String otp, String email) {
+    // User theUser = userRepo.findByEmail(email);
+    // theUser.setOtp(otp);
+    // userRepo.save(theUser);
+    // }
 
     @Override
     public void deleteAccount(String email) {
         userRepo.deleteUser(email);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepo.findByEmail(email);
     }
 
 }
