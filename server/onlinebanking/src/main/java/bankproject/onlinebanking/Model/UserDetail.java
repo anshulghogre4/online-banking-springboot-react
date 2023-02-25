@@ -43,7 +43,7 @@ public class UserDetail {
     private String mobile;
 
     @Column(unique = true)
-    @ColumnTransformer(read = "UPPER(name)", write = "LOWER(?)")
+    // @ColumnTransformer(read = "UPPER(name)", write = "LOWER(?)")
     private String pan;
 
     private char gender;
@@ -52,7 +52,6 @@ public class UserDetail {
     public Date dateOfBirth;
 
     @OneToOne
-    @JoinColumn(name = "userid")
     private User user;
 
     private int age;

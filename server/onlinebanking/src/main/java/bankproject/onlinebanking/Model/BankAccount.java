@@ -44,4 +44,5 @@ public class BankAccount {
     // @OneToOne(mappedBy = "account")
     // @JsonManagedReference
     // private LoanAccount loanAccount;
+
 }

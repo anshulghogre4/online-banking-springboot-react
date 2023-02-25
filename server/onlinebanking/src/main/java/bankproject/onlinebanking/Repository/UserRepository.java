@@ -19,14 +19,16 @@ public interface UserRepository extends JpaRepository<User, String> {
     // true)
     // public boolean existsByUUID(UUID userid);
 
-    @Query(value = "select * from userdata", nativeQuery = true)
-    public List<User> getAllUsers();
+    // @Query(value = "select * from userdata", nativeQuery = true)
+    // public List<User> getAllUsers();
 
     public User findByEmail(String email);
 
     // public User findByResetPasswordToken(String token);
 
     // public User findByotp(String otp);
+    @Query(value = "select * from userdata where userid = '079b8412-6517-484b-bb85-13f782aacc22'", nativeQuery = true)
+    public User getUserWithId();
 
     @Transactional
     @Modifying

@@ -33,8 +33,6 @@ public class SignUpServiceImpl implements SignUpService {
     @Override
     public User createUser(User user) {
 
-        String userId = UUID.randomUUID().toString();
-        user.setUserId(userId);
         user.setPassword(passwordEncoded.encode(user.getPassword()));
         return userRepo.save(user);
 
@@ -50,11 +48,10 @@ public class SignUpServiceImpl implements SignUpService {
 
     @Override
     public List<User> GetAllUsers() {
-
+        System.out.println("++++++ insdi all user controller 2");
         List<User> users = null;
-
-        users = userRepo.getAllUsers();
-
+        System.out.println("++++++ insdi all user controller 2");
+        users = userRepo.findAll();
         return users;
     }
 

@@ -30,6 +30,7 @@ public class SignUpController {
      * 
      * Signup FirstName,Last Name,email,password
      */
+
     @PostMapping("/signup")
     public ResponseEntity<User> Signup(@RequestBody User user) {
 
@@ -37,6 +38,8 @@ public class SignUpController {
             return new ResponseEntity<User>(HttpStatus.CONFLICT);
         }
 
+        String userid = UUID.randomUUID().toString();
+        user.setUserId(userid);
         user.setRole(Role.USER);
         user.setCreatedDate(new Date(System.currentTimeMillis()));
         signUpService.createUser(user);
