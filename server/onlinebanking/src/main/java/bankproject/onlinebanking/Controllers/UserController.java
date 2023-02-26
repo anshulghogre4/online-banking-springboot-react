@@ -51,12 +51,29 @@ public class UserController {
 
     }
 
-    @PutMapping("/uuser/{userId}")
+    // in front end hide create button once profile created and there after show
+    // only update button
+    // for below req
+    @PutMapping("/createprofile/{userId}")
+    public ResponseEntity<User> createUserProfile(@RequestBody UserDetail userDetail, @PathVariable String userId) {
+
+        ResponseEntity<User> re = null;
+
+        User theUser = profileService.createUserProfile(userDetail, userId);
+
+        re = new ResponseEntity<User>(theUser, HttpStatus.OK);
+
+        return re;
+
+    }
+
+    // include userdeails id in json request in postman to update respective user
+    @PutMapping("/updateprofile/{userId}")
     public ResponseEntity<User> updateUserProfile(@RequestBody UserDetail userDetail, @PathVariable String userId) {
 
         ResponseEntity<User> re = null;
 
-        User theUser = profileService.updateUser(userDetail, userId);
+        User theUser = profileService.createUserProfile(userDetail, userId);
 
         re = new ResponseEntity<User>(theUser, HttpStatus.OK);
 

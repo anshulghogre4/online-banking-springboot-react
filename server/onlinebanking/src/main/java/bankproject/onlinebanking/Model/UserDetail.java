@@ -4,7 +4,6 @@ import java.math.BigInteger;
 import java.sql.Blob;
 import java.sql.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,13 +36,10 @@ public class UserDetail {
     private String pin;
     private String state;
 
-    @Column(unique = true)
     private Long adhaar;
 
-    @Column(unique = true)
     private String mobile;
 
-    @Column(unique = true)
     // @ColumnTransformer(read = "UPPER(name)", write = "LOWER(?)")
     private String pan;
 
@@ -52,7 +48,7 @@ public class UserDetail {
     @Column(name = "birthdate")
     public Date dateOfBirth;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private User user;
 
     private int age;
