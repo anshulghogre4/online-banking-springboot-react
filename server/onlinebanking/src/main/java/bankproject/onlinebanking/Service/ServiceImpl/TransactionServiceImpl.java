@@ -1,71 +1,90 @@
 package bankproject.onlinebanking.Service.ServiceImpl;
 
+
+
 import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import bankproject.onlinebanking.Model.BankAccount;
 import bankproject.onlinebanking.Model.Transactions;
 import bankproject.onlinebanking.Repository.TransactionRepository;
 import bankproject.onlinebanking.Service.TransactionService;
 
-public class TransactionServiceImpl implements TransactionService {
+@Service
+public class TransactionServiceImpl implements TransactionService{
 
     @Autowired
     TransactionRepository transactionRepository;
 
     @Override
-    public List<Transactions> getDetailsByAccount(BankAccount bankAccount) {
-
-        // if (transactionRepository.getDetailsByAccountNo(bankAccount.getAccountno())
-        // != null) {
-        // return null;
-        // }
-        // return
-        // transactionRepository.getDetailsByAccountNo(bankAccount.getAccountno());
-        return null;
+    public List<Transactions> getDetailsByAccount(long fromAccount) {
+        
+        if(transactionRepository.getDetailsByAccountNo(fromAccount)==null)
+        {
+            return null;
+        }
+       return transactionRepository.getDetailsByAccountNo(fromAccount); 
     }
 
     @Override
     public List<Transactions> getTransactionsByReceiver(long toAccount) {
 
-        // return transactionRepository.getTransactionsByToAccount(toAccount);
-        return null;
-    }
+        if(transactionRepository.getTransactionsByToAccount(toAccount)==null)
+        {
+            return null;
+        }
+            return transactionRepository.getTransactionsByToAccount(toAccount);
+        }
 
+  
     @Override
     public Transactions save(Transactions transaction) {
         transactionRepository.save(transaction);
-        // return
-        // transactionRepository.getCurrentTransaction(transaction.getToAccount());
-        return null;
+        return transactionRepository.getCurrentTransaction(transaction.getToAccount());
     }
 
     @Override
-    public Transactions setTransactions(BankAccount bankAccount, long toAccount, double amount, String description,
-            String status) {
-        Transactions newTransaction = new Transactions();
-        newTransaction.setFromAccount(bankAccount.getAccountno());
-        newTransaction.setToAccount(toAccount);
-        newTransaction.setAmount(amount);
-        newTransaction.setDescription(description);
-        newTransaction.setTransactionStatus(status);
-        // newTransaction.setTransactionDate(date);
+    public Transactions setTransactions(BankAccount bankAccount, long toAccount, double amount, String description, String status) {
+            Transactions newTransaction = new Transactions();
+            newTransaction.setFromAccount(bankAccount.getAccountno());
+            newTransaction.setToAccount(toAccount);
+            newTransaction.setAmount(amount);
+            newTransaction.setDescription(description);
+            newTransaction.setTransactionStatus(status);
+            //newTransaction.setTransactionDate(date);
 
-        transactionRepository.save(newTransaction);
-        // return
-        // transactionRepository.getTransactionsByFromAccount(bankAccount.getAccountno());
-        return null;
+            transactionRepository.save(newTransaction);
+            return transactionRepository.getTransactionsByFromAccount(bankAccount.getAccountno());
 
     }
 
     @Override
     public Transactions getTransactionsById(int transactionId) {
-        if (transactionRepository.getById(transactionId) != null) {
+        if(transactionRepository.getById(transactionId)!=null)
+        {
             return null;
         }
-        return transactionRepository.getById(transactionId);
+       return transactionRepository.getById(transactionId);
     }
+
+    @Override
+    public List<Transactions> findAll() {
+        return transactionRepository.findAll();
+    }
+
+    @Override
+    public List<Transactions> getAllByAccount(long accountno) {
+        return transactionRepository.getByAccount(accountno);
+    }
+
+    @Override
+    public Transactions getCurrentTransaction(long accountno) {
+        return transactionRepository.getCurrentTransaction(accountno);
+    }
+
+
 
 }

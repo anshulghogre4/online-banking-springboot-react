@@ -19,8 +19,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public BankAccount findByAccountNo(long accountNo) {
-        // return bankAccountRepository.findByAccountNo(accountNo);
-        return null;
+        return bankAccountRepository.findByAccountNo(accountNo);
+        //return null;
 
     }
 
@@ -37,15 +37,31 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void updateAccount(BankAccount bankAccount) {
 
-        // BankAccount account =
-        // bankAccountRepository.findByAccountNo(bankAccount.getAccountno());
-        // account.setUser(bankAccount.getUser());
-        // bankAccountRepository.save(account);// **need to add query**
+        BankAccount account = bankAccountRepository.findByAccountNo(bankAccount.getAccountno());
+        //account.setUser(bankAccount.getUser());
+        account.setIsactive(bankAccount.isIsactive());
+        account.setBalance(bankAccount.getBalance());
+        bankAccountRepository.save(account);// **need to add query**
     }
 
     @Override
     public void deleteAccount(BankAccount bankAccount) {
         bankAccountRepository.deleteById(bankAccount.getAccountno());
+    }
+
+    @Override
+    public boolean validateAccNo(long accountno) {
+        if(!bankAccountRepository.existsById(accountno))
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public BankAccount deleteAccount(long accoutno) {
+        BankAccount temp = bankAccountRepository.findByAccountNo(accoutno);
+        bankAccountRepository.deleteById(accoutno);
+        return temp;
     }
 
 }

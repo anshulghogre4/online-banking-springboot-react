@@ -2,7 +2,9 @@ package bankproject.onlinebanking.Repository;
 
 import java.math.BigInteger;
 
+import org.hibernate.sql.Select;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
@@ -12,8 +14,9 @@ import bankproject.onlinebanking.Model.BankAccount;
 @EnableJpaRepositories
 public interface BankAccountRepository extends JpaRepository<BankAccount, Long> {
 
-    // BankAccount findByAccountNo(long accountNo);
+    @Query(value = "select * from bankaccount where accountno=?1", nativeQuery = true)
+    public BankAccount findByAccountNo(long accountno);
 
-    // void deleteByEmail(String email);
+   // public void deleteByAccountNo(long accountno);
 
 }
