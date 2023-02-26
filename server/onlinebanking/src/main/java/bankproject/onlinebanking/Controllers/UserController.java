@@ -64,17 +64,4 @@ public class UserController {
 
     }
 
-    @PostMapping("/uuserr")
-    public ResponseEntity<?> updateUserProfilee(@RequestBody User user) {
-
-        ResponseEntity<?> re = null;
-
-        String theUser = profileService.updateUserr(user);
-
-        re = new ResponseEntity<>(theUser, HttpStatus.OK);
-
-        return re;
-
-    }
-
 }

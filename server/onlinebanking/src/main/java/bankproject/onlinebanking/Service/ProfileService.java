@@ -8,5 +8,4 @@ import bankproject.onlinebanking.Model.UserDetail;
 public interface ProfileService {
     public User updateUser(UserDetail userDetails, String userId);
 
-    public String updateUserr(User user);
 }
