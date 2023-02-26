@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import bankproject.onlinebanking.Execptions.UserNotFoundException;
 import bankproject.onlinebanking.Model.User;
 import bankproject.onlinebanking.Model.UserDetail;
 import bankproject.onlinebanking.Service.ProfileService;
@@ -69,7 +70,8 @@ public class UserController {
 
     // include userdeails id in json request in postman to update respective user
     @PutMapping("/updateprofile/{userId}")
-    public ResponseEntity<User> updateUserProfile(@RequestBody UserDetail userDetail, @PathVariable String userId) {
+    public ResponseEntity<User> updateUserProfile(@RequestBody UserDetail userDetail, @PathVariable String userId)
+            throws UserNotFoundException {
 
         ResponseEntity<User> re = null;
 
