@@ -56,7 +56,8 @@ public class UserController {
     // only update button
     // for below req
     @PutMapping("/createprofile/{userId}")
-    public ResponseEntity<User> createUserProfile(@RequestBody UserDetail userDetail, @PathVariable String userId) {
+    public ResponseEntity<User> createUserProfile(@RequestBody UserDetail userDetail, @PathVariable String userId)
+            throws UserNotFoundException {
 
         ResponseEntity<User> re = null;
 
