@@ -14,4 +14,6 @@ public interface AccountService {
     public void deleteAccount(BankAccount bankAccount);
     public boolean validateAccNo(long accountno);
     public BankAccount deleteAccount(long accoutno);
+    public List<BankAccount> updateAccount(BankAccount newAccount, String userId);
+    public List<BankAccount> findByUserId(String userId);
 }
