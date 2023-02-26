@@ -71,14 +71,14 @@ public class User {
     @Transient
     public String token;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     private UserDetail userdetails;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @JsonManagedReference(value = "user-account")
     private List<BankAccount> accounts;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Beneficiaries> beneficiaries;
 
     // public boolean isEmailVerified() {

@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.sql.Blob;
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -51,7 +52,7 @@ public class UserDetail {
     @Column(name = "birthdate")
     public Date dateOfBirth;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private User user;
 
     private int age;

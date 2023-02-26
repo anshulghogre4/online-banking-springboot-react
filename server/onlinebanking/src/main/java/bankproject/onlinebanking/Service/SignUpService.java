@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 import bankproject.onlinebanking.Model.User;
-import bankproject.onlinebanking.Requests.SignUpRequest;
 
 public interface SignUpService {
 
