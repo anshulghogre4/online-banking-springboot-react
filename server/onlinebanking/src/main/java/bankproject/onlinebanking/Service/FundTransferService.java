@@ -5,7 +5,7 @@ import bankproject.onlinebanking.Model.Transactions;
 
 public interface FundTransferService {
    //public Transactions fundTransfer(long accounNo,String name, String desctription, double amount );
-    public Transactions save(long accounNo,String name, String desctription, double amount );
+    public Transactions save(Transactions transactions);
     public BankAccount updateFundDeducion(BankAccount bankAccount);
 
 }
