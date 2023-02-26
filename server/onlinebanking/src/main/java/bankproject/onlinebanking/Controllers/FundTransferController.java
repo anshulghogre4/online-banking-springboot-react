@@ -40,12 +40,28 @@ public class FundTransferController {
             BankAccount senderAccount = accountService.findByAccountNo(bankAccount.getAccountno());
             if(!senderAccount.isIsactive())
             {
-                return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+                Transactions newTransactions = new Transactions();
+                newTransactions.setFromAccount(senderAccount.getAccountno());
+                newTransactions.setToAccount(toAccount);
+                newTransactions.setAmount(amount);
+                newTransactions.setDescription(description);
+                newTransactions.setTransactionDate(Helper.dateStamp());
+                newTransactions.setTransactionTime(Helper.timeStamp());
+                newTransactions.setTransactionStatus("Declined");
+                return new ResponseEntity<Transactions>(transactionService.save(newTransactions),HttpStatus.NOT_ACCEPTABLE);
             }
 
             if(senderAccount.getBalance()< amount)
             {
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
+                Transactions newTransactions = new Transactions();
+                newTransactions.setFromAccount(senderAccount.getAccountno());
+                newTransactions.setToAccount(toAccount);
+                newTransactions.setAmount(amount);
+                newTransactions.setDescription(description);
+                newTransactions.setTransactionDate(Helper.dateStamp());
+                newTransactions.setTransactionTime(Helper.timeStamp());
+                newTransactions.setTransactionStatus("Insufficient Bal");
+                return new ResponseEntity<Transactions>(transactionService.save(newTransactions),HttpStatus.NOT_ACCEPTABLE);
             }
             else
             {
@@ -63,7 +79,6 @@ public class FundTransferController {
                     newTransactions.setTransactionDate(Helper.dateStamp());
                     newTransactions.setTransactionTime(Helper.timeStamp());
                     newTransactions.setTransactionStatus("Completed");
-
                     accountService.updateAccount(senderAccount);
                     accountService.updateAccount(receiverAccount);
                     transactionService.save(newTransactions);
@@ -71,10 +86,7 @@ public class FundTransferController {
                 }
 
             }
-
-
         }
-
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 

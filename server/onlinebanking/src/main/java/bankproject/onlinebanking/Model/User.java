@@ -11,6 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -73,9 +74,11 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL)
     private UserDetail userdetails;
-
+ 
+ 
+ //   @JsonManagedReference(value = "user-account")
     @OneToMany(cascade = CascadeType.ALL)
-    @JsonManagedReference(value = "user-account")
+    @JoinColumn(name = "user_userid", referencedColumnName = "userid")
     private List<BankAccount> accounts;
 
     @OneToMany(cascade = CascadeType.ALL)

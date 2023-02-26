@@ -55,10 +55,18 @@ public class AccountController {
          return accountService.findAll();
     }
 
-    @PostMapping("/create")
-    public BankAccount saveAccount(@RequestBody BankAccount bankAccount)
+    @PostMapping("/create/{userId}")
+    public ResponseEntity<List<BankAccount>> saveAccount(@RequestBody BankAccount bankAccount, @PathVariable String userId)
     {
         System.out.println("Ctreations");
+        List<BankAccount> accounts=accountService.findByUserId(userId);
+        if(accounts !=null )
+        {
+            for (BankAccount acc : accounts) {
+                if(acc.getAccountType().equals(bankAccount.getAccountType()))
+                    return new ResponseEntity(acc, HttpStatus.CONFLICT);
+            }
+        }
         BankAccount newAccount = new BankAccount();
         newAccount.setAccountType(bankAccount.getAccountType());
         newAccount.setBalance(0.00);
@@ -71,7 +79,8 @@ public class AccountController {
         newAccount.setAccountno(accountno);
         newAccount.setDateCreated(Helper.dateStamp());
         newAccount.setTimeCreated(Helper.timeStamp());
-        return accountService.saveAccount(newAccount);
+        
+        return new ResponseEntity<>(accountService.updateAccount(newAccount, userId),HttpStatus.OK);//saveAccount(newAccount);
     }
 
     @DeleteMapping("/accounts/{accountno}")
@@ -136,6 +145,15 @@ public class AccountController {
 
             return new ResponseEntity<BankAccount>(accountService.findByAccountNo(bankAccount.getAccountno()), HttpStatus.OK);
         }
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/checkbal/{accountno}")
+    private ResponseEntity<Double> checkBalance(@PathVariable long accountno)
+    {
+        if(accountService.findByAccountNo(accountno)!=null)
+            return new ResponseEntity<Double>(accountService.findByAccountNo(accountno).getBalance(), HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
