@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import bankproject.onlinebanking.Model.User;
 
 import bankproject.onlinebanking.Repository.UserRepository;
-import bankproject.onlinebanking.Requests.SignUpRequest;
+
 import bankproject.onlinebanking.Service.SignUpService;
 
 @Service
@@ -34,7 +34,10 @@ public class SignUpServiceImpl implements SignUpService {
     public User createUser(User user) {
 
         user.setPassword(passwordEncoded.encode(user.getPassword()));
-        return userRepo.save(user);
+
+        User createdUser = userRepo.save(user);
+
+        return createdUser;
 
     }
 

@@ -11,6 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -71,14 +72,16 @@ public class User {
     @Transient
     public String token;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     private UserDetail userdetails;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference(value = "user-account")
+ 
+ 
+ //   @JsonManagedReference(value = "user-account")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_userid", referencedColumnName = "userid")
     private List<BankAccount> accounts;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Beneficiaries> beneficiaries;
 
     // public boolean isEmailVerified() {

@@ -1,21 +1,28 @@
 package bankproject.onlinebanking.Service.ServiceImpl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import bankproject.onlinebanking.Model.BankAccount;
 import bankproject.onlinebanking.Model.Transactions;
+import bankproject.onlinebanking.Repository.TransactionRepository;
 import bankproject.onlinebanking.Service.FundTransferService;
 
+@Service
 public class FundTransferServiceImpl implements FundTransferService{
 
+
+    @Autowired
+    TransactionRepository transactionRepository;
+
     @Override
-    public Transactions save(long accounNo, String name, String desctription, double amount) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
+    public Transactions save(Transactions transactions) {
+        return transactionRepository.save(transactions);
     }
 
     @Override
     public BankAccount updateFundDeducion(BankAccount bankAccount) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateFundDeducion'");
+        return null;
     }
     
 }

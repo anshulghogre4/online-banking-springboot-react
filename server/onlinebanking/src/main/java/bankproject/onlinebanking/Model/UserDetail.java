@@ -36,13 +36,10 @@ public class UserDetail {
     private String pin;
     private String state;
 
-    @Column(unique = true)
     private Long adhaar;
 
-    @Column(unique = true)
     private String mobile;
 
-    @Column(unique = true)
     // @ColumnTransformer(read = "UPPER(name)", write = "LOWER(?)")
     private String pan;
 

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import bankproject.onlinebanking.Execptions.UserNotFoundException;
 import bankproject.onlinebanking.Model.User;
 import bankproject.onlinebanking.Model.UserDetail;
 import bankproject.onlinebanking.Service.ProfileService;
@@ -51,12 +52,16 @@ public class UserController {
 
     }
 
-    @PutMapping("/uuser/{userId}")
-    public ResponseEntity<User> updateUserProfile(@RequestBody UserDetail userDetail, @PathVariable String userId) {
+    // in front end hide create button once profile created and there after show
+    // only update button
+    // for below req
+    @PutMapping("/createprofile/{userId}")
+    public ResponseEntity<User> createUserProfile(@RequestBody UserDetail userDetail, @PathVariable String userId)
+            throws UserNotFoundException {
 
         ResponseEntity<User> re = null;
 
-        User theUser = profileService.updateUser(userDetail, userId);
+        User theUser = profileService.createUserProfile(userDetail, userId);
 
         re = new ResponseEntity<User>(theUser, HttpStatus.OK);
 
@@ -64,14 +69,16 @@ public class UserController {
 
     }
 
-    @PostMapping("/uuserr")
-    public ResponseEntity<?> updateUserProfilee(@RequestBody User user) {
+    // include userdeails id in json request in postman to update respective user
+    @PutMapping("/updateprofile/{userId}")
+    public ResponseEntity<User> updateUserProfile(@RequestBody UserDetail userDetail, @PathVariable String userId)
+            throws UserNotFoundException {
 
-        ResponseEntity<?> re = null;
+        ResponseEntity<User> re = null;
 
-        String theUser = profileService.updateUserr(user);
+        User theUser = profileService.createUserProfile(userDetail, userId);
 
-        re = new ResponseEntity<>(theUser, HttpStatus.OK);
+        re = new ResponseEntity<User>(theUser, HttpStatus.OK);
 
         return re;
 

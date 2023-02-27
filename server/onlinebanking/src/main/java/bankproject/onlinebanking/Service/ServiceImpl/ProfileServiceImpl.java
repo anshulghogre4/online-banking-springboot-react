@@ -5,8 +5,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import bankproject.onlinebanking.Execptions.UserNotFoundException;
 import bankproject.onlinebanking.Model.User;
 import bankproject.onlinebanking.Model.UserDetail;
+import bankproject.onlinebanking.Repository.UserDetailsRepository;
 import bankproject.onlinebanking.Repository.UserRepository;
 import bankproject.onlinebanking.Service.ProfileService;
 
@@ -17,21 +19,12 @@ public class ProfileServiceImpl implements ProfileService {
     private UserRepository userRepo;
 
     @Override
-    public String updateUserr(User user) {
+    public User createUserProfile(UserDetail userDetails, String userId) throws UserNotFoundException {
 
-        if (userRepo.getUserWithId() != null) {
-            // User theUser = userRepo.findById(user.getUserId()).get();
-            System.out.println("i'm here aftercheck");
-            return "isme ara kuch ";
+        if (userDetails.getAdhaar() == null || userDetails.getPan() == null || userDetails.getMobile() == null) {
+
+            throw new UserNotFoundException("Provide mandatory fields");
         }
-
-        System.out.println("ye dega null ka bacha");
-        return "nahi ara kuch bhi";
-
-    }
-
-    @Override
-    public User updateUser(UserDetail userDetails, String userId) {
 
         User theUser = userRepo.findById(userId).get();
 
