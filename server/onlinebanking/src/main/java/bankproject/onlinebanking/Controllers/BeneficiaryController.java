@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import bankproject.onlinebanking.Model.Beneficiaries;
 import bankproject.onlinebanking.Service.BeneficiariesService;
+import bankproject.onlinebanking.Service.UserService;
 
 @RestController
 @RequestMapping("/beneficiaries")
@@ -18,10 +19,33 @@ public class BeneficiaryController {
     @Autowired
     private BeneficiariesService beneficiariesService;
 
+    @Autowired
+    private UserService UserService;
+
     @PostMapping("/add")
     public ResponseEntity<Beneficiaries> createBeneficiary(@RequestBody Beneficiaries beneficiary) {
         Beneficiaries newBeneficiary = beneficiariesService.createBeneficiary(beneficiary);
         return new ResponseEntity<>(newBeneficiary, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/create/{userId}")
+    public ResponseEntity<?> saveBeneficiary(@RequestBody Beneficiaries beneficiary, @PathVariable String userId)
+    {
+        // if(!UserService.findById(userId).getBeneficiaries())
+        //     return new ResponseEntity<>(HttpStatus.CONFLICT);
+       
+        List<Beneficiaries> beneficiaries =beneficiariesService.findByUserId(userId);
+
+        if(beneficiaries !=null )
+        {
+            for (Beneficiaries ben : beneficiaries) {
+                if(ben.getBeneaccountno() == beneficiary.getBeneaccountno())
+                    return new ResponseEntity<>("Already Exists", HttpStatus.CONFLICT); //messsage already have Benefeciries
+            }
+        }
+
+        return new ResponseEntity<>(beneficiariesService.createBeneficiaries(beneficiary, userId),HttpStatus.OK);
+
     }
 
     @GetMapping("/getall")

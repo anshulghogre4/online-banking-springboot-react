@@ -23,7 +23,7 @@ import bankproject.onlinebanking.Service.TransactionService;
 public class TransactionController {
 
     @Autowired
-    public TransactionService transactionService;
+    private TransactionService transactionService;
 
     @GetMapping("/transaction")
     public ResponseEntity<List<Transactions>> findAll()

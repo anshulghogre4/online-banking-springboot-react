@@ -23,13 +23,13 @@ import bankproject.onlinebanking.Service.TransactionService;
 public class FundTransferController {
 
     @Autowired
-    public FundTransferService fundTransferService;
+    private FundTransferService fundTransferService;
 
     @Autowired
-    public TransactionService transactionService;
+    private TransactionService transactionService;
 
     @Autowired 
-    public AccountService accountService;
+    private AccountService accountService;
 
 
     @PostMapping("/transfer")

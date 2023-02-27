@@ -3,8 +3,12 @@ package bankproject.onlinebanking.Controllers;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transaction;
 
@@ -24,8 +28,11 @@ import org.springframework.web.bind.annotation.RestController;
 import bankproject.helper.Helper;
 import bankproject.onlinebanking.Model.BankAccount;
 import bankproject.onlinebanking.Model.Transactions;
+import bankproject.onlinebanking.Model.User;
+import bankproject.onlinebanking.Repository.UserRepository;
 import bankproject.onlinebanking.Service.AccountService;
 import bankproject.onlinebanking.Service.TransactionService;
+import bankproject.onlinebanking.Service.UserService;
 import lombok.AllArgsConstructor;
 
 
@@ -37,10 +44,14 @@ public class AccountController {
 
 
     @Autowired
-    public AccountService accountService;
+    private AccountService accountService;
 
     @Autowired
-    public TransactionService transactionService;
+    private TransactionService transactionService;
+
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/accountdetails/{accountNo}")
     public BankAccount findAccount(@PathVariable long accountNo)
@@ -50,76 +61,101 @@ public class AccountController {
     }
 
     @GetMapping("/accounts")
-    public List<BankAccount> findAllAccounts()
+    public ResponseEntity<?> findAllAccounts()
     {
-         return accountService.findAll();
+        List<Object> objs = new ArrayList<>();
+        objs.add(userService.findAll()); 
+        return new ResponseEntity<> (objs, HttpStatus.OK);
     }
 
-    @PostMapping("/create/{userId}")
-    public ResponseEntity<List<BankAccount>> saveAccount(@RequestBody BankAccount bankAccount, @PathVariable String userId)
+
+    @GetMapping("/accounts/mail")
+    public ResponseEntity<?> findAllAccounts(@Param(value = "") String email)
     {
-        System.out.println("Ctreations");
+        
+        User user = userService.findByEmail(email);
+        if(user != null)
+            return new ResponseEntity<> (user, HttpStatus.OK);
+        else
+            return new ResponseEntity<>("User does not exists", HttpStatus.NOT_FOUND);
+    }
+
+
+    @PostMapping("/create/{userId}")
+    public ResponseEntity<?> saveAccount(@RequestBody BankAccount bankAccount, @PathVariable String userId)
+    {
+        if(!userService.findById(userId).isAccountopenningreq())
+            return new ResponseEntity<>("Create account not allowed",HttpStatus.CONFLICT);
+       
         List<BankAccount> accounts=accountService.findByUserId(userId);
+
         if(accounts !=null )
         {
             for (BankAccount acc : accounts) {
                 if(acc.getAccountType().equals(bankAccount.getAccountType()))
-                    return new ResponseEntity(acc, HttpStatus.CONFLICT);
+                    return new ResponseEntity<>("Already have an account", HttpStatus.CONFLICT);
             }
         }
         BankAccount newAccount = new BankAccount();
         newAccount.setAccountType(bankAccount.getAccountType());
-        newAccount.setBalance(0.00);
+        newAccount.setBalance(10000.00);
         newAccount.setIsactive(true);
-        //newAccount.setUser(bankAccount.getUser());
+    
         long accountno;
         do{
             accountno = Helper.generateAccountNo();
             }while(!accountService.validateAccNo(accountno));
+
         newAccount.setAccountno(accountno);
         newAccount.setDateCreated(Helper.dateStamp());
         newAccount.setTimeCreated(Helper.timeStamp());
         
-        return new ResponseEntity<>(accountService.updateAccount(newAccount, userId),HttpStatus.OK);//saveAccount(newAccount);
+        return new ResponseEntity<>(accountService.createAccount(newAccount, userId),HttpStatus.OK);
     }
 
     @DeleteMapping("/accounts/{accountno}")
-    private ResponseEntity<BankAccount> deleteAccount(@PathVariable long accountno)
+    private ResponseEntity<?> deleteAccount(@PathVariable long accountno)
     {
-        if(accountService.findByAccountNo(accountno)!=null)
-            return new ResponseEntity<BankAccount>(accountService.deleteAccount((long)accountno), HttpStatus.OK);
+        BankAccount bankAccount=accountService.findByAccountNo(accountno);
+        if(bankAccount!=null)
+        {
+            if(bankAccount.getBalance()>1.00)
+                return new ResponseEntity<>("Account balance should be zero", HttpStatus.OK);
+            else
+                return new ResponseEntity<BankAccount>(accountService.deleteAccount((long)accountno), HttpStatus.OK);
+        }
         else
-            return new ResponseEntity<BankAccount>(new BankAccount(), HttpStatus.CONFLICT);
+            return new ResponseEntity<>("Account does not exists", HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/accounts/suspend/{accountno}")
-    private ResponseEntity suspendAccount(@PathVariable long accountno)
+    private ResponseEntity<?> suspendAccount(@PathVariable long accountno)
     {
         BankAccount account= accountService.findByAccountNo(accountno);
         if( account != null)
         {    
             account.setIsactive(false);
             accountService.updateAccount(account);
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<>("Account Suspended",HttpStatus.OK);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Account does not exists", HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/accounts/activate/{accountno}")
-    private ResponseEntity activateAccount(@PathVariable long accountno)
+    private ResponseEntity<?> activateAccount(@PathVariable long accountno)
     {
         BankAccount account= accountService.findByAccountNo(accountno);
         if( account != null)
         {    
             account.setIsactive(true);
             accountService.updateAccount(account);
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<>("Account activated",HttpStatus.OK);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Account does not exists", HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/accounts/fixdeposit")
-    private ResponseEntity<BankAccount> fixedDeposit(@RequestBody BankAccount bankAccount)
+    private ResponseEntity<?> fixedDeposit(@RequestBody BankAccount bankAccount)
     {
         BankAccount account = accountService.findByAccountNo(bankAccount.getAccountno());
         if( account != null)
@@ -146,16 +182,16 @@ public class AccountController {
             return new ResponseEntity<BankAccount>(accountService.findByAccountNo(bankAccount.getAccountno()), HttpStatus.OK);
         }
         else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Account does not exists", HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/checkbal/{accountno}")
-    private ResponseEntity<Double> checkBalance(@PathVariable long accountno)
+    private ResponseEntity<?> checkBalance(@PathVariable long accountno)
     {
         if(accountService.findByAccountNo(accountno)!=null)
             return new ResponseEntity<Double>(accountService.findByAccountNo(accountno).getBalance(), HttpStatus.OK);
         else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Account does not exists", HttpStatus.NOT_FOUND);
     }
  
 }
