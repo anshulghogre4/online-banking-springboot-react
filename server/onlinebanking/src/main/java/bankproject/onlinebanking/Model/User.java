@@ -73,10 +73,10 @@ public class User {
     public String token;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn
     private UserDetail userdetails;
- 
- 
- //   @JsonManagedReference(value = "user-account")
+
+    // @JsonManagedReference(value = "user-account")
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_userid", referencedColumnName = "userid")
     private List<BankAccount> accounts;
