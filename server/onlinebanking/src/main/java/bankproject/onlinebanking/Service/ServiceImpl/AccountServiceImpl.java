@@ -70,7 +70,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<BankAccount> updateAccount(BankAccount newAccount, String userId) {
+    public List<BankAccount> createAccount(BankAccount newAccount, String userId) {
         User theUser = userRepo.findById(userId).get();
         List<BankAccount> existingAccounts= bankAccountRepository.findAllByUserId(userId);
        

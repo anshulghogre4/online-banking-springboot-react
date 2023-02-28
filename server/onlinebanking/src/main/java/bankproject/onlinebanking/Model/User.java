@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.EqualsAndHashCode;
@@ -72,16 +74,26 @@ public class User {
     @Transient
     public String token;
 
+    
     @OneToOne(cascade = CascadeType.ALL)
+<<<<<<< HEAD
     @JoinColumn
     private UserDetail userdetails;
 
     // @JsonManagedReference(value = "user-account")
+=======
+    @JsonManagedReference
+    private UserDetail userdetails;
+
+ 
+
+>>>>>>> 1ffac91da32d267d7809facc06fcddf55d02bbaf
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_userid", referencedColumnName = "userid")
     private List<BankAccount> accounts;
 
     @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_userid", referencedColumnName = "userid")
     private List<Beneficiaries> beneficiaries;
 
     // public boolean isEmailVerified() {

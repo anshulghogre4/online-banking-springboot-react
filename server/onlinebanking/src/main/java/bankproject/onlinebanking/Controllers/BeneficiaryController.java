@@ -8,8 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import bankproject.onlinebanking.Model.BankAccount;
 import bankproject.onlinebanking.Model.Beneficiaries;
+import bankproject.onlinebanking.Service.AccountService;
 import bankproject.onlinebanking.Service.BeneficiariesService;
+import bankproject.onlinebanking.Service.SignUpService;
 
 @RestController
 @RequestMapping("/beneficiaries")
@@ -18,10 +21,38 @@ public class BeneficiaryController {
     @Autowired
     private BeneficiariesService beneficiariesService;
 
+    @Autowired
+    private SignUpService signUpService;
+
+    @Autowired
+    private AccountService accountService;
+
     @PostMapping("/add")
     public ResponseEntity<Beneficiaries> createBeneficiary(@RequestBody Beneficiaries beneficiary) {
         Beneficiaries newBeneficiary = beneficiariesService.createBeneficiary(beneficiary);
         return new ResponseEntity<>(newBeneficiary, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/create/{userId}")
+    public ResponseEntity<?> saveBeneficiary(@RequestBody Beneficiaries beneficiary, @PathVariable String userId) {
+        if (accountService.findByAccountNo(beneficiary.getBeneaccountno()) == null)
+            return new ResponseEntity<>("Account does not Exists", HttpStatus.NOT_FOUND);
+
+        List<BankAccount> account = accountService.findByUserId(userId);
+        for (BankAccount bankAccount : account) {
+            if (bankAccount.getAccountno() == beneficiary.getBeneaccountno())
+                return new ResponseEntity<>("This account cannot be added", HttpStatus.CONFLICT);
+        }
+
+        List<Beneficiaries> beneficiaries = beneficiariesService.getBeneficiariesByUserId(userId);
+        if (beneficiaries != null) {
+            for (Beneficiaries ben : beneficiaries) {
+                if (ben.getBeneaccountno() == beneficiary.getBeneaccountno())
+                    return new ResponseEntity<>("Already Exists", HttpStatus.CONFLICT);
+            }
+        }
+
+        return new ResponseEntity<>(beneficiariesService.createBeneficiaries(beneficiary, userId), HttpStatus.OK);
     }
 
     @GetMapping("/getall")
@@ -49,8 +80,8 @@ public class BeneficiaryController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<Optional<Beneficiaries>> getBeneficiariesByUserId(@PathVariable int userId) {
-        Optional<Beneficiaries> beneficiaries = beneficiariesService.getBeneficiariesByUserId(userId);
+    public ResponseEntity<?> getBeneficiariesByUserId(@PathVariable String userId) {
+        List<Beneficiaries> beneficiaries = beneficiariesService.getBeneficiariesByUserId(userId);
         return new ResponseEntity<>(beneficiaries, HttpStatus.OK);
     }
 }
