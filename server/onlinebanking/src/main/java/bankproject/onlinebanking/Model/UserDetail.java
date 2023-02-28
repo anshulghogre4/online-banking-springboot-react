@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.sql.Blob;
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnTransformer;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,7 +52,9 @@ public class UserDetail {
     @Column(name = "birthdate")
     public Date dateOfBirth;
 
+    
     @OneToOne
+    @JsonBackReference
     private User user;
 
     private int age;

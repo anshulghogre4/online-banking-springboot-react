@@ -17,7 +17,7 @@ import bankproject.onlinebanking.Service.TransactionService;
 public class TransactionServiceImpl implements TransactionService{
 
     @Autowired
-    TransactionRepository transactionRepository;
+    private TransactionRepository transactionRepository;
 
     @Override
     public List<Transactions> getDetailsByAccount(long fromAccount) {

@@ -13,7 +13,7 @@ public class FundTransferServiceImpl implements FundTransferService{
 
 
     @Autowired
-    TransactionRepository transactionRepository;
+    private TransactionRepository transactionRepository;
 
     @Override
     public Transactions save(Transactions transactions) {

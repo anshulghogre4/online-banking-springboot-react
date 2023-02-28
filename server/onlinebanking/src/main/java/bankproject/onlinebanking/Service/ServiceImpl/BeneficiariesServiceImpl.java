@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import bankproject.onlinebanking.Model.Beneficiaries;
+import bankproject.onlinebanking.Model.User;
 import bankproject.onlinebanking.Repository.BeneficiaryRepository;
+import bankproject.onlinebanking.Repository.UserRepository;
 import bankproject.onlinebanking.Service.BeneficiariesService;
 
 
@@ -18,6 +20,9 @@ public class BeneficiariesServiceImpl implements BeneficiariesService {
 
     @Autowired
     private BeneficiaryRepository beneficiariesRepository;
+
+    @Autowired 
+    private UserRepository userRepo;
 
     @Override
     public Beneficiaries createBeneficiary(Beneficiaries beneficiary) {
@@ -46,8 +51,24 @@ public class BeneficiariesServiceImpl implements BeneficiariesService {
     }
 
     @Override
-    public Optional<Beneficiaries> getBeneficiariesByUserId(int userId) {
-        return (Optional<Beneficiaries>) beneficiariesRepository.findById(userId);
+    public List<Beneficiaries> getBeneficiariesByUserId(String userId) {
+        return beneficiariesRepository.findAllByUserId(userId);
     }
-}
+
+    @Override
+    public List<Beneficiaries> createBeneficiaries(Beneficiaries beneficiary, String userId) {
+        User theUser = userRepo.findById(userId).get();
+        List<Beneficiaries> beneficiaries= beneficiariesRepository.findAllByUserId(userId);
+       
+        beneficiaries.add(beneficiary);
+     
+        theUser.setBeneficiaries(beneficiaries);
+
+        User savingUpdatedUser = userRepo.save(theUser);
+
+        return savingUpdatedUser.getBeneficiaries();
+
+    }
+
+ }
 
