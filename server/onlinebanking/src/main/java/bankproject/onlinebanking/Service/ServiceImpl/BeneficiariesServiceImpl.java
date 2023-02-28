@@ -51,8 +51,8 @@ public class BeneficiariesServiceImpl implements BeneficiariesService {
     }
 
     @Override
-    public Optional<Beneficiaries> getBeneficiariesByUserId(int userId) {
-        return (Optional<Beneficiaries>) beneficiariesRepository.findById(userId);
+    public List<Beneficiaries> getBeneficiariesByUserId(String userId) {
+        return beneficiariesRepository.findAllByUserId(userId);
     }
 
     @Override
@@ -68,11 +68,6 @@ public class BeneficiariesServiceImpl implements BeneficiariesService {
 
         return savingUpdatedUser.getBeneficiaries();
 
-    }
-
-    @Override
-    public List<Beneficiaries> findByUserId(String userId) {
-        return beneficiariesRepository.findAllByUserId(userId);
     }
 
  }

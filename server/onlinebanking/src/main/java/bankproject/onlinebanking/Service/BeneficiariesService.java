@@ -17,9 +17,8 @@ public interface BeneficiariesService {
 
     void deleteBeneficiary(int beneficiaryId);
     
-    Optional<Beneficiaries> getBeneficiariesByUserId(int userId);
+    List<Beneficiaries> getBeneficiariesByUserId(String userId);
 
-    List<Beneficiaries> findByUserId(String userId);
 
     List<Beneficiaries> createBeneficiaries(Beneficiaries beneficiary, String userId);
 }
