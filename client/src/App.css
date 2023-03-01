@@ -1,5 +1,24 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+table {
+    column-width: auto;
+    align-items: center;
+}
+
+th,td {
+    border: 1px solid black;
+    margin: 10px;
+    padding: 5px 20px;
+}
+
+#submit {
+    margin-left: 50px;
+    align-items: flex-end;
+    color: rgb(255, 255, 255);
+    border: none;
+    background: rgb(117, 137, 250);
+    font-size: larger;
+    font-weight: 800;
+}
