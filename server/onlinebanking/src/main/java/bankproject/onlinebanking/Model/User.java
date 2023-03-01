@@ -74,20 +74,10 @@ public class User {
     @Transient
     public String token;
 
-    
     @OneToOne(cascade = CascadeType.ALL)
-<<<<<<< HEAD
-    @JoinColumn
-    private UserDetail userdetails;
-
-    // @JsonManagedReference(value = "user-account")
-=======
     @JsonManagedReference
     private UserDetail userdetails;
 
- 
-
->>>>>>> 1ffac91da32d267d7809facc06fcddf55d02bbaf
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_userid", referencedColumnName = "userid")
     private List<BankAccount> accounts;
