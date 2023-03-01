@@ -11,10 +11,6 @@ import ErrorPage from './Components/ErrorPage/ErrorPage';
 import DashBoardBalance from './Components/Dashboard/DashBoardBalance';
 import DashBoardTransactions from './Components/Dashboard/DashBoardTransactions';
 import DashboardTransferMoney from './Components/Dashboard/DashboardTransferMoney';
-import Tran from './Components/Transactions/Transact';
-import Bal from './Components/Transactions/Checkbal';
-import Requests from './Components/Accounts/NewAccRequests';
-
 
 function App() {
   return (
@@ -29,11 +25,6 @@ function App() {
       <Route path='/profile' element={<Profile/>}/>
       <Route path='/about' element={<AboutUs/>}/>
       <Route path='/error'element={<ErrorPage/>}/>
-      <Route path='/transact' element={<Tran/>}/>
-      <Route path='/checkbal' element={<Bal/>}/>
-      <Route path='/accreq' element={<Requests/>}/>
-      
-      
       </Routes>
   );
 }
