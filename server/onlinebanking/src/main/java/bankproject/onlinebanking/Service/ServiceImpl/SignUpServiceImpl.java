@@ -114,4 +114,13 @@ public class SignUpServiceImpl implements SignUpService {
         return userRepo.findByEmail(email);
     }
 
+    @Override
+    public void save(User theUser) {
+        userRepo.save(theUser);
+    }
+
+    // @Override
+    // public List<User> getAllReq() {
+    //    return userRepo.findAllByReq();
+    // } 
 }

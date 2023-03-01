@@ -38,4 +38,8 @@ public interface SignUpService {
 
     public User findByEmail(String email);
 
+    public void save(User theUser);
+
+    //public List<User> getAllReq();
+
 }
