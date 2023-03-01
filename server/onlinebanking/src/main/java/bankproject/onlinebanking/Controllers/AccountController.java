@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -37,6 +38,7 @@ import lombok.AllArgsConstructor;
 
 //
 //@AllArgsConstructor
+@CrossOrigin
 @RestController
 @RequestMapping(path = "/account")
 public class AccountController {
@@ -71,6 +73,30 @@ public class AccountController {
             return new ResponseEntity<>(user, HttpStatus.OK);
         else
             return new ResponseEntity<>("User does not exists", HttpStatus.NOT_FOUND);
+    }
+
+
+    @GetMapping("/getallreq")
+    public ResponseEntity<?> getAllReq()
+    {
+        List<User> users = signUpService.GetAllUsers();
+        List<User> reqUsers= new ArrayList<>(); 
+        for (User user : users) 
+        {
+            if(!accountService.findByUserId(user.getUserId()).isEmpty())
+            {
+                //System.out.println("\n\n Skipping****************************************** "+user.getUserId()+"\n\n");
+                continue;
+            }
+                else
+            {
+                //System.out.println("\n\n adding \n\n");
+                reqUsers.add(user);
+            }
+        }
+
+
+        return new ResponseEntity<>(reqUsers, HttpStatus.OK);
     }
 
     @PostMapping("/create/{userId}")
@@ -166,10 +192,15 @@ public class AccountController {
 
     @GetMapping("/checkbal/{accountno}")
     private ResponseEntity<?> checkBalance(@PathVariable long accountno) {
-        if (accountService.findByAccountNo(accountno) != null)
-            return new ResponseEntity<Double>(accountService.findByAccountNo(accountno).getBalance(), HttpStatus.OK);
-        else
-            return new ResponseEntity<>("Account does not exists", HttpStatus.NOT_FOUND);
+       List<BankAccount> lst = new ArrayList<>(); 
+       if (accountService.findByAccountNo(accountno) != null)
+        {
+           
+           lst.add(accountService.findByAccountNo(accountno));
+            return new ResponseEntity<>(lst, HttpStatus.OK);
+        }
+            else
+            return new ResponseEntity<>(lst,HttpStatus.NOT_FOUND);
     }
 
 }
