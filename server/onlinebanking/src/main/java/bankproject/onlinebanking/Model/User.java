@@ -1,7 +1,7 @@
 package bankproject.onlinebanking.Model;
 
 import java.sql.Date;
-
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,6 +17,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -31,7 +34,7 @@ import lombok.Setter;
 @EqualsAndHashCode
 @NoArgsConstructor
 @Table(name = "userdata")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @Column(name = "userid")
@@ -85,6 +88,38 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_userid", referencedColumnName = "userid")
     private List<Beneficiaries> beneficiaries;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+
+        return true;
+    }
 
     // public boolean isEmailVerified() {
     // return emailVerified;
