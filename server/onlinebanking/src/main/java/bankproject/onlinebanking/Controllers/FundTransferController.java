@@ -48,7 +48,8 @@ public class FundTransferController {
                 newTransactions.setTransactionDate(Helper.dateStamp());
                 newTransactions.setTransactionTime(Helper.timeStamp());
                 newTransactions.setTransactionStatus("Declined");
-                return new ResponseEntity<Transactions>(transactionService.save(newTransactions),
+                transactionService.save(newTransactions);
+                return new ResponseEntity<>(transactionService.getCurrentTransaction(senderAccount.getAccountno()),
                         HttpStatus.NOT_ACCEPTABLE);
             }
 
@@ -61,7 +62,8 @@ public class FundTransferController {
                 newTransactions.setTransactionDate(Helper.dateStamp());
                 newTransactions.setTransactionTime(Helper.timeStamp());
                 newTransactions.setTransactionStatus("Insufficient Bal");
-                return new ResponseEntity<Transactions>(transactionService.save(newTransactions),
+                transactionService.save(newTransactions);
+                return new ResponseEntity<>(transactionService.getCurrentTransaction(senderAccount.getAccountno()),
                         HttpStatus.NOT_ACCEPTABLE);
             } else {
                 BankAccount receiverAccount = accountService.findByAccountNo(toAccount);
@@ -106,7 +108,8 @@ public class FundTransferController {
                 newTransactions.setTransactionDate(Helper.dateStamp());
                 newTransactions.setTransactionTime(Helper.timeStamp());
                 newTransactions.setTransactionStatus("Declined");
-                return new ResponseEntity<Transactions>(transactionService.save(newTransactions),
+                transactionService.save(newTransactions);
+                return new ResponseEntity<>(transactionService.getCurrentTransaction(senderAccount.getAccountno()),
                         HttpStatus.NOT_ACCEPTABLE);
             }
             if (senderAccount.getBalance() < amount) {
@@ -118,7 +121,8 @@ public class FundTransferController {
                 newTransactions.setTransactionDate(Helper.dateStamp());
                 newTransactions.setTransactionTime(Helper.timeStamp());
                 newTransactions.setTransactionStatus("Insufficient Bal");
-                return new ResponseEntity<Transactions>(transactionService.save(newTransactions),
+                transactionService.save(newTransactions);
+                return new ResponseEntity<>(transactionService.getCurrentTransaction(senderAccount.getAccountno()),
                         HttpStatus.NOT_ACCEPTABLE);
             } else {
 
@@ -138,7 +142,6 @@ public class FundTransferController {
                 accountService.updateAccount(senderAccount);
                 accountService.updateAccount(receiverAccount);
                 transactionService.save(newTransactions);
-
                 return new ResponseEntity<>(transactionService.getCurrentTransaction(senderAccount.getAccountno()),
                         HttpStatus.OK);
             }

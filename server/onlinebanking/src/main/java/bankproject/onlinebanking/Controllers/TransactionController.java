@@ -61,19 +61,19 @@ public class TransactionController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/bankaccount")
-    public ResponseEntity<List<Transactions>> findByFromAccount(@RequestBody BankAccount bankAccount)
+    @GetMapping("/bankaccount/{accountno}")
+    public ResponseEntity<List<Transactions>> findByFromAccountNo(@PathVariable long accountno)
     {
-        if(transactionService.getAllByAccount(bankAccount.getAccountno())!=null)
+        if(transactionService.getAllByAccount(accountno)!=null)
         {
-            List<Transactions> transactions= transactionService.getAllByAccount(bankAccount.getAccountno());
+            List<Transactions> transactions= transactionService.getAllByAccount(accountno);
             return new ResponseEntity<>(transactions, HttpStatus.OK);
         }
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/transactionId/{toAccount}")
+    @GetMapping("/transactionId/{transactionId}")
     public ResponseEntity<Transactions> findByToAccount(@PathVariable int transactionId)
     {
         if(transactionService.getTransactionsById(transactionId)!=null)
