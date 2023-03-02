@@ -11,20 +11,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import bankproject.onlinebanking.Model.User;
 import bankproject.onlinebanking.Repository.UserRepository;
 import bankproject.onlinebanking.Service.SignUpService;
 
 @CrossOrigin
 @RestController
-@RequestMapping("api/v1/user")
+@RequestMapping("/api/v1/user")
 public class AccountOpenningReq {
 
-    
-    @Autowired 
+    @Autowired
     private SignUpService signUpService;
-
 
     @GetMapping("/acopreq")
     public ResponseEntity<?> accountOpenningReq(@RequestParam String userId) {
@@ -46,7 +43,5 @@ public class AccountOpenningReq {
             return new ResponseEntity<String>("Account oppening request successfull", HttpStatus.OK);
         }
     }
-
-
 
 }

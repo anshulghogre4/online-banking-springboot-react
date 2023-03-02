@@ -42,7 +42,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         logger.info("header: {}", reqToken);
 
-        String email = null;
+        String username = null;
         String token = null;
 
         if (reqToken != null && reqToken.startsWith("Bearer")) {
@@ -51,7 +51,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             try {
 
-                email = jwtUtil.getUsernameFromToken(token);
+                username = jwtUtil.getUsernameFromToken(token);
 
             } catch (IllegalArgumentException e) {
 
@@ -74,9 +74,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             logger.info("invalid header value!");
         }
 
-        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             Boolean validatedToken = jwtUtil.validateToken(token, userDetails);
 
             if (validatedToken) {

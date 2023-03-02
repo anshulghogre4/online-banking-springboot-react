@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import bankproject.onlinebanking.Model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -17,7 +19,8 @@ public class JwtUtil {
 
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 
-    private String secret = "jwtTokenKey";
+    @Value("${jwt.secret}")
+    private String secret;
 
     // retrieve username from jwt token
     public String getUsernameFromToken(String token) {
@@ -48,6 +51,7 @@ public class JwtUtil {
     // generate token for user
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("userId", ((User) userDetails).getUserId());
         return doGenerateToken(claims, userDetails.getUsername());
     }
 
