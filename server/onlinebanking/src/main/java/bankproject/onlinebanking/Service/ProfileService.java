@@ -9,4 +9,6 @@ import bankproject.onlinebanking.Model.UserDetail;
 public interface ProfileService {
     public User createUserProfile(UserDetail userDetails, String userId) throws UserNotFoundException;
 
+    public User updateUserProfile(UserDetail userDetails, String userId) throws UserNotFoundException;
+
 }

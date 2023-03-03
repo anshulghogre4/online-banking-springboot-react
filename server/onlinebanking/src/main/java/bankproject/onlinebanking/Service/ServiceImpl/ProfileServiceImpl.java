@@ -27,11 +27,25 @@ public class ProfileServiceImpl implements ProfileService {
         }
 
         User theUser = userRepo.findById(userId).get();
-
+        userDetails.setUser(theUser);
         theUser.setUserdetails(userDetails);
-
         User savingUpdatedUser = userRepo.save(theUser);
+        return savingUpdatedUser;
 
+    }
+
+    @Override
+    public User updateUserProfile(UserDetail userDetails, String userId) throws UserNotFoundException {
+
+        if (userDetails.getAdhaar() == null || userDetails.getPan() == null || userDetails.getMobile() == null) {
+
+            throw new UserNotFoundException("Provide mandatory fields");
+        }
+
+        User theUser = userRepo.findById(userId).get();
+        userDetails.setUser(theUser);
+        theUser.setUserdetails(userDetails);
+        User savingUpdatedUser = userRepo.save(theUser);
         return savingUpdatedUser;
 
     }

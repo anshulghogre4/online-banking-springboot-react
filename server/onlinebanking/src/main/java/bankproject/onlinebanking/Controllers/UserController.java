@@ -56,31 +56,29 @@ public class UserController {
     // only update button
     // for below req
     @PutMapping("/createprofile/{userId}")
-    public ResponseEntity<User> createUserProfile(@RequestBody UserDetail userDetail, @PathVariable String userId)
+    public ResponseEntity<?> createUserProfile(@RequestBody UserDetail userDetail, @PathVariable String userId)
             throws UserNotFoundException {
-
-        ResponseEntity<User> re = null;
 
         User theUser = profileService.createUserProfile(userDetail, userId);
 
-        re = new ResponseEntity<User>(theUser, HttpStatus.OK);
-
-        return re;
+        if (theUser != null) {
+            return new ResponseEntity<User>(theUser, HttpStatus.OK);
+        } else
+            return new ResponseEntity<String>("User Not Updated!", HttpStatus.EXPECTATION_FAILED);
 
     }
 
     // include userdeails id in json request in postman to update respective user
     @PutMapping("/updateprofile/{userId}")
-    public ResponseEntity<User> updateUserProfile(@RequestBody UserDetail userDetail, @PathVariable String userId)
+    public ResponseEntity<?> updateUserProfile(@RequestBody UserDetail userDetail, @PathVariable String userId)
             throws UserNotFoundException {
 
-        ResponseEntity<User> re = null;
+        User theUser = profileService.updateUserProfile(userDetail, userId);
 
-        User theUser = profileService.createUserProfile(userDetail, userId);
-
-        re = new ResponseEntity<User>(theUser, HttpStatus.OK);
-
-        return re;
+        if (theUser != null) {
+            return new ResponseEntity<User>(theUser, HttpStatus.OK);
+        } else
+            return new ResponseEntity<String>("User Not Updated!", HttpStatus.EXPECTATION_FAILED);
 
     }
 

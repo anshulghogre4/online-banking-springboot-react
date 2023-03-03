@@ -35,4 +35,8 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query(value = "DELETE FROM userdata WHERE email= :email", nativeQuery = true)
     void deleteUser(String email);
 
+    // @Query(value = "select * from userdata where userdetails_userdetailsid =
+    // :userDetailId", nativeQuery = true)
+    // public Boolean searchWithUserDetailId(int userDetailId);
+
 }
