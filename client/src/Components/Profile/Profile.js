@@ -1,8 +1,10 @@
 
 import React, { useState } from 'react';
+import {useBankingSystem} from "../Context/UserContext"
+import axios from "../../Utills/AxiosWithJWT"
 
 const Profile = () => {
-
+   
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -20,7 +22,16 @@ const Profile = () => {
   const [image, setImage] = useState(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState('');
 
+  const [existedUser, setExistedUser] = useState();
 
+  const { setUserDetails, userDetails} = useBankingSystem();
+
+   
+
+  useEffect(() => {
+    console.log(userDetails)
+    setExistedUser(userDetails)
+ }, [userDetails])
 
   const handleImageChange = (e) => {
     e.preventDefault();
@@ -35,6 +46,13 @@ const Profile = () => {
     reader.readAsDataURL(file)
   }
   
+
+
+  const  handleAlreadyExistedDetails = (ele) =>{
+    user = ele.target.name;
+    uservalue = ele.target.value;
+    setUserDetails({...userDetails,[user]:uservalue});
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();

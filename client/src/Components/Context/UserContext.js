@@ -16,15 +16,7 @@ export const UserContextProvider=({children}) =>{
 
      const BASE_URL = "http://localhost:8081";
 
-
     const [userDetails, setUserDetails]= useState();
-
-
-
-
-
-
-
 
 return(
     //setting the values to be used for many times in different component
