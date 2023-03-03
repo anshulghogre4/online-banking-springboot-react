@@ -1,48 +1,109 @@
-import React from 'react'
-import {NavLink} from "react-router-dom"
+import React,{useState} from 'react'
+import {NavLink, useNavigate} from "react-router-dom"
+import  axios from "axios" 
+import {toast} from "react-hot-toast"
 
-const Register = () => {
+const Register = ({BASE_URL}) => {
+
+        const navigateTo = useNavigate();
+
+
+        const [userDetails,setUserDetails] = useState({
+          firstname : "",
+          lastname : "",
+          email: "",
+          password : ""
+        })
+
+      
+
+        let user,uservalue;
+
+        const  handleDetails = (ele) =>{
+          user = ele.target.name;
+          uservalue = ele.target.value;
+          setUserDetails({...userDetails,[user]:uservalue});
+        };
+
+        const handleSubmit = async (e) => {
+          e.preventDefault();
+          console.log("++++ test+++++");
+
+          const { firstname, lastname, email, password} = userDetails;
+
+          const data = {
+            firstname,
+            lastname,
+              email,
+               password
+          }
+
+          if (!firstname || !lastname || ! email || !password) {
+             //alert("Please fill all fields");
+             toast.error("Please fill all fields");
+            return;
+          };
+
+          if (password.length < 8) {
+            toast.error("password should be atleast of 8 characters!");
+           //alert("password should be atleast of 8 characters!");
+           return;
+          }
+            const resp = await axios.post(`${BASE_URL}/api/v1/signup`, data);
+              
+              console.log(resp);
+              
+              if (resp.status === 200) {
+                navigateTo("/login")
+                toast.success("Registration Successfull,Please Login!");
+          }else{
+            toast.error("Invalid Credentials");
+          }
+
+         } 
+
   return (
     <>
     <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
     <div className="text-center text-2xl font-bold">Sign up</div>
     <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-        <form className="space-y-6" action="#" method="POST">
+        <form  onSubmit={ handleSubmit } className="space-y-6" action="#" method="POST">
           <div>
             <label
-              htmlFor="firstName"
+              htmlFor="firstname"
               className="block text-sm font-medium text-gray-700"
             >
               First Name
             </label>
             <div className="mt-1">
               <input
-                id="firstName"
-                name="firstName"
+                id="firstname"
+                name="firstname"
                 type="text"
-                autoComplete="firstName"
-               
-                required
+                autoComplete="firstname"
+                value={userDetails.firstname}
+                onChange ={handleDetails}
                 className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
           </div>
           <div>
             <label
-              htmlFor="lastName"
+              htmlFor="lastname"
               className="block text-sm font-medium text-gray-700"
             >
               Last Name
             </label>
             <div className="mt-1">
               <input
-                id="lastName"
-                name="lastName"
+                id="lastname"
+                name="lastname"
                 type="text"
-                autoComplete="lastName"
-               
-                required
+                autoComplete="lastname"
+                value={userDetails.lastname}
+                onChange ={handleDetails}
+                
                 className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
@@ -60,7 +121,8 @@ const Register = () => {
                 name="email"
                 type="email"
                 required
-               
+                value={userDetails.email}
+                onChange ={handleDetails}
                 className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
             </div>
@@ -78,8 +140,9 @@ const Register = () => {
                 name="password"
                 type="password"
                 autoComplete="current-password"
+                value={userDetails.password}
+                onChange ={handleDetails}
                 
-                required
                 className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 
               />

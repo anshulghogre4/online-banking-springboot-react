@@ -1,14 +1,57 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, {useState} from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
+import axios from "axios"
+import { toast } from 'react-hot-toast'
 
-const Login = () => {
+const Login = ({BASE_URL}) => {
+
+
+  const navigateTo = useNavigate();
+      const [email,setEmail] = useState("");
+      const [password, setPassword] =useState("");
+
+     
+        const submitLogin = async (e) =>{
+            
+          try {
+            e.preventDefault();
+            const data = {
+              email,
+              password
+            };
+             const resp = await axios.post(`${BASE_URL}/api/v1/login`, data);
+            // const resp = await axios.post("http://localhost:8081/api/v1/login", data);
+
+            
+            console.log(resp);
+            // save token in session storage
+           sessionStorage.setItem("jwtToken", resp.data.jwtToken);
+           if (resp.status === 200) {
+            navigateTo("/dashboard");
+            console.log(resp.data.jwtToken);
+            toast.success("Login Successfull!");
+           } 
+           
+           
+           if(resp.status !== 200 || resp.status === 401){
+            toast.error("Invalid Crenditals!")
+           }
+          } catch (error) {
+            console.log(error);
+            toast.error("Invalid Credentials!")
+          }
+             
+            
+        }
+
+
   return (
     <>
     <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="text-center font-bold text-2xl">Log in</div>
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form  className="space-y-6" action="#" method="POST">
+          <form onSubmit={submitLogin} className="space-y-6" action="#" method="POST">
             <div>
               <label
                 htmlFor="email"
@@ -22,7 +65,8 @@ const Login = () => {
                   name="email"
                   type="email"
                   autoComplete="email"
-                  
+                  value={email}
+                    onChange={(e)=>{setEmail(e.target.value)}}
                   required
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   
@@ -42,7 +86,8 @@ const Login = () => {
                   name="password"
                   type="password"
                   autoComplete="current-password"
-                  
+                  value={password}
+                    onChange={(e)=>{setPassword(e.target.value)}}
                   required
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   

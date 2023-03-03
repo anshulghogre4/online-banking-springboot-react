@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import dashimg from "../../assets/images/Welcome_dashboard.png"
-import {HiOutlineExclamationCircle} from "react-icons/hi"
-import { Modal,Button } from 'flowbite-react'
+
 import { NavLink } from 'react-router-dom'
 
 
@@ -9,7 +8,7 @@ import { NavLink } from 'react-router-dom'
 const DashboardMain = () => {
   let accountNo =null;
 
-  const [show, setShow] = useState(false);
+  
 
 
 
