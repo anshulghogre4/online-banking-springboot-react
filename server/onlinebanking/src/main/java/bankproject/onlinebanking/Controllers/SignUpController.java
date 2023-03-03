@@ -42,8 +42,9 @@ public class SignUpController {
         user.setUserId(userid);
         user.setRole(Role.USER);
         user.setCreatedDate(new Date(System.currentTimeMillis()));
-        signUpService.createUser(user);
-        return new ResponseEntity<User>(user, HttpStatus.OK);
+        User theUser = signUpService.createUser(user);
+
+        return new ResponseEntity<User>(theUser, HttpStatus.OK);
 
     }
 

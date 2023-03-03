@@ -24,6 +24,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import bankproject.onlinebanking.Utility.JwtAuthenticationEntryPoint;
 import bankproject.onlinebanking.Utility.JwtAuthenticationFilter;
+import io.jsonwebtoken.lang.Arrays;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -89,13 +90,12 @@ public class WebSecurityConfig {
 
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowCredentials(true);
-        // corsConfiguration.setAllowedOrigins(Arrays.asList("https://domain2.com","http://localhost:4200"));
         corsConfiguration.addAllowedOriginPattern("*");
         corsConfiguration.addAllowedHeader("Authorization");
         corsConfiguration.addAllowedHeader("Content-Type");
         corsConfiguration.addAllowedHeader("Accept");
-        corsConfiguration.addAllowedMethod("GET");
         corsConfiguration.addAllowedMethod("POST");
+        corsConfiguration.addAllowedMethod("GET");
         corsConfiguration.addAllowedMethod("DELETE");
         corsConfiguration.addAllowedMethod("PUT");
         corsConfiguration.addAllowedMethod("OPTIONS");
