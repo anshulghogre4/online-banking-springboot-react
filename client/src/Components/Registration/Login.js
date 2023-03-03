@@ -10,6 +10,8 @@ const Login = () => {
   const navigateTo = useNavigate();
       const [email,setEmail] = useState("");
       const [password, setPassword] =useState("");
+
+      // extracting and using context API hereusing destructuring
       const {BASE_URL, setUserDetails, userDetails} = useBankingSystem();
     
 
@@ -25,9 +27,10 @@ const Login = () => {
              const resp = await axios.post(`${BASE_URL}/api/v1/login`, data);
 
             console.log(resp);
-
+              //Setting the ContextAPI state so that it can be used anywhere in the component tree
             setUserDetails(resp.data.user)
 
+            //testing the set ContextAPI state here
             console.log("login successfull for user: ",userDetails.userId);
 
             // save token in session storage
