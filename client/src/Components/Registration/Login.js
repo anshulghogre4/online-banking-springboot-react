@@ -2,13 +2,16 @@ import React, {useState} from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import axios from "axios"
 import { toast } from 'react-hot-toast'
+import  {useBankingSystem} from "../Context/UserContext"
 
-const Login = ({BASE_URL}) => {
+const Login = () => {
 
 
   const navigateTo = useNavigate();
       const [email,setEmail] = useState("");
       const [password, setPassword] =useState("");
+      const {BASE_URL, setUserDetails, userDetails} = useBankingSystem();
+    
 
      
         const submitLogin = async (e) =>{
@@ -20,10 +23,13 @@ const Login = ({BASE_URL}) => {
               password
             };
              const resp = await axios.post(`${BASE_URL}/api/v1/login`, data);
-            // const resp = await axios.post("http://localhost:8081/api/v1/login", data);
 
-            
             console.log(resp);
+
+            setUserDetails(resp.data.user)
+
+            console.log("login successfull for user: ",userDetails.userId);
+
             // save token in session storage
            sessionStorage.setItem("jwtToken", resp.data.jwtToken);
            if (resp.status === 200) {
@@ -36,6 +42,7 @@ const Login = ({BASE_URL}) => {
            if(resp.status !== 200 || resp.status === 401){
             toast.error("Invalid Crenditals!")
            }
+
           } catch (error) {
             console.log(error);
             toast.error("Invalid Credentials!")

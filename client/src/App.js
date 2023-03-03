@@ -17,14 +17,14 @@ import DashboardTransferMoney from './Components/Dashboard/DashboardTransferMone
 
 function App() {
 
-  const BASE_URL = "http://localhost:8081";
+  
 
   return (
     
     <Routes>
       <Route path="/" element = {<LandingPage/>}/>
-      <Route path='/login' element={<Login BASE_URL={BASE_URL}/>}/>
-      <Route path='/signup' element={<Register  BASE_URL={BASE_URL}/>}/>
+      <Route path='/login' element={<Login/>}/>
+      <Route path='/signup' element={<Register />}/>
       <Route path='/dashboard' element={<Dashboard/>}/>
       <Route path='/dashboard/balance' element={<DashBoardBalance/>}/>
       <Route path='/dashboard/Stmt' element={<DashBoardTransactions/>}/>

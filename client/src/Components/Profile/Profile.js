@@ -178,7 +178,7 @@ const Profile = () => {
 </div>
       <div className=' flex flex-row justify-center items-center space-x-4'>
       <button className="bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600">
-        Submit
+        Create
       </button>
       <button className="bg-amber-600 text-white py-2 px-4 rounded-lg hover:bg-amber-700">
         Update
