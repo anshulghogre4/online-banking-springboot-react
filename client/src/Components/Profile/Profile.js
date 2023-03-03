@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {useBankingSystem} from "../Context/UserContext"
 import axios from "../../Utills/AxiosWithJWT"
 
@@ -22,16 +22,24 @@ const Profile = () => {
   const [image, setImage] = useState(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState('');
 
-  const [existedUser, setExistedUser] = useState();
+  const [existedUser, setExistedUser] = useState({
+    userId: "",
+    firstname: "",
+    lastname: "",
+    email:""
+  });
 
+  //contextAPI
   const { setUserDetails, userDetails} = useBankingSystem();
 
    
 
   useEffect(() => {
-    console.log(userDetails)
+    
     setExistedUser(userDetails)
  }, [userDetails])
+
+
 
   const handleImageChange = (e) => {
     e.preventDefault();
@@ -47,11 +55,11 @@ const Profile = () => {
   }
   
 
-
+  let user, uservalue;
   const  handleAlreadyExistedDetails = (ele) =>{
     user = ele.target.name;
     uservalue = ele.target.value;
-    setUserDetails({...userDetails,[user]:uservalue});
+    setExistedUser({...userDetails,[user]:uservalue});
   };
 
   const handleSubmit = (event) => {
@@ -66,7 +74,7 @@ const Profile = () => {
     <form className="bg-white p-6 rounded-lg flex flex-col">
     <div className="flex flex-wrap -mx-3 mb-6">
       <div className="w-full px-3">
-        <label className="block font-medium text-lg mb-2" for="firstName">
+        <label className="block font-medium text-lg mb-2" htmlFor="firstName">
           First Name:
         </label>
         <input
@@ -79,7 +87,7 @@ const Profile = () => {
       </div>
   
       <div className="w-full px-3">
-        <label className="block font-medium text-lg mb-2" for="lastName">
+        <label className="block font-medium text-lg mb-2" htmlFor="lastName">
           Last Name:
         </label>
         <input
@@ -94,7 +102,7 @@ const Profile = () => {
   
     <div className="flex flex-wrap -mx-3 mb-6">
       <div className="w-full px-3">
-        <label className="block font-medium text-lg mb-2" for="email">
+        <label className="block font-medium text-lg mb-2" htmlFor="email">
           Email:
         </label>
         <input
