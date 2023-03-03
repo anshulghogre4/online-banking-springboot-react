@@ -18,9 +18,14 @@ export const UserContextProvider=({children}) =>{
 
     const [userDetails, setUserDetails]= useState();
 
+    const setUser = (details => {
+        console.log("Main Pagal Hu: ", details);
+        setUserDetails(details);
+    })
+
 return(
     //setting the values to be used for many times in different component
-    <UserContext.Provider value={{userDetails, setUserDetails, BASE_URL}}>
+    <UserContext.Provider value={{userDetails, setUser, BASE_URL}}>
 
         {children}
 

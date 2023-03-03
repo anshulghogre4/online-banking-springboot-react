@@ -5,7 +5,7 @@ import axios from "../../Utills/AxiosWithJWT"
 
 const Profile = () => {
    
-  const [firstName, setFirstName] = useState('');
+  
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -32,7 +32,7 @@ const Profile = () => {
   //contextAPI
   const { setUserDetails, userDetails} = useBankingSystem();
 
-   
+   console.log(userDetails?.userId);
 
   useEffect(() => {
     
@@ -59,7 +59,7 @@ const Profile = () => {
   const  handleAlreadyExistedDetails = (ele) =>{
     user = ele.target.name;
     uservalue = ele.target.value;
-    setExistedUser({...userDetails,[user]:uservalue});
+    setExistedUser({...existedUser,[user]:uservalue});
   };
 
   const handleSubmit = (event) => {
@@ -80,9 +80,10 @@ const Profile = () => {
         <input
           className="bg-gray-200 p-2 rounded-lg w-full hover:bg-gray-300 focus:bg-gray-300 focus:outline-none"
           type="text"
-          id="firstName"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
+          id="firstname"
+          name='firstname'
+          value={existedUser?.firstname}
+          onChange={handleAlreadyExistedDetails}
         />
       </div>
   
