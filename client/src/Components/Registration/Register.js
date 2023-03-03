@@ -2,9 +2,11 @@ import React,{useState} from 'react'
 import {NavLink, useNavigate} from "react-router-dom"
 import  axios from "axios" 
 import {toast} from "react-hot-toast"
+import  {useBankingSystem} from "../Context/UserContext"
 
-const Register = ({BASE_URL}) => {
+const Register = () => {
 
+        const {BASE_URL} = useBankingSystem();
         const navigateTo = useNavigate();
 
 

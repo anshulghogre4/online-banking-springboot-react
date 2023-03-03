@@ -14,7 +14,7 @@ const Profile = () => {
   const [zip, setZip] = useState('');
   const [aadharCard, setAadharCard] = useState('');
   const [panCard, setPanCard] = useState('');
-  const [password, setPassword] = useState('');
+  
   const [gender, setGender] = useState('');
   const [dob, setDob] = useState('');
   const [image, setImage] = useState(null);
@@ -87,19 +87,6 @@ const Profile = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
-  
-      <div className="w-full px-3">
-        <label className="block font-medium text-lg mb-2" for="password">
-          Password:
-        </label>
-        <input
-          className="bg-gray-200 p-2 rounded-lg w-full hover:bg-gray-300 focus:bg-gray-300 focus:outline-none"
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
     </div>
 
    
@@ -124,7 +111,7 @@ const Profile = () => {
     </label>
 
     <label className="block font-medium text-lg mb-2">
-        Zip Code:
+        PIN Code:
         <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:bg-white hover:bg-gray-100" type="text" value={zip} onChange={(e) => setZip(e.target.value)} />
     </label>
 
