@@ -8,8 +8,8 @@ const Login = () => {
 
 
   const navigateTo = useNavigate();
-      const [email,setEmail] = useState("");
-      const [password, setPassword] =useState("");
+      const [email,setEmail] = useState("dogalife5555@gmail.com");
+      const [password, setPassword] =useState("anshul123456");
 
       // extracting and using context API hereusing destructuring
       const {BASE_URL, setUser: setUserDetails, userDetails} = useBankingSystem();

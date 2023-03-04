@@ -2,37 +2,38 @@
 import React, { useState, useEffect } from 'react';
 import {useBankingSystem} from "../Context/UserContext"
 import axios from "../../Utills/AxiosWithJWT"
+import { toast } from 'react-hot-toast';
+import { useNavigate} from "react-router-dom"
 
 const Profile = () => {
    
-  
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [addressLine1, setAddressLine1] = useState('');
-  const [addressLine2, setAddressLine2] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [zip, setZip] = useState('');
-  const [aadharCard, setAadharCard] = useState('');
-  const [panCard, setPanCard] = useState('');
-  
-  const [gender, setGender] = useState('');
-  const [dob, setDob] = useState('');
-  const [image, setImage] = useState(null);
-  const [imagePreviewUrl, setImagePreviewUrl] = useState('');
-
+  //contextAPI
+  const { BASE_URL, setUser: setUserDetails, userDetails} = useBankingSystem();
+  // const [image, setImage] = useState(null);
+  // const [imagePreviewUrl, setImagePreviewUrl] = useState('');
   const [existedUser, setExistedUser] = useState({
     userId: "",
     firstname: "",
     lastname: "",
-    email:""
+    email:"",
+    userdetails:{
+      userdetailsid: "",
+      address: "",
+      city: "",
+      state: "",
+      pin: "",
+      adhaar: "",
+      pan: "",
+      gender: "",
+      mobile: "",
+      dateOfBirth:""
+
+    }
   });
 
-  //contextAPI
-  const { setUserDetails, userDetails} = useBankingSystem();
+  
 
-   console.log(userDetails?.userId);
+  const navigateTo = useNavigate();
 
   useEffect(() => {
     
@@ -41,173 +42,580 @@ const Profile = () => {
 
 
 
-  const handleImageChange = (e) => {
-    e.preventDefault();
-    let reader = new FileReader();
-    let file = e.target.files[0];
+  // const handleImageChange = (e) => {
+  //   e.preventDefault();
+  //   let reader = new FileReader();
+  //   let file = e.target.files[0];
 
-    reader.onloadend = () => {
-      setImage(file)
-      setImagePreviewUrl(reader.result);
-    }
+  //   reader.onloadend = () => {
+  //     setImage(file)
+  //     setImagePreviewUrl(reader.result);
+  //   }
 
-    reader.readAsDataURL(file)
-  }
+  //   reader.readAsDataURL(file)
+  // }
   
 
   let user, uservalue;
   const  handleAlreadyExistedDetails = (ele) =>{
+    const fieldsLevel1 = ['userId',
+    'firstname',
+    'lastname',
+    'email'];
     user = ele.target.name;
     uservalue = ele.target.value;
-    setExistedUser({...existedUser,[user]:uservalue});
+    console.log("+++++ ",user);
+    if (fieldsLevel1.indexOf(user?.trim()) < 0) {
+      let modifiedUser = {
+        ...existedUser,
+        userdetails: {
+          ...existedUser?.userdetails,
+          [user]: uservalue,
+        }
+      };
+      console.log("Modified User: ", modifiedUser);
+      setExistedUser(modifiedUser);
+    } else {
+      let modifiedUser = {...existedUser,[user]:uservalue};
+      console.log("Modified User 2: ", modifiedUser);
+      setExistedUser(modifiedUser);
+    }
+
+    
   };
 
-  const handleSubmit = (event) => {
+    
+
+
+  const handleCreateProfile = async (event) => {
     event.preventDefault();
-    console.log("Form Submitted");
-    // Add code here to handle form submission, such as sending the data to a server
+    console.log("create profile initiated", existedUser);
+
+        const{userdetails} = existedUser;
+
+        const data = {
+          address: userdetails?.address,
+          city: userdetails?.city,
+          state: userdetails?.state,
+          pin: userdetails?.pin,
+          adhaar: userdetails?.adhaar,
+          pan: userdetails?.pan,
+          gender: userdetails?.gender,
+          mobile: userdetails?.mobile,
+          dateOfBirth:userdetails?.dateOfBirth
+        }
+
+
+        if (!userdetails?.adhaar || !userdetails?.pan || ! userdetails?.mobile ) {
+          //alert("Please fill all fields");
+          toast.error("Please fill all mandatory fields");
+         return;
+       };
+
+       if (userdetails.adhaar.length === 11) {
+        toast.error("Aadhar must be of 12 numbers!");
+       return;
+      }
+
+      if (userdetails.pan.length === 9) {
+        toast.error("PAN must be of 10 numbers!");
+       return;
+      }
+
+      if (userdetails.mobile.length === 9) {
+        toast.error("Mobile number must be of 10 numbers!");
+       return;
+      }
+
+      const profileResp = await axios.put(`${BASE_URL}/api/v1/user/updateprofile/${existedUser.userId}`, data);
+
+          setUserDetails(profileResp.data.user);
+          
+          console.log(profileResp);
+              
+              if (profileResp.status === 200) {
+                toast.success("Profile Successfully Created,Please Relogin and Request for Account opening!");
+                navigateTo("/login")
+               
+          }else{
+            toast.error("Error in creating Profile!");
+          }
+
+
+
+  }
+
+  const handleUpdateProfile = async (event) => {
+    event.preventDefault();
+    console.log("update profile initiated", existedUser);
+
+        const{userdetails} = existedUser;
+
+        const data = {
+          userdetailsid: userdetails?.userdetailsid,
+          address: userdetails?.address,
+          city: userdetails?.city,
+          state: userdetails?.state,
+          pin: userdetails?.pin,
+          adhaar: userdetails?.adhaar,
+          pan: userdetails?.pan,
+          gender: userdetails?.gender,
+          mobile: userdetails?.mobile,
+          dateOfBirth:userdetails?.dateOfBirth
+        }
+
+
+        if (!userdetails?.adhaar || !userdetails?.pan || ! userdetails?.mobile ) {
+          //alert("Please fill all fields");
+          toast.error("Please fill all mandatory fields");
+         return;
+       };
+
+       if (userdetails.adhaar.length === 11) {
+        toast.error("Aadhar must be of 12 numbers!");
+       return;
+      }
+
+      if (userdetails.pan.length === 9) {
+        toast.error("PAN must be of 10 numbers!");
+       return;
+      }
+
+      if (userdetails.mobile.length === 9) {
+        toast.error("Mobile number must be of 10 numbers!");
+       return;
+      }
+
+      const profileResp = await axios.put(`${BASE_URL}/api/v1/user/updateprofile/${existedUser.userId}`, data);
+
+          setUserDetails(profileResp.data.user);
+          
+          console.log(profileResp);
+              
+              if (profileResp.status === 200) {
+                toast.success("Profile Successfully Updated,Please Relogin and Request for Account opening!");
+                navigateTo("/login")
+               
+          }else{
+            toast.error("Error in creating Profile!");
+          }
+
+
+
   }
 
 
-  return (
+
+
+  if (!existedUser?.userdetails?.userdetailsid) {
+    
+    return (
       
-    <form className="bg-white p-6 rounded-lg flex flex-col">
-    <div className="flex flex-wrap -mx-3 mb-6">
-      <div className="w-full px-3">
-        <label className="block font-medium text-lg mb-2" htmlFor="firstName">
-          First Name:
-        </label>
-        <input
-          className="bg-gray-200 p-2 rounded-lg w-full hover:bg-gray-300 focus:bg-gray-300 focus:outline-none"
-          type="text"
-          id="firstname"
-          name='firstname'
-          value={existedUser?.firstname}
-          onChange={handleAlreadyExistedDetails}
-        />
+      <form  onSubmit={handleCreateProfile} className="bg-white p-6 rounded-lg flex flex-col">
+      <div className="flex flex-wrap -mx-3 mb-6">
+        <div className="w-full px-3">
+          <label className="block font-medium text-lg mb-2" htmlFor="firstName">
+            First Name:
+          </label>
+          <input
+            className="bg-gray-200 p-2 rounded-lg w-full hover:bg-gray-300 focus:bg-gray-300 focus:outline-none"
+            type="text"
+            id="firstname"
+            name='firstname'
+            value={existedUser?.firstname?.toUpperCase()}
+            onChange={handleAlreadyExistedDetails}
+          />
+        </div>
+    
+        <div className="w-full px-3">
+          <label className="block font-medium text-lg mb-2" htmlFor="lastName">
+            Last Name:
+          </label>
+          <input
+            className="bg-gray-200 p-2 rounded-lg w-full hover:bg-gray-300 focus:bg-gray-300 focus:outline-none"
+            type="text"
+            id="lastname"
+            name='lastname'
+            value={existedUser?.lastname?.toUpperCase()}
+            onChange={handleAlreadyExistedDetails}
+          />
+        </div>
+      </div>
+    
+      <div className="flex flex-wrap -mx-3 mb-6">
+        <div className="w-full px-3">
+          <label className="block font-medium text-lg mb-2" htmlFor="email">
+            Email:
+          </label>
+          <input
+            className="bg-gray-200 p-2 rounded-lg w-full hover:bg-gray-300 focus:bg-gray-300 focus:outline-none"
+            type="email"
+            id="email"
+            name='lastname'
+            value={existedUser?.email}
+            onChange={handleAlreadyExistedDetails}
+          />
+        </div>
       </div>
   
-      <div className="w-full px-3">
-        <label className="block font-medium text-lg mb-2" htmlFor="lastName">
-          Last Name:
-        </label>
-        <input
-          className="bg-gray-200 p-2 rounded-lg w-full hover:bg-gray-300 focus:bg-gray-300 focus:outline-none"
-          type="text"
-          id="lastName"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-        />
-      </div>
-    </div>
+     
+      <label className="block font-medium text-lg mb-2">
+          Address:
+          <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:bg-white hover:bg-gray-100"
+           type="text"
+           id="address" 
+           name='address'
+           value={existedUser?.userdetails?.address}
+           onChange={handleAlreadyExistedDetails}
+             />
+      </label>
   
-    <div className="flex flex-wrap -mx-3 mb-6">
-      <div className="w-full px-3">
-        <label className="block font-medium text-lg mb-2" htmlFor="email">
-          Email:
-        </label>
-        <input
-          className="bg-gray-200 p-2 rounded-lg w-full hover:bg-gray-300 focus:bg-gray-300 focus:outline-none"
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
+      
+  
+      <label className="block font-medium text-lg mb-2">
+          City:
+          <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:bg-white hover:bg-gray-100" 
+          type="text" 
+            id="city" 
+           name='city'
+           value={existedUser?.userdetails?.city}
+           onChange={handleAlreadyExistedDetails} />
+      </label>
+  
+      <label className="block font-medium text-lg mb-2">
+          State:
+          <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:bg-white hover:bg-gray-100" type="text" 
+           id="state" 
+           name='state'
+           value={existedUser?.userdetails?.state}
+           onChange={handleAlreadyExistedDetails} />
+      </label>
+  
+      <label className="block font-medium text-lg mb-2">
+          PIN Code:
+          <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:bg-white hover:bg-gray-100" 
+          type="text"
+            id="pin" 
+           name='pin'
+           value={existedUser?.userdetails?.pin}
+           onChange={handleAlreadyExistedDetails} />
+      </label>
+  
+      <label className="block font-medium text-lg mb-2">
+          Aadhar Card Number:
+          <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:bg-white hover:bg-gray-100" 
+          type="text"
+          id="adhaar" 
+          name='adhaar'
+          value={existedUser?.userdetails?.adhaar}
+          onChange={handleAlreadyExistedDetails} />
+      </label>
+  
+      <label className="block font-medium text-lg mb-2">
+          PAN Card Number:
+          <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:bg-white hover:bg-gray-100"
+           type="text" 
+          id="pan" 
+          name='pan'
+          value={existedUser?.userdetails?.pan?.toUpperCase()}
+          onChange={handleAlreadyExistedDetails} />
+      </label>
+  
+      <label className="block font-medium text-lg mb-2">
+    Gender:
+    <div className="inline-block">
+      <label className="mr-3">
+        <input type="radio"
+        id='gender'
+        name='gender'
+        value= 'M'
+         checked={existedUser?.userdetails?.gender === 'M'} 
+         onChange={handleAlreadyExistedDetails}
+          className="form-radio focus:outline-none focus:shadow-outline-indigo" />
+        Male
+      </label>
+      <label className="mr-3">
+        <input type="radio"
+        id='gender'
+        name='gender' 
+        value='F'
+        checked={existedUser?.userdetails?.gender === 'F'}
+        onChange={handleAlreadyExistedDetails} 
+         className="form-radio focus:outline-none focus:shadow-outline-indigo" />
+        Female
+      </label>
+      <label className="mr-3">
+        <input type="radio" 
+        id='gender'
+        name='gender'
+        value= 'M'
+        checked={existedUser?.userdetails?.gender === 'O'} 
+        onChange={handleAlreadyExistedDetails}
+         className="form-radio focus:outline-none focus:shadow-outline-indigo" />
+        Others
+      </label>
     </div>
-
-   
-    <label className="block font-medium text-lg mb-2">
-        Address Line 1:
-        <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:bg-white hover:bg-gray-100" type="text" value={addressLine1} onChange={(e) => setAddressLine1(e.target.value)} />
-    </label>
-
-    <label className="block font-medium text-lg mb-2">
-        Address Line 2:
-        <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:bg-white hover:bg-gray-100" type="text" value={addressLine2} onChange={(e) => setAddressLine2(e.target.value)} />
-    </label>
-
-    <label className="block font-medium text-lg mb-2">
-        City:
-        <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:bg-white hover:bg-gray-100" type="text" value={city} onChange={(e) => setCity(e.target.value)} />
-    </label>
-
-    <label className="block font-medium text-lg mb-2">
-        State:
-        <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:bg-white hover:bg-gray-100" type="text" value={state} onChange={(e) => setState(e.target.value)} />
-    </label>
-
-    <label className="block font-medium text-lg mb-2">
-        PIN Code:
-        <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:bg-white hover:bg-gray-100" type="text" value={zip} onChange={(e) => setZip(e.target.value)} />
-    </label>
-
-    <label className="block font-medium text-lg mb-2">
-        Aadhar Card Number:
-        <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:bg-white hover:bg-gray-100" type="text" value={aadharCard} onChange={(e) => setAadharCard(e.target.value)} />
-    </label>
-
-    <label className="block font-medium text-lg mb-2">
-        PAN Card Number:
-        <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:bg-white hover:bg-gray-100" type="text" value={panCard} onChange={(e) => setPanCard(e.target.value)} />
-    </label>
-
-    <label className="block font-medium text-lg mb-2">
-  Gender:
-  <div className="inline-block">
-    <label className="mr-3">
-      <input type="radio" value="male" checked={gender === 'male'} onChange={(e) => setGender(e.target.value)} className="form-radio focus:outline-none focus:shadow-outline-indigo" />
-      Male
-    </label>
-    <label className="mr-3">
-      <input type="radio" value="female" checked={gender === 'female'} onChange={(e) => setGender(e.target.value)} className="form-radio focus:outline-none focus:shadow-outline-indigo" />
-      Female
-    </label>
-    <label className="mr-3">
-      <input type="radio" value="others" checked={gender === 'others'} onChange={(e) => setGender(e.target.value)} className="form-radio focus:outline-none focus:shadow-outline-indigo" />
-      Others
-    </label>
-  </div>
-</label>
-
-<label className="block font-medium text-lg mb-2">
-  Phone Number:
-  <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:shadow-outline-indigo" type="tel" pattern="[+][9][1][0-9]{10}" value={`+91${phone}`} onChange={(e) => setPhone(e.target.value.substring(3))} placeholder="+91" />
-</label>
-<br />
-
-<label className="block font-medium text-lg mb-2">
-  Date of Birth:
-  <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:shadow-outline-indigo" type="date" value={dob} onChange={(e) => setDob(e.target.value)} />
-</label>
-<br />
-
-<div>
+  </label>
+  
   <label className="block font-medium text-lg mb-2">
-    Profile Picture:
-    <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:shadow-outline-indigo" type="file" onChange={handleImageChange} accept="image/*" />
+    Mobile Number:
+    <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:shadow-outline-indigo" type="tel"
+    //  pattern="[+][9][1][0-9]{10}"
+    id="mobile" 
+    name='mobile'
+     value={(existedUser?.userdetails?.mobile)}
+      // onChange={(e) => setPhone(e.target.value.substring(3))}
+      onChange={handleAlreadyExistedDetails}
+       />
   </label>
   <br />
-  {imagePreviewUrl && <img src={imagePreviewUrl} alt="Preview" className="w-16 h-16 rounded-full object-cover" />}
-</div>
-      <div className=' flex flex-row justify-center items-center space-x-4'>
-      <button className="bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600">
-        Create
-      </button>
-      <button className="bg-amber-600 text-white py-2 px-4 rounded-lg hover:bg-amber-700">
-        Update
-      </button>
+  
+  <label className="block font-medium text-lg mb-2">
+    Date of Birth:
+    <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:shadow-outline-indigo" type="date"
+    id='dateOfBirth'
+    name='dateOfBirth'
+    value={(existedUser?.userdetails?.dateOfBirth)}
+    onChange={handleAlreadyExistedDetails} />
+  </label>
+  <br />
+  
+  {/* <div>
+    <label className="block font-medium text-lg mb-2">
+      Profile Picture:
+      <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:shadow-outline-indigo" type="file" onChange={handleImageChange} accept="image/*" />
+    </label>
+    <br />
+    {imagePreviewUrl && <img src={imagePreviewUrl} alt="Preview" className="w-16 h-16 rounded-full object-cover" />}
+  </div> */}
+  
+  
+        <div className=' flex flex-row justify-center items-center space-x-4'>
+  
+  
+         
+          <button  type="submit" className="bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600">
+          Create
+        </button>
+        
+        
+  
+        
+        
+        </div>
+  
+  
+  
+  
+  
+        </form>
+   )
+
+
+  }
+  else{
+    // .................................................else condition.......................................
+    return (
+      
+      <form onSubmit={handleUpdateProfile} className="bg-white p-6 rounded-lg flex flex-col">
+      <div className="flex flex-wrap -mx-3 mb-6">
+        <div className="w-full px-3">
+          <label className="block font-medium text-lg mb-2" htmlFor="firstName">
+            First Name:
+          </label>
+          <input
+            className="bg-gray-200 p-2 rounded-lg w-full hover:bg-gray-300 focus:bg-gray-300 focus:outline-none"
+            type="text"
+            id="firstname"
+            name='firstname'
+            value={existedUser?.firstname?.toUpperCase()}
+            onChange={handleAlreadyExistedDetails}
+          />
+        </div>
+    
+        <div className="w-full px-3">
+          <label className="block font-medium text-lg mb-2" htmlFor="lastName">
+            Last Name:
+          </label>
+          <input
+            className="bg-gray-200 p-2 rounded-lg w-full hover:bg-gray-300 focus:bg-gray-300 focus:outline-none"
+            type="text"
+            id="lastname"
+            name='lastname'
+            value={existedUser?.lastname?.toUpperCase()}
+            onChange={handleAlreadyExistedDetails}
+          />
+        </div>
       </div>
+    
+      <div className="flex flex-wrap -mx-3 mb-6">
+        <div className="w-full px-3">
+          <label className="block font-medium text-lg mb-2" htmlFor="email">
+            Email:
+          </label>
+          <input
+            className="bg-gray-200 p-2 rounded-lg w-full hover:bg-gray-300 focus:bg-gray-300 focus:outline-none"
+            type="email"
+            id="email"
+            name='lastname'
+            value={existedUser?.email}
+            onChange={handleAlreadyExistedDetails}
+          />
+        </div>
+      </div>
+  
+     
+      <label className="block font-medium text-lg mb-2">
+          Address:
+          <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:bg-white hover:bg-gray-100"
+           type="text"
+           id="address" 
+           name='address'
+           value={existedUser?.userdetails?.address}
+           onChange={handleAlreadyExistedDetails}
+             />
+      </label>
+  
+      
+  
+      <label className="block font-medium text-lg mb-2">
+          City:
+          <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:bg-white hover:bg-gray-100" 
+          type="text" 
+            id="city" 
+           name='city'
+           value={existedUser?.userdetails?.city}
+           onChange={handleAlreadyExistedDetails} />
+      </label>
+  
+      <label className="block font-medium text-lg mb-2">
+          State:
+          <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:bg-white hover:bg-gray-100" type="text" 
+           id="state" 
+           name='state'
+           value={existedUser?.userdetails?.state}
+           onChange={handleAlreadyExistedDetails} />
+      </label>
+  
+      <label className="block font-medium text-lg mb-2">
+          PIN Code:
+          <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:bg-white hover:bg-gray-100" 
+          type="text"
+            id="pin" 
+           name='pin'
+           value={existedUser?.userdetails?.pin}
+           onChange={handleAlreadyExistedDetails} />
+      </label>
+  
+      <label className="block font-medium text-lg mb-2">
+          Aadhar Card Number:
+          <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:bg-white hover:bg-gray-100" 
+          type="text"
+          id="adhaar" 
+          name='adhaar'
+          value={existedUser?.userdetails?.adhaar}
+          onChange={handleAlreadyExistedDetails} />
+      </label>
+  
+      <label className="block font-medium text-lg mb-2">
+          PAN Card Number:
+          <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:bg-white hover:bg-gray-100"
+           type="text" 
+          id="pan" 
+          name='pan'
+          value={existedUser?.userdetails?.pan?.toUpperCase()}
+          onChange={handleAlreadyExistedDetails} />
+      </label>
+  
+      <label className="block font-medium text-lg mb-2">
+    Gender:
+    <div className="inline-block">
+      <label className="mr-3">
+        <input type="radio"
+        id='gender'
+        name='gender'
+        value='M'
+         checked={existedUser?.userdetails?.gender === 'M'} 
+         onChange={handleAlreadyExistedDetails}
+          className="form-radio focus:outline-none focus:shadow-outline-indigo" />
+        Male
+      </label>
+      <label className="mr-3">
+        <input type="radio"
+        id='gender'
+        name='gender' 
+        value='F'
+        checked={existedUser?.userdetails?.gender === 'F'}
+        onChange={handleAlreadyExistedDetails} 
+         className="form-radio focus:outline-none focus:shadow-outline-indigo" />
+        Female
+      </label>
+      <label className="mr-3">
+        <input type="radio" 
+        id='gender'
+        name='gender'
+        value='O'
+        checked={existedUser?.userdetails?.gender === 'O'} 
+        onChange={handleAlreadyExistedDetails}
+         className="form-radio focus:outline-none focus:shadow-outline-indigo" />
+        Others
+      </label>
+    </div>
+  </label>
+  
+  <label className="block font-medium text-lg mb-2">
+    Mobile Number:
+    <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:shadow-outline-indigo" type="tel"
+    //  pattern="[+][9][1][0-9]{10}"
+    id="mobile" 
+    name='mobile'
+     value={(existedUser?.userdetails?.mobile)}
+      // onChange={(e) => setPhone(e.target.value.substring(3))}
+      onChange={handleAlreadyExistedDetails}
+       />
+  </label>
+  <br />
+  
+  <label className="block font-medium text-lg mb-2">
+    Date of Birth:
+    <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:shadow-outline-indigo" type="date"
+    id='dateOfBirth'
+    name='dateOfBirth'
+    value={(existedUser?.userdetails?.dateOfBirth)}
+    onChange={handleAlreadyExistedDetails} />
+  </label>
+  <br />
+  
+  {/* <div>
+    <label className="block font-medium text-lg mb-2">
+      Profile Picture:
+      <input className="bg-gray-200 p-2 rounded-lg w-full focus:outline-none focus:shadow-outline-indigo" type="file" onChange={handleImageChange} accept="image/*" />
+    </label>
+    <br />
+    {imagePreviewUrl && <img src={imagePreviewUrl} alt="Preview" className="w-16 h-16 rounded-full object-cover" />}
+  </div> */}
+  
+  
+        <div className=' flex flex-row justify-center items-center space-x-4'>
+  
+  
+        
+          <button className="bg-amber-600 text-white py-2 px-4 rounded-lg hover:bg-amber-700">
+          Update
+        </button>
+        
+        
+        </div>
+  
+        </form>
+   )
+  }
 
-
-
-
-
-      </form>
+  
           
 
 
-  )
+ 
 
   
 
