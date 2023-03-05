@@ -9,9 +9,13 @@ import { NavLink } from 'react-router-dom'
 const DashboardMain = () => {
   let accountNo =null;
 
-  //intercepting token with axios
-  // const token = sessionStorage.getItem("jwtToken");
-  // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+  
+
+    
+
+
+
+  
   
 
 
