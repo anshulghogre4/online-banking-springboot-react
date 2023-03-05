@@ -1,17 +1,53 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import dashimg from "../../assets/images/Welcome_dashboard.png"
-import axios from "axios"
-
+import axios from "../Utills/AxiosWithJWT.js"
+import { useBankingSystem } from '../Context/UserContext'
+import { toast } from 'react-hot-toast'
 import { NavLink } from 'react-router-dom'
 
 
 
 const DashboardMain = () => {
+  const { BASE_URL, userDetails, setUser: setUserDetails } = useBankingSystem();
+
+
+console.log(userDetails?.userId);
+
   let accountNo =null;
 
+  useEffect(()=>{
+      
+  },[userDetails])
   
+      
 
-    
+    const handleAccountOpnReq = async (e) =>{
+
+      e.preventDefault("user Id is ",userDetails?.userId);
+
+
+
+      
+      if(userDetails?.userdetails?.adhaar == null || userDetails?.userdetails?.pan == null || userDetails?.userdetails?.mobile == null ||  userDetails?.userdetails?.gender == null ){
+      toast.error("Please Update Profile First");
+      return;
+      }
+        
+        if (userDetails?.accountopenningreq == false) {
+          const reqResp  = await axios.put(`${BASE_URL}/api/v1/user/acopreq/${userDetails?.userId}`)
+          setUserDetails(reqResp.data);
+          toast.success("Request Sent Successfully!");
+          console.log(reqResp);
+          
+        } else{
+          toast.success("Already Requested For Account Opening!");
+        }
+ 
+       
+
+
+    }
+
 
 
 
@@ -29,7 +65,7 @@ if (accountNo===null) {
         <div className='dash_hero flex flex-row justify-around items-center pt-[1rem]
          '>
             <div className='w-[20rem] bg-[#f1f2f6] p-[1rem] rounded-lg text-center'>
-            <button className=' text-[#2d3436] text-[1.5rem] font-semibold rounded-lg '>
+            <button onClick={handleAccountOpnReq} className=' text-[#2d3436] text-[1.5rem] font-semibold rounded-lg '>
                  Click here to apply for Account Oppening!
                </button>
       

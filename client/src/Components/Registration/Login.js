@@ -6,7 +6,6 @@ import  {useBankingSystem} from "../Context/UserContext"
 
 const Login = () => {
 
-
   const navigateTo = useNavigate();
       const [email,setEmail] = useState("");
       const [password, setPassword] =useState("");
@@ -14,7 +13,7 @@ const Login = () => {
       // extracting and using context API hereusing destructuring
       const {BASE_URL, setUser: setUserDetails, userDetails} = useBankingSystem();
     
-
+  
      
         const submitLogin = async (e) =>{
             

@@ -87,14 +87,22 @@ const Profile = () => {
   };
 
 
-
+    useEffect(()=>{
+      
+      },[existedUser])
 
   const handleCreateProfile = async (event) => {
     event.preventDefault();
     console.log("create profile initiated", existedUser);
+    
+      
 
     const { userdetails } = existedUser;
 
+    console.log("adhaar length ",userdetails?.adhaar?.length);
+    console.log("pan length ",userdetails?.pan?.length);
+    console.log("mobile length ",userdetails?.mobile?.length);
+    
     const data = {
       address: userdetails?.address,
       city: userdetails?.city,
@@ -108,23 +116,26 @@ const Profile = () => {
     }
 
 
-    if (!userdetails?.adhaar || !userdetails?.pan || !userdetails?.mobile) {
+    if (!userdetails?.adhaar || !userdetails?.pan || !userdetails?.mobile || !userdetails?.gender ) {
       //alert("Please fill all fields");
       toast.error("Please fill all mandatory fields");
       return;
     };
 
-    if (userdetails.adhaar.length !== 11) {
+    
+
+
+    if (userdetails?.adhaar?.length !== 12) {
       toast.error("Aadhar must be of 12 numbers!");
       return;
     }
 
-    if (userdetails.pan.length !== 9) {
+    if (userdetails?.pan?.length !== 10) {
       toast.error("PAN must be of 10 numbers!");
       return;
     }
 
-    if (userdetails.mobile.length !== 9) {
+    if (userdetails?.mobile?.length !== 10) {
       toast.error("Mobile number must be of 10 numbers!");
       return;
     }
@@ -147,11 +158,20 @@ const Profile = () => {
 
   }
 
+  useEffect(()=>{
+      
+  },[existedUser])
+
+
   const handleUpdateProfile = async (event) => {
     event.preventDefault();
     console.log("update profile initiated", existedUser);
 
     const { userdetails } = existedUser;
+
+    console.log("adhaar length ",userdetails?.adhaar?.length);
+    console.log("pan length ",userdetails?.pan?.length);
+    console.log("mobile length ",userdetails?.mobile?.length);
 
     const data = {
       userdetailsid: userdetails?.userdetailsid,
@@ -173,17 +193,17 @@ const Profile = () => {
       return;
     };
 
-    if (userdetails.adhaar.length !== 12) {
+    if (userdetails?.adhaar?.length !== 12) {
       toast.error("Aadhar must be of 12 numbers!");
       return;
     }
 
-    if (userdetails.pan.length !== 10) {
+    if (userdetails?.pan?.length !== 10) {
       toast.error("PAN must be of 10 numbers!");
       return;
     }
 
-    if (userdetails.mobile.length !== 10) {
+    if (userdetails?.mobile?.length !== 10) {
       toast.error("Mobile number must be of 10 numbers!");
       return;
     }

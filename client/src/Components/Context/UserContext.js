@@ -20,7 +20,7 @@ export const UserContextProvider=({children}) =>{
 
     const setUser = (details => {
         console.log("Main Pagal Hu: ", details);
-        setUserDetails(details);
+        setUserDetails(details)
     })
 
 return(
