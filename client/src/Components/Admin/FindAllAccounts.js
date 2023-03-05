@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import axios from "axios"
+import axios from "../Utills/AxiosWithJWT.js"
 import { toast } from 'react-hot-toast'
 import { useBankingSystem } from "../Context/UserContext"
 import Popup from 'reactjs-popup';

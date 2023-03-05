@@ -1,4 +1,5 @@
-import React, {useContext, useState} from "react";
+import axios from "../Utills/AxiosWithJWT.js"
+import React, {useContext, useEffect, useState} from "react";
 
 const UserContext  = React.createContext()
 
@@ -23,9 +24,31 @@ export const UserContextProvider=({children}) =>{
         setUserDetails(details)
     })
 
+    const gettingAUser = async(userDetails) =>{
+
+        const userid = sessionStorage.getItem("userId");
+
+        const resp = await axios.get(`${BASE_URL}/api/v1/user/auser/`,{
+            params:{
+                userid
+            }
+        })
+
+        console.log("150 rupya dega", resp.data)
+        setUser(resp.data);
+
+    }
+        useEffect(()=>{
+            gettingAUser();
+        },[])
+
+
+
+
+
 return(
     //setting the values to be used for many times in different component
-    <UserContext.Provider value={{userDetails, setUser, BASE_URL}}>
+    <UserContext.Provider value={{userDetails, setUser, BASE_URL, gettingAUser }}>
 
         {children}
 

@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import axios from "axios"
+import axios from "../Utills/AxiosWithJWT.js"
 import { toast } from 'react-hot-toast'
 import { useBankingSystem } from "../Context/UserContext"
 
@@ -31,6 +31,7 @@ const Admin = () => {
             const resp = await axios.post(`${BASE_URL}/account/create/${userId}`, accType);
             toast.success("Account created successfully");
             setAccount(resp.data.slice(-1));
+            getAllRequests();
 
             console.log("before accountdetails tost")
             console.log(...accountDetails);
@@ -38,12 +39,20 @@ const Admin = () => {
 
             // const resp1 = await axios.get(`${BASE_URL}/account/getallreq`);
             // setUsers(resp1.data);
-            getAllRequests();
+           
             console.log("me aprove kar raha");
 
         }
         catch (err) { }
     };
+
+    useEffect(() => {
+        console.log("Welcome to useeffect!");
+    }, [usersDetails, accountDetails, approveReq ]);
+
+    useEffect(() => {
+        getAllRequests();
+    }, []);
 
     const declineReq = async (userId) => {
         try {
@@ -90,10 +99,7 @@ const Admin = () => {
 
 
     console.log("im render");
-    useEffect(() => {
-        console.log("Welcome to useeffect!");
-    }, [usersDetails, accountDetails, approveReq ]);
-
+    
     return (
         <>
             <h1 className="mt-0 mb-2 text-5xl font-medium leading-tight text-primary">Admin</h1>

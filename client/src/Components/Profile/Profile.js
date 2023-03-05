@@ -7,10 +7,11 @@ import { useNavigate } from "react-router-dom"
 
 const Profile = () => {
 
-
+  const token = sessionStorage.getItem("jwtToken");
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
   //contextAPI
-  const { BASE_URL, setUser: setUserDetails, userDetails } = useBankingSystem();
+  const { BASE_URL, setUser: setUserDetails, userDetails, gettingAUser } = useBankingSystem();
   // const [image, setImage] = useState(null);
   // const [imagePreviewUrl, setImagePreviewUrl] = useState('');
   const [existedUser, setExistedUser] = useState({
