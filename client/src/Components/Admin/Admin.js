@@ -48,7 +48,7 @@ const Admin = () => {
     const declineReq = async (userId) => {
         try {
 
-            const resp = await axios.get(`${BASE_URL}/api/v1/user/acopreq/${userId}`)
+            const resp = await axios.get(`${BASE_URL}/api/v1/user/acopreqchng/${userId}`)
 
             toast.error("Request deleted successfully!");
             getAllRequests();

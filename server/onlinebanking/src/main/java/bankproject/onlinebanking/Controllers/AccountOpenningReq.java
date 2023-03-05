@@ -49,4 +49,22 @@ public class AccountOpenningReq {
         }
     }
 
+
+    @GetMapping("/acopreqchng/{userId}")
+    public ResponseEntity<?> accountOpeningReqChange(@PathVariable String userId) {
+
+        ResponseEntity<?> re = null;
+
+        User theUser = signUpService.getAUser(userId).get();
+
+        theUser.setAccountopenningreq(!theUser.isAccountopenningreq());
+        signUpService.save(theUser);
+
+        if (theUser.isAccountopenningreq() == false) {
+            return new ResponseEntity<String>("Account oppening request deleted", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("Account oppening request successfull", HttpStatus.OK);
+        }
+    }
+
 }
