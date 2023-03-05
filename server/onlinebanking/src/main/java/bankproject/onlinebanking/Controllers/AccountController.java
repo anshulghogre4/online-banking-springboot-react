@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -141,7 +142,7 @@ public class AccountController {
             return new ResponseEntity<>("Account does not exists", HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/accounts/suspend/{accountno}")
+    @PutMapping("/accounts/suspend/{accountno}")
     private ResponseEntity<?> suspendAccount(@PathVariable long accountno) {
         BankAccount account = accountService.findByAccountNo(accountno);
         if (account != null) {
@@ -152,7 +153,7 @@ public class AccountController {
         return new ResponseEntity<>("Account does not exists", HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/accounts/activate/{accountno}")
+    @PutMapping("/accounts/activate/{accountno}")
     private ResponseEntity<?> activateAccount(@PathVariable long accountno) {
         BankAccount account = accountService.findByAccountNo(accountno);
         if (account != null) {

@@ -82,4 +82,19 @@ public class UserController {
 
     }
 
+    @PutMapping("/en_dis_user/{userId}")
+    public ResponseEntity<?> endisUser(@PathVariable String userId)
+            throws UserNotFoundException {
+
+        User theUser = signUpService.getAUser(userId).get();
+        theUser.setEnabled(!theUser.isEnabled());
+        signUpService.save(theUser);
+
+        if (theUser != null) {
+            return new ResponseEntity<User>(theUser, HttpStatus.OK);
+        } else
+            return new ResponseEntity<String>("Request Not Changed!", HttpStatus.EXPECTATION_FAILED);
+
+    }
+
 }
