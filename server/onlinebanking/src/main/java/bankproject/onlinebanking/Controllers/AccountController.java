@@ -84,7 +84,7 @@ public class AccountController {
         List<User> reqUsers= new ArrayList<>(); 
         for (User user : users) 
         {
-            if(!accountService.findByUserId(user.getUserId()).isEmpty())
+            if(!accountService.findByUserId(user.getUserId()).isEmpty() || !user.isAccountopenningreq())
             {
                 //System.out.println("\n\n Skipping****************************************** "+user.getUserId()+"\n\n");
                 continue;
