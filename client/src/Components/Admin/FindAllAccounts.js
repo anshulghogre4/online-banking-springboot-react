@@ -93,7 +93,7 @@ const Accounts = () => {
     }
     console.log("im render");
 
-    
+
     useEffect(() => {
         console.log("Welcome to useeffect!");
 
@@ -105,6 +105,10 @@ const Accounts = () => {
             <div>
                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                     onClick={getAllUsers}>View Accounts</button>
+
+                <button
+        cd            className="inline-block rounded-full bg-success px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-black shadow-[0_4px_9px_-4px_#14a44d] transition duration-150 ease-in-out hover:bg-success-600 hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:bg-success-600 focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:outline-none focus:ring-0 active:bg-success-700 active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)]"
+                    onClick={() => navigateTo("/admin")}>Back </button>
 
                 {usersDetails ?
                     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
