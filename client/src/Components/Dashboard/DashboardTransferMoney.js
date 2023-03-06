@@ -1,8 +1,9 @@
 import React from 'react'
 import NavbarDashboard from './NavbarDashboard'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 const DashboardTransferMoney = () => {
+    const navigateTo = useNavigate();
   return (
     <div>
         <NavbarDashboard/>
@@ -25,7 +26,7 @@ const DashboardTransferMoney = () => {
 <div className='w-[50rem] '>
         <h2 className='text-[#f1f2f6] text-[1.3rem] '>Amount transfer</h2>
    <div className='flex flex-row justify-around p-4 ml-[2rem] '>
-            <button className='bg-[#f1f2f6] font-semibold p-1 rounded'>Add beneficiaries</button>
+            <button onClick={() => navigateTo("/dashboard/trx/addbene")} className='bg-[#f1f2f6] font-semibold p-1 rounded'>Add beneficiaries</button>
             <button className='bg-[#f1f2f6] font-semibold p-1 rounded'>See all beneficiaries</button>
 
    </div>

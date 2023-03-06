@@ -6,7 +6,7 @@ import { toast } from 'react-hot-toast'
 import { useNavigate, NavLink } from 'react-router-dom'
 
 
-
+//need to create checks for every page in dashboard for account no, if account no is present then only permit user to reach that URI else navigate back to dashboard
 
 const DashboardMain = () => {
 
@@ -19,12 +19,12 @@ const DashboardMain = () => {
   let accountNo = 0;
 
 
-  const role = userDetails?.role;
+  // const role = userDetails?.role;
 
-  const navigateTo = useNavigate();
-  if (role == "ADMIN") {
-    navigateTo("/admin");
-  }
+  // const navigateTo = useNavigate();
+  // if (role == "ADMIN") {
+  //   navigateTo("/admin");
+  // }
 
 
   if (userDetails.accounts.length == 0) {

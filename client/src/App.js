@@ -15,6 +15,7 @@ import Admin from './Components/Admin/Admin'
 import Accounts from './Components/Admin/FindAllAccounts';
 import Transaction from './Components/Transaction/AllTransactions';
 import AccTransaction from './Components/Transaction/AccountTransaction';
+import AddBeneficiary from './Components/Beneficiary/AddBeneficiary';
 
 
 
@@ -40,6 +41,7 @@ function App() {
       <Route path='/admin/accounts' element={<Accounts/>}/>
       <Route path='/admin/transactions' element={<Transaction/>}/>
       <Route path='/admin/acctransactions' element={<AccTransaction/>}/>
+      <Route path='/dashboard/trx/addbene' element={<AddBeneficiary/>}/>
       </Routes>
   );
 }
