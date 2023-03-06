@@ -11,7 +11,9 @@ const DashboardMain = () => {
   const { BASE_URL, userDetails, setUser: setUserDetails } = useBankingSystem();
 
 
-console.log(userDetails?.userId);
+console.log("in  ashboard checking user ID ",userDetails?.userId);
+
+
 
   let accountNo =null;
 
