@@ -12,16 +12,13 @@ import bankproject.onlinebanking.Repository.BeneficiaryRepository;
 import bankproject.onlinebanking.Repository.UserRepository;
 import bankproject.onlinebanking.Service.BeneficiariesService;
 
-
-
-
 @Service
 public class BeneficiariesServiceImpl implements BeneficiariesService {
 
     @Autowired
     private BeneficiaryRepository beneficiariesRepository;
 
-    @Autowired 
+    @Autowired
     private UserRepository userRepo;
 
     @Override
@@ -29,9 +26,9 @@ public class BeneficiariesServiceImpl implements BeneficiariesService {
         return beneficiariesRepository.save(beneficiary);
     }
 
-     @Override
-     public Beneficiaries getBeneficiaryById(int beneficiaryId) {
-         	Beneficiaries beneficiaryOptional =  beneficiariesRepository.findById(beneficiaryId).get();
+    @Override
+    public Beneficiaries getBeneficiaryById(int beneficiaryId) {
+        Beneficiaries beneficiaryOptional = beneficiariesRepository.findById(beneficiaryId).get();
         return (beneficiaryOptional);
     }
 
@@ -58,10 +55,10 @@ public class BeneficiariesServiceImpl implements BeneficiariesService {
     @Override
     public List<Beneficiaries> createBeneficiaries(Beneficiaries beneficiary, String userId) {
         User theUser = userRepo.findById(userId).get();
-        List<Beneficiaries> beneficiaries= beneficiariesRepository.findAllByUserId(userId);
-       
+        List<Beneficiaries> beneficiaries = beneficiariesRepository.findAllByUserId(userId);
+
         beneficiaries.add(beneficiary);
-     
+        // beneficiary.setUser(theUser);
         theUser.setBeneficiaries(beneficiaries);
 
         User savingUpdatedUser = userRepo.save(theUser);
@@ -70,5 +67,4 @@ public class BeneficiariesServiceImpl implements BeneficiariesService {
 
     }
 
- }
-
+}

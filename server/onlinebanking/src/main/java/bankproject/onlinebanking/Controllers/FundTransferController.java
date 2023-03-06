@@ -35,9 +35,19 @@ public class FundTransferController {
 
     @PostMapping("/transfer")
     public ResponseEntity<?> fundTransfer(@RequestBody BankAccount bankAccount,
-            @Param(value = "") long toAccount, @Param(value = "") double amount,
+            @Param(value = "") Long toAccount, @Param(value = "") double amount,
             @Param(value = "") String description) {
-        if (accountService.findByAccountNo(bankAccount.getAccountno()) != null) {
+        System.out.println("==================================================================kya de rha h ye "
+                + bankAccount.getAccountno());
+
+        long bankaccountno = bankAccount.getAccountno();
+
+        System.out.println("313123123123____________" + toAccount);
+        System.out.println(
+                "313123123123 haina meri jaan____________" + accountService.findByAccountNo(bankaccountno).toString());
+
+        if (accountService.findByAccountNo(bankaccountno) != null) {
+            System.out.println("---------------------------entry point1_______________________________");
             BankAccount senderAccount = accountService.findByAccountNo(bankAccount.getAccountno());
             if (!senderAccount.isIsactive()) {
                 Transactions newTransactions = new Transactions();
@@ -66,25 +76,31 @@ public class FundTransferController {
                 return new ResponseEntity<>(transactionService.getCurrentTransaction(senderAccount.getAccountno()),
                         HttpStatus.NOT_ACCEPTABLE);
             } else {
+                System.out.println("---------------------------entry point2_______________________________");
                 BankAccount receiverAccount = accountService.findByAccountNo(toAccount);
-                if (receiverAccount.getAccountno() == toAccount) {
-                    senderAccount.setBalance(senderAccount.getBalance() - amount);
-                    receiverAccount.setBalance(receiverAccount.getBalance() + amount);
+                System.out.println("receiverAccount accountno check 1" + receiverAccount.getAccountno());
+                System.out.println("receiverAccount accountno check 2" + toAccount);
+                // if (receiverAccount.getAccountno() == toAccount) {
+                System.out.println("---------------------------entry point3_______________________________");
+                senderAccount.setBalance(senderAccount.getBalance() - amount);
+                receiverAccount.setBalance(receiverAccount.getBalance() + amount);
 
-                    Transactions newTransactions = new Transactions();
-                    newTransactions.setFromAccount(senderAccount.getAccountno());
-                    newTransactions.setToAccount(receiverAccount.getAccountno());
-                    newTransactions.setAmount(amount);
-                    newTransactions.setDescription(description);
-                    newTransactions.setTransactionDate(Helper.dateStamp());
-                    newTransactions.setTransactionTime(Helper.timeStamp());
-                    newTransactions.setTransactionStatus("Completed");
-                    accountService.updateAccount(senderAccount);
-                    accountService.updateAccount(receiverAccount);
-                    transactionService.save(newTransactions);
-                    return new ResponseEntity<>(transactionService.getCurrentTransaction(senderAccount.getAccountno()),
-                            HttpStatus.OK);
-                }
+                Transactions newTransactions = new Transactions();
+                newTransactions.setFromAccount(senderAccount.getAccountno());
+                newTransactions.setToAccount(receiverAccount.getAccountno());
+                newTransactions.setAmount(amount);
+                newTransactions.setDescription(description);
+                newTransactions.setTransactionDate(Helper.dateStamp());
+                newTransactions.setTransactionTime(Helper.timeStamp());
+                newTransactions.setTransactionStatus("Completed");
+                accountService.updateAccount(senderAccount);
+                accountService.updateAccount(receiverAccount);
+                transactionService.save(newTransactions);
+                System.out.println("---------------------------entry pointinfinite_______________________________");
+                return new ResponseEntity<Transactions>(
+                        transactionService.getCurrentTransaction(senderAccount.getAccountno()),
+                        HttpStatus.OK);
+                // }
 
             }
         }

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import bankproject.onlinebanking.Model.BankAccount;
 import bankproject.onlinebanking.Model.Beneficiaries;
+import bankproject.onlinebanking.Model.User;
+import bankproject.onlinebanking.Repository.UserRepository;
 import bankproject.onlinebanking.Service.AccountService;
 import bankproject.onlinebanking.Service.BeneficiariesService;
 import bankproject.onlinebanking.Service.SignUpService;
@@ -27,6 +29,9 @@ public class BeneficiaryController {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private UserRepository userRepo;
+
     @PostMapping("/add")
     public ResponseEntity<Beneficiaries> createBeneficiary(@RequestBody Beneficiaries beneficiary) {
         Beneficiaries newBeneficiary = beneficiariesService.createBeneficiary(beneficiary);
@@ -41,14 +46,14 @@ public class BeneficiaryController {
         List<BankAccount> account = accountService.findByUserId(userId);
         for (BankAccount bankAccount : account) {
             if (bankAccount.getAccountno() == beneficiary.getBeneaccountno())
-                return new ResponseEntity<>("This account cannot be added", HttpStatus.CONFLICT);
+                return new ResponseEntity<>("This account cannot be added", HttpStatus.OK);
         }
 
         List<Beneficiaries> beneficiaries = beneficiariesService.getBeneficiariesByUserId(userId);
         if (beneficiaries != null) {
             for (Beneficiaries ben : beneficiaries) {
                 if (ben.getBeneaccountno() == beneficiary.getBeneaccountno())
-                    return new ResponseEntity<>("Already Exists", HttpStatus.CONFLICT);
+                    return new ResponseEntity<String>("Already Exists", HttpStatus.OK);
             }
         }
 
@@ -67,16 +72,31 @@ public class BeneficiaryController {
         return new ResponseEntity<>(beneficiary, HttpStatus.OK);
     }
 
-    @PutMapping("/updateabn")
-    public ResponseEntity<Beneficiaries> updateBeneficiary(@RequestBody Beneficiaries beneficiary) {
-        Beneficiaries updatedBeneficiary = beneficiariesService.updateBeneficiary(beneficiary);
-        return new ResponseEntity<>(updatedBeneficiary, HttpStatus.OK);
+    @PutMapping("/updateabn/{userId}")
+    public ResponseEntity<?> updateBeneficiary(@RequestBody Beneficiaries beneficiary, @PathVariable String userId) {
+
+        User theuser = userRepo.findById(userId).get();
+        List<BankAccount> account = accountService.findByUserId(userId);
+        for (BankAccount bankAccount : account) {
+            if (bankAccount.getAccountno() == beneficiary.getBeneaccountno())
+                return new ResponseEntity<>("This account cannot be added", HttpStatus.OK);
+        }
+        beneficiary.setUser(theuser);
+        return new ResponseEntity<>(beneficiariesService.updateBeneficiary(beneficiary), HttpStatus.OK);
     }
+
+    // redundant service
+    // public ResponseEntity<Beneficiaries> updateBeneficiary(@RequestBody
+    // Beneficiaries beneficiary) {
+    // Beneficiaries updatedBeneficiary =
+    // beneficiariesService.updateBeneficiary(beneficiary);
+    // return new ResponseEntity<>(updatedBeneficiary, HttpStatus.OK);
+    // }
 
     @DeleteMapping("/deleteabn/{beneficiaryId}")
     public ResponseEntity<Void> deleteBeneficiary(@PathVariable int beneficiaryId) {
         beneficiariesService.deleteBeneficiary(beneficiaryId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/user/{userId}")
