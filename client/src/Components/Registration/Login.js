@@ -11,9 +11,12 @@ const Login = () => {
       const [password, setPassword] =useState("");
 
       // extracting and using context API hereusing destructuring
-      const {BASE_URL, setUser: setUserDetails, userDetails} = useBankingSystem();
+      const {BASE_URL, setUser: setUserDetails, userDetails, gettingAUser} = useBankingSystem();
     
-  
+
+
+      
+
      
         const submitLogin = async (e) =>{
             
@@ -26,20 +29,20 @@ const Login = () => {
              const resp = await axios.post(`${BASE_URL}/api/v1/login`, data);
 
             console.log(resp);
-
-
+            
               //Setting the ContextAPI state so that it can be used anywhere in the component tree
-            setUserDetails(resp.data.user)
-
+          
             //testing the set ContextAPI state here
             console.log("login successfull for user: ",userDetails);
 
             // save token in session storage
            sessionStorage.setItem("jwtToken", resp.data.jwtToken);
+           sessionStorage.setItem("userId", resp.data.user.userId);
            if (resp.status === 200) {
             navigateTo("/dashboard");
             console.log(resp.data.jwtToken);
             toast.success("Login Successfull!");
+            gettingAUser();
            } 
            
            

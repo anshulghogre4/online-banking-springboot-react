@@ -33,7 +33,7 @@ console.log(userDetails?.userId);
       return;
       }
         
-        if (userDetails?.accountopenningreq == false) {
+        if (userDetails?.accountopenningreq === false) {
           const reqResp  = await axios.put(`${BASE_URL}/api/v1/user/acopreq/${userDetails?.userId}`)
           setUserDetails(reqResp.data);
           toast.success("Request Sent Successfully!");
@@ -110,7 +110,7 @@ if (accountNo===null) {
             </div>
 
             <div >
-              <img src={dashimg} className="w-[40rem]" alt="dashboard welcome image" />
+              <img src={dashimg} className="w-[40rem]" alt="dashboard_welcome_image" />
             </div>
         </div>
 

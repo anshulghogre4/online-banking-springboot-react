@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import axios from "axios"
+import axios from "../Utills/AxiosWithJWT.js"
 import { toast } from 'react-hot-toast'
 import { useBankingSystem } from "../Context/UserContext"
 import Popup from 'reactjs-popup';
@@ -33,6 +33,7 @@ const Admin = () => {
             const resp = await axios.post(`${BASE_URL}/account/create/${userId}`, accType);
             toast.success("Account created successfully");
             setAccount(resp.data.slice(-1));
+            getAllRequests();
 
             console.log("before accountdetails tost")
             console.log(...accountDetails);
@@ -40,12 +41,20 @@ const Admin = () => {
 
             // const resp1 = await axios.get(`${BASE_URL}/account/getallreq`);
             // setUsers(resp1.data);
-            getAllRequests();
+           
             console.log("me aprove kar raha");
 
         }
         catch (err) { }
     };
+
+    useEffect(() => {
+        console.log("Welcome to useeffect!");
+    }, [usersDetails, accountDetails, approveReq ]);
+
+    useEffect(() => {
+        getAllRequests();
+    }, []);
 
     const declineReq = async (userId) => {
         try {
@@ -93,7 +102,7 @@ const Admin = () => {
 
     console.log("im render");
     useEffect(() => {
-        console.log("Welcome to useeffect!");
+        console.log("Welcome to useEffect!");
     }, [usersDetails, accountDetails, approveReq]);
 
     return (
@@ -102,6 +111,8 @@ const Admin = () => {
             <div>
                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                     onClick={getAllRequests}>Requests</button>
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                    onClick={()=>navigateTo("/admin/transactions")}>Transactions</button>
 
                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                     onClick={() => navigateTo("/admin/accounts")}>Accounts</button>
