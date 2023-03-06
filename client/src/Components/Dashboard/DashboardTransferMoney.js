@@ -3,17 +3,28 @@ import axios from "../Utills/AxiosWithJWT.js"
 import { useBankingSystem } from '../Context/UserContext.js'
 import NavbarDashboard from './NavbarDashboard'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { toast } from 'react-hot-toast'
 
 const DashboardTransferMoney = () => {
-
+    const {BASE_URL, userDetails} = useBankingSystem();
     const [selectedBeneficiary, setSelectedbeneficiary] = useState();
     const [benefeciaryOption, setBenefeciaryOption] = useState([]);
-    const [beneficiaryAccountNo, setBeneficiaryAccountNo] =useState();
+    
+    const [accountNo, setAccountNo] = useState();
+    const [toAccount, setToAccount] = useState();
+    const [amount, setAmount] = useState();
+    const [description, setDescription] = useState();
+
+    console.log("ye lo fund details ",accountNo,toAccount,amount,description);
+    console.log("ye lo selectedBeneficiary ",selectedBeneficiary);
+    console.log("ye lo userDetails?.accounts[0]?.accountno  ",userDetails?.accounts[0]?.accountno);
+
+  
     const navigateTo = useNavigate();
 
         console.log("benlol", benefeciaryOption);
 
-    const {BASE_URL, userDetails} = useBankingSystem();
+    
        
 
     const getUserBeneficiaries = async()=>{
@@ -26,6 +37,36 @@ const DashboardTransferMoney = () => {
     useEffect(()=>{
         getUserBeneficiaries();
     },[userDetails])
+
+
+  
+    const handleFundTransferSubmit = async (e)=>{
+        e.preventDefault();
+
+        const data ={
+            accountno:userDetails?.accounts[0]?.accountno
+        }
+
+            const resp = await axios.post(`${BASE_URL}/fund/transfer`, data,{
+                params:{
+                    toAccount:selectedBeneficiary,
+                    amount,
+                    description
+                }
+            })
+
+            console.log(resp);
+
+            if (resp.status === 200) {
+                toast.success("Transactions Succesfully done!");
+            }
+        
+
+    }
+
+
+
+
 
 
 
@@ -67,28 +108,33 @@ const DashboardTransferMoney = () => {
         </div>
     <div>
 
-        <form >
+        <form  onSubmit={handleFundTransferSubmit}  >
         <div className='flex flex-row justify-around p-4 '>
             <label  className='text-[#f1f2f6]' htmlFor="fromAccount">From Account:
                 <input 
+                    required
+                    contenteditable='true'
                  value={userDetails?.accounts[0]?.accountno}
-                 className='text-gray-600'  type="number" name='fromAccount' id='fromAccount'  />
+                 onChange={(e)=>{setAccountNo(e.target.value)}}
+                 className='text-gray-600'  type="number" name='accountno' id='accountno'  />
             </label>
 
             <label className='text-[#f1f2f6]'  htmlFor="toAccount">to Account:
-                <input className='text-gray-600'  value={selectedBeneficiary} type="number" name='toAccount' id='toAccount' />
+                <input required className='text-gray-600' 
+                contenteditable='true' value={selectedBeneficiary}
+                 onChange={(e)=>{setToAccount(e.target.value)}} type="number" name='toAccount' id='toAccount' />
             </label>
         </div>
                     
         <div className='flex flex-row justify-around p-4 ml-[4rem] '>
         <label className='text-[#f1f2f6] relative right-[1rem]'  htmlFor="amount">Amount
-                <input type="number" name='amount' id='amount' />
+                <input className='text-gray-600' required type="number" value={amount}  onChange={(e)=>{setAmount(e.target.value)}}  name='amount' id='amount' />
             </label>
             <label className='text-[#f1f2f6]'  htmlFor="Remark">Remark
-                <input type="text" name='Remark' id='Remark' />
+                <input className='text-gray-600' required value={description} onChange={(e)=>{setDescription(e.target.value)}}   type="text" name='description' id='Remark' />
             </label>
         </div  >
-            <div className='flex flex-row justify-center items center'><button className='bg-[#f1f2f6] font-semibold px-[2rem] py-[0.5rem] rounded'>Send</button></div>
+            <div className='flex flex-row justify-center items center'><button type='submit' className='bg-[#f1f2f6] font-semibold px-[2rem] py-[0.5rem] rounded'>Send</button></div>
         
         </form>
     </div>

@@ -46,7 +46,7 @@ const DashboardMain = () => {
 
   const handleAccountOpnReq = async (e) => {
 
-    e.preventDefault("user Id is ", userDetails?.userId);
+    e.preventDefault();
 
 
 
