@@ -144,7 +144,7 @@ const Admin = () => {
                                         <td>
                                             <div>
                                                 <Popup
-                                                    trigger={<div><button className="button" >View </button></div>}
+                                                    trigger={<div><button className="button"  >View </button></div>}
                                                     modal
                                                     nested>
                                                     {close => (
@@ -156,17 +156,39 @@ const Admin = () => {
                                                             <div className="content">
                                                                 {user.userdetails ?
                                                                     <div>
-                                                                        <h1>User Name : {user.firstname + " " + user.lastname}</h1>
-                                                                        <h1>Birth Date : {user.userdetails.dateOfBirth}</h1>
-                                                                        <h1>Age : {user.userdetails.age}</h1>
-                                                                        <h1>Gender : {user.userdetails.gender}</h1>
-                                                                        <h1>Adhaar : {user.userdetails.adhaar}</h1>
-                                                                        <h1>Mobile : {user.userdetails.mobile}</h1>
-                                                                        <h1>Pan : {user.userdetails.pan}</h1>
-                                                                        <h1>Address : {user.userdetails.address}</h1>
-                                                                        <h1>City : {user.userdetails.city}</h1>
-                                                                        <h1>Area Pin : {user.userdetails.pin}</h1>
-                                                                        <h1>State : {user.userdetails.state}</h1>
+                                                                        <table className="border-collapse border border-slate-400 ...">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th className="border border-slate-900 ...">Birth Date</th>
+                                                                                    <th className="border border-slate-900 ...">Age</th>
+                                                                                    <th className="border border-slate-900 ...">User Name</th>
+                                                                                    <th className="border border-slate-900 ...">Gender</th>
+                                                                                    <th className="border border-slate-900 ...">Adhaar</th>
+                                                                                    <th className="border border-slate-900 ...">Mobile</th>
+                                                                                    <th className="border border-slate-900 ...">Pan</th>
+                                                                                    <th className="border border-slate-900 ...">Address</th>
+                                                                                    <th className="border border-slate-900 ...">City</th>
+                                                                                    <th className="border border-slate-900 ...">Area Pin</th>
+                                                                                    <th className="border border-slate-900 ...">State</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                            
+                                                                            <td className="border border-slate-900 ...">{user.firstname + " " + user.lastname}</td>
+                                                                            <td className="border border-slate-900 ...">{user.userdetails.dateOfBirth}</td>
+                                                                            <td className="border border-slate-900 ...">{user.userdetails.age}</td>
+                                                                            <td className="border border-slate-900 ...">{user.userdetails.gender}</td>
+                                                                            <td className="border border-slate-900 ...">{user.userdetails.adhaar}</td>
+                                                                            <td className="border border-slate-900 ...">{user.userdetails.mobile}</td>
+                                                                            <td className="border border-slate-900 ...">{user.userdetails.pan}</td>
+                                                                            <td className="border border-slate-900 ...">{user.userdetails.address}</td>
+                                                                            <td className="border border-slate-900 ...">{user.userdetails.city}</td>
+                                                                            <td className="border border-slate-900 ...">{user.userdetails.pin}</td>
+                                                                            <td className="border border-slate-900 ...">{user.userdetails.state}</td>
+
+                                                                            </tbody>
+                                                                        </table>
+                                                                       
                                                                     </div>
                                                                     :
                                                                     <div>

@@ -1,8 +1,27 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
+import axios from "../Utills/AxiosWithJWT.js"
+import { useBankingSystem } from '../Context/UserContext.js'
 import NavbarDashboard from './NavbarDashboard'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
-const DashboardTransferMoney = () => {
+const DashboardTransferMoney = (
+    // {userData, gettingAUser}
+    ) => {
+
+    const [selectedBeneficiary, setSelectedbeneficiary] = useState();
+    
+    const navigateTo = useNavigate();
+
+    const {BASE_URL, userDetails} = useBankingSystem();
+       console.log("checking data in ",userDetails?.accounts[0]?.accountno);
+
+
+
+       
+
+
+
+
   return (
     <div>
         <NavbarDashboard/>
@@ -25,17 +44,23 @@ const DashboardTransferMoney = () => {
 <div className='w-[50rem] '>
         <h2 className='text-[#f1f2f6] text-[1.3rem] '>Amount transfer</h2>
    <div className='flex flex-row justify-around p-4 ml-[2rem] '>
-            <button className='bg-[#f1f2f6] font-semibold p-1 rounded'>Add beneficiaries</button>
-            <button className='bg-[#f1f2f6] font-semibold p-1 rounded'>See all beneficiaries</button>
+            <button onClick={() => navigateTo("/dashboard/trx/addbene")} className='bg-[#f1f2f6] font-semibold p-1 rounded'>Add beneficiaries</button>
+            <button className='bg-[#f1f2f6] font-semibold p-1 rounded'  onClick={() => navigateTo("/dashboard/trx/seebene")}    > View/Update Beneficiaries</button>
 
    </div>
-
+        <div>
+            <select name="" id="">
+                <option value="" defaultValue> Select Beneficiary</option>
+            </select>
+        </div>
     <div>
 
         <form >
         <div className='flex flex-row justify-around p-4 '>
             <label  className='text-[#f1f2f6]' htmlFor="fromAccount">From Account:
-                <input type="number" name='fromAccount' id='fromAccount' />
+                <input 
+                 value={userDetails?.accounts[0]?.accountno}
+                 className='text-gray-600'  type="number" name='fromAccount' id='fromAccount'  />
             </label>
 
             <label className='text-[#f1f2f6]'  htmlFor="toAccount">to Account:

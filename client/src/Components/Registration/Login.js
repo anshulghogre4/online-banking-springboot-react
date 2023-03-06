@@ -11,7 +11,7 @@ const Login = () => {
       const [password, setPassword] =useState("");
 
       // extracting and using context API hereusing destructuring
-      const {BASE_URL, setUser: setUserDetails, userDetails, gettingAUser} = useBankingSystem();
+      const {BASE_URL, userDetails, gettingAUser} = useBankingSystem();
     
 
 
@@ -39,8 +39,13 @@ const Login = () => {
            sessionStorage.setItem("jwtToken", resp.data.jwtToken);
            sessionStorage.setItem("userId", resp.data.user.userId);
            if (resp.status === 200) {
-            navigateTo("/dashboard");
-            console.log(resp.data.jwtToken);
+            if (resp.data.user.role === "ADMIN") {
+              navigateTo("/admin");
+            }else{
+              navigateTo("/dashboard");
+            }
+           
+            
             toast.success("Login Successfull!");
             gettingAUser();
            } 
