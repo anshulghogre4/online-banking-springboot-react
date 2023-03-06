@@ -17,9 +17,9 @@ const SeeUserBeneficiaries = () => {
 
     const getUserBeneficiaries = async()=>{
              
-            const resp = await axios.get(`${BASE_URL}/beneficiaries/user/${userDetails.userId}`)
+            const resp = await axios.get(`${BASE_URL}/beneficiaries/user/${userDetails?.userId}`)
                
-                setUserBeneficiaries(resp.data);
+                setUserBeneficiaries(resp?.data);
     }
 
 

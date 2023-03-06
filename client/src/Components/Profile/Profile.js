@@ -40,7 +40,8 @@ const Profile = () => {
 
   useEffect(() => {
 
-    setExistedUser(userDetails)
+  setExistedUser(userDetails)
+    
   }, [userDetails])
 
 

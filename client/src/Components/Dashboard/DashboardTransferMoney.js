@@ -4,20 +4,29 @@ import { useBankingSystem } from '../Context/UserContext.js'
 import NavbarDashboard from './NavbarDashboard'
 import { NavLink, useNavigate } from 'react-router-dom'
 
-const DashboardTransferMoney = (
-    // {userData, gettingAUser}
-    ) => {
+const DashboardTransferMoney = () => {
 
     const [selectedBeneficiary, setSelectedbeneficiary] = useState();
-    
+    const [benefeciaryOption, setBenefeciaryOption] = useState([]);
+    const [beneficiaryAccountNo, setBeneficiaryAccountNo] =useState();
     const navigateTo = useNavigate();
 
+        console.log("benlol", benefeciaryOption);
+
     const {BASE_URL, userDetails} = useBankingSystem();
-       console.log("checking data in ",userDetails?.accounts[0]?.accountno);
-
-
-
        
+
+    const getUserBeneficiaries = async()=>{
+             
+        const resp = await axios.get(`${BASE_URL}/beneficiaries/user/${userDetails?.userId}`)
+           
+        setBenefeciaryOption(resp.data);
+}
+
+    useEffect(()=>{
+        getUserBeneficiaries();
+    },[userDetails])
+
 
 
 
@@ -39,8 +48,6 @@ const DashboardTransferMoney = (
 </div>
 
 
-
-
 <div className='w-[50rem] '>
         <h2 className='text-[#f1f2f6] text-[1.3rem] '>Amount transfer</h2>
    <div className='flex flex-row justify-around p-4 ml-[2rem] '>
@@ -49,8 +56,13 @@ const DashboardTransferMoney = (
 
    </div>
         <div>
-            <select name="" id="">
-                <option value="" defaultValue> Select Beneficiary</option>
+            <select onChange={(event) => setSelectedbeneficiary(event.target.value)}>
+                <option > Select Beneficiary</option>
+                 { benefeciaryOption && benefeciaryOption.map((options)=>(
+                    <option key={options.beneficiaryid} value={options.beneaccountno}>{options.beneficiaryname}</option>
+                 )) }
+                    
+                
             </select>
         </div>
     <div>
@@ -64,10 +76,10 @@ const DashboardTransferMoney = (
             </label>
 
             <label className='text-[#f1f2f6]'  htmlFor="toAccount">to Account:
-                <input type="number" name='toAccount' id='toAccount' />
+                <input className='text-gray-600'  value={selectedBeneficiary} type="number" name='toAccount' id='toAccount' />
             </label>
         </div>
-
+                    
         <div className='flex flex-row justify-around p-4 ml-[4rem] '>
         <label className='text-[#f1f2f6] relative right-[1rem]'  htmlFor="amount">Amount
                 <input type="number" name='amount' id='amount' />
