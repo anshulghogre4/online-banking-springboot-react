@@ -27,12 +27,12 @@ const DashboardMain = () => {
   // }
 
 
-  if (userDetails.accounts.length == 0) {
+  if (userDetails?.accounts?.length == 0) {
     console.log("@@@@@@@@@@@ Empty null")
   }
   else {
 
-    accountNo = userDetails.accounts[0].accountno;
+    accountNo = userDetails?.accounts[0]?.accountno;
     console.log("@@@@@@@@@@@ not null accno : " + accountNo)
   }
 

@@ -6,7 +6,10 @@ import { useBankingSystem } from '../Context/UserContext.js';
 
 
 const AddBeneficiary = () => {
-    const {BASE_URL} = useBankingSystem();
+    const {BASE_URL, userDetails} = useBankingSystem();
+    
+    
+
     const navigateTo = useNavigate();
 
 
@@ -44,7 +47,7 @@ const AddBeneficiary = () => {
               return;
             };
 
-                const userId = sessionStorage.getItem("userId");
+                const userId = userDetails.userId;
                 console.log("++++tet++ ");
               const resp = await axios.post(`${BASE_URL}/beneficiaries/create/${userId}`, data);
                 

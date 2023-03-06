@@ -11,7 +11,7 @@ const Login = () => {
       const [password, setPassword] =useState("");
 
       // extracting and using context API hereusing destructuring
-      const {BASE_URL, setUser: setUserDetails, userDetails, gettingAUser} = useBankingSystem();
+      const {BASE_URL, userDetails, gettingAUser} = useBankingSystem();
     
 
 

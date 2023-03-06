@@ -24,7 +24,7 @@ export const UserContextProvider=({children}) =>{
         setUserDetails(details)
     })
 
-    const gettingAUser = async(userDetails) =>{
+    const gettingAUser = async () =>{
 
         const userid = sessionStorage.getItem("userId");
 
@@ -34,7 +34,7 @@ export const UserContextProvider=({children}) =>{
             }
         })
 
-        console.log("150 rupya dega", resp.data)
+        
         setUser(resp.data);
 
     }
