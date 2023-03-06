@@ -13,9 +13,7 @@ import DashBoardTransactions from './Components/Dashboard/DashBoardTransactions'
 import DashboardTransferMoney from './Components/Dashboard/DashboardTransferMoney';
 import Admin from './Components/Admin/Admin'
 import Accounts from './Components/Admin/FindAllAccounts';
-import Transaction from './Components/Transaction/AllTransactions';
-import AccTransaction from './Components/Transaction/AccountTransaction';
-
+import AdminTransaction from './Components/Transaction/AdminTransaction';
 
 
 
@@ -38,8 +36,8 @@ function App() {
       <Route path='/error'element={<ErrorPage/>}/>
       <Route path='/admin' element={<Admin/>}/>
       <Route path='/admin/accounts' element={<Accounts/>}/>
-      <Route path='/admin/transactions' element={<Transaction/>}/>
-      <Route path='/admin/acctransactions' element={<AccTransaction/>}/>
+      <Route path='/admin/transactions' element={<AdminTransaction/>}/>
+
       </Routes>
   );
 }
