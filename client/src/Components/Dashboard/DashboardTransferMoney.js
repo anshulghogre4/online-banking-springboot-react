@@ -14,6 +14,7 @@ const DashboardTransferMoney = () => {
     const [toAccount, setToAccount] = useState();
     const [amount, setAmount] = useState();
     const [description, setDescription] = useState();
+    // setAccountNo(userDetails?.accounts[0]?.accountno);
 
     console.log("ye lo fund details ",accountNo,toAccount,amount,description);
     console.log("ye lo selectedBeneficiary ",selectedBeneficiary);
@@ -114,7 +115,9 @@ const DashboardTransferMoney = () => {
                 <input 
                     required
                     contenteditable='true'
+                //  value={accountNo}
                  value={userDetails?.accounts[0]?.accountno}
+                 
                  onChange={(e)=>{setAccountNo(e.target.value)}}
                  className='text-gray-600'  type="number" name='accountno' id='accountno'  />
             </label>
