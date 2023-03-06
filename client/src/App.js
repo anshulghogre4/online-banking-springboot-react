@@ -17,6 +17,7 @@ import Accounts from './Components/Admin/FindAllAccounts';
 import AddBeneficiary from './Components/Beneficiary/AddBeneficiary';
 import SeeUserBeneficiaries from './Components/Beneficiary/SeeUserBeneficiaries';
 
+import AdminTransaction from './Components/Transaction/AdminTransaction';
 
 
 
@@ -73,6 +74,8 @@ function App() {
       <Route path='/admin/accounts' element={<Accounts/>}/>
       <Route path='/dashboard/trx/seebene' element={<SeeUserBeneficiaries/>}/>
       <Route path='/dashboard/trx/addbene' element={<AddBeneficiary/>}/>
+      <Route path='/admin/transactions' element={<AdminTransaction/>}/>
+
       </Routes>
   );
 }
