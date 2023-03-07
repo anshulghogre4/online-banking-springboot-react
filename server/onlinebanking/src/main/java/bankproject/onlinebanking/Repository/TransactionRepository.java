@@ -23,7 +23,7 @@ public interface TransactionRepository extends JpaRepository<Transactions, Integ
     @Query(value = "select * from transactions where to_account=?1 order by transaction_date", nativeQuery = true)
     public List<Transactions> getTransactionsByToAccount(long toAccount);
 
-    @Query(value = "select * from transactions where from_account=?1 or to_account=?1  order by transaction_date desc", nativeQuery = true)
+    @Query(value = "select * from transactions where from_account=?1 or to_account=?1  order by transaction_date desc, transaction_time desc", nativeQuery = true)
     public List<Transactions> getByAccount(long accountno);
 
 }
