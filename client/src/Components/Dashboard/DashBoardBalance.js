@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import NavbarDashboard from './NavbarDashboard'
 import axios from "../Utills/AxiosWithJWT.js"
 import { useBankingSystem } from '../Context/UserContext'
@@ -8,19 +8,28 @@ import { toast } from 'react-hot-toast'
 
 const DashBoardBalance = () => {
 
-
+  const navigateTo = useNavigate();
   const { BASE_URL, userDetails, setUser: setUserDetails } = useBankingSystem();
   const [balance, setBalance] = useState(0);
+  let accountNo = 0;
+  let userName = null;
+  try {
+    console.log(userDetails?.userId);
+    console.log(userDetails.accounts[0].accountno);
 
-  console.log(userDetails?.userId);
-  console.log(userDetails.accounts[0].accountno);
-
-  let userName = userDetails.firstname + " " + userDetails.lastname;
-  let accountNo = userDetails.accounts[0].accountno;
-  // setBalance(userDetails.accounts[0].balance);
-
+    userName = userDetails.firstname + " " + userDetails.lastname;
+    accountNo = userDetails.accounts[0].accountno;
+    // setBalance(userDetails.accounts[0].balance);
+  }
+  catch
+  { }
 
   const checkbal = async (e) => {
+
+    while (accountNo == 0) {
+      console.log("im whilel loop");
+      accountNo = userDetails?.accounts[0]?.accountno;
+    }
 
     try {
 
@@ -29,13 +38,19 @@ const DashBoardBalance = () => {
       setBalance(resp.data[0].balance);
       console.log(resp);
     }
-    catch { }
+    catch (error) {
+      console.log(error);
+
+      if (userDetails?.accounts === undefined) { navigateTo("/dashboard") }
+
+      // toast.error("Invalid Credentials!")
+    }
   }
 
   useEffect(() => {
     console.log("Welcome to useeffect!");
     checkbal();
-}, []);
+  }, []);
 
   return (
     <div>
