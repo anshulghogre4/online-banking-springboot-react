@@ -12,11 +12,7 @@ const Login = () => {
 
       // extracting and using context API hereusing destructuring
       const {BASE_URL, userDetails, gettingAUser} = useBankingSystem();
-    
-
-
-      
-
+  
      
         const submitLogin = async (e) =>{
             

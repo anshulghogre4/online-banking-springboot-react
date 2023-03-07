@@ -10,9 +10,17 @@ import { useNavigate, NavLink } from 'react-router-dom'
 
 const DashboardMain = () => {
 
+  const navigateTo = useNavigate();
+ 
+  useEffect(()=>{
+      if(!sessionStorage.getItem("jwtToken")){
+        navigateTo("/login")
+      }
+  },[])
+
   const { BASE_URL, userDetails, setUser: setUserDetails } = useBankingSystem();
 
-
+  
 
   console.log(userDetails?.userId);
   //console.log(userDetails.accounts[0].accountno);
@@ -70,7 +78,7 @@ const DashboardMain = () => {
 
 
 
-
+  
 
 
   if (accountNo == 0) {

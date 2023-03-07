@@ -1,12 +1,14 @@
 import axios from "../Utills/AxiosWithJWT.js"
 import React, {useContext, useEffect, useState} from "react";
+import { useNavigate } from "react-router-dom";
 
 const UserContext  = React.createContext()
 
+    
 
 //instead creating diffrent file for Context,We utlized useContext here and we're exporting it
 export function useBankingSystem(){
-
+ 
     return useContext(UserContext)
 
 };
@@ -14,7 +16,8 @@ export function useBankingSystem(){
 
 //Exporting the provider in index.js
 export const UserContextProvider=({children}) =>{
-
+   
+    const navigateTo =useNavigate();
      const BASE_URL = "http://localhost:8081";
 
     const [userDetails, setUserDetails]= useState();
@@ -39,6 +42,9 @@ export const UserContextProvider=({children}) =>{
 
     }
         useEffect(()=>{
+            if(!sessionStorage.getItem("jwtToken")){
+                navigateTo("/login")
+              }
             gettingAUser();
         },[])
 
