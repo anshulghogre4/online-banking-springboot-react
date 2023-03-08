@@ -51,7 +51,7 @@ const Login = () => {
 
            if (resp.status === 200) {
             if (resp.data.user.role === "ADMIN") {
-              navigateTo("/admin");
+              navigateTo("/admin/dashboard");
             }else{
               navigateTo("/dashboard");
             }

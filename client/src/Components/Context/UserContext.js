@@ -31,7 +31,7 @@ export const UserContextProvider=({children}) =>{
 
         const userid = sessionStorage.getItem("userId");
 
-        const resp = await axios.get(`${BASE_URL}/api/v1/user/auser/`,{
+        const resp = await axios.get(`${BASE_URL}/api/v1/user/auser`,{
             params:{
                 userid
             }
