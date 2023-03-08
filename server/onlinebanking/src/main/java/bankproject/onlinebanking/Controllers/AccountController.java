@@ -59,10 +59,33 @@ public class AccountController {
         return accountService.findByAccountNo(accountNo);
     }
 
-    @GetMapping("/accounts")
-    public ResponseEntity<?> findAllAccounts() {
+    @GetMapping("/accounts/{all}")
+    public ResponseEntity<?> findAllAccounts(@PathVariable int all) {
         List<Object> objs = new ArrayList<>();
-        objs.add(signUpService.GetAllUsers());
+
+        List<User> users = signUpService.GetAllUsers();
+        List<User> reqUsers = new ArrayList<>();
+
+        if (all == 0)
+            for (User user : users) {
+                if (!user.getAccounts().isEmpty()) {
+                    reqUsers.add(user);
+                }
+            }
+
+        if (all == 1)
+            for (User user : users) {
+                if (user.getAccounts().isEmpty()) {
+                    reqUsers.add(user);
+                }
+            }
+
+        if (all == 2) {
+            objs.add(signUpService.GetAllUsers());
+            return new ResponseEntity<>(objs, HttpStatus.OK);
+        }
+
+        objs.add(reqUsers);
         return new ResponseEntity<>(objs, HttpStatus.OK);
     }
 
@@ -76,26 +99,20 @@ public class AccountController {
             return new ResponseEntity<>("User does not exists", HttpStatus.NOT_FOUND);
     }
 
-
     @GetMapping("/getallreq")
-    public ResponseEntity<?> getAllReq()
-    {
+    public ResponseEntity<?> getAllReq() {
         List<User> users = signUpService.GetAllUsers();
-        List<User> reqUsers= new ArrayList<>(); 
-        for (User user : users) 
-        {
-            if(!accountService.findByUserId(user.getUserId()).isEmpty() || !user.isAccountopenningreq())
-            {
-                //System.out.println("\n\n Skipping****************************************** "+user.getUserId()+"\n\n");
+        List<User> reqUsers = new ArrayList<>();
+        for (User user : users) {
+            if (!accountService.findByUserId(user.getUserId()).isEmpty() || !user.isAccountopenningreq()) {
+                // System.out.println("\n\n Skipping******************************************
+                // "+user.getUserId()+"\n\n");
                 continue;
-            }
-                else
-            {
-                //System.out.println("\n\n adding \n\n");
+            } else {
+                // System.out.println("\n\n adding \n\n");
                 reqUsers.add(user);
             }
         }
-
 
         return new ResponseEntity<>(reqUsers, HttpStatus.OK);
     }
@@ -193,15 +210,13 @@ public class AccountController {
 
     @GetMapping("/checkbal/{accountno}")
     private ResponseEntity<?> checkBalance(@PathVariable long accountno) {
-       List<BankAccount> lst = new ArrayList<>(); 
-       if (accountService.findByAccountNo(accountno) != null)
-        {
-           
-           lst.add(accountService.findByAccountNo(accountno));
+        List<BankAccount> lst = new ArrayList<>();
+        if (accountService.findByAccountNo(accountno) != null) {
+
+            lst.add(accountService.findByAccountNo(accountno));
             return new ResponseEntity<>(lst, HttpStatus.OK);
-        }
-            else
-            return new ResponseEntity<>(lst,HttpStatus.NOT_FOUND);
+        } else
+            return new ResponseEntity<>(lst, HttpStatus.NOT_FOUND);
     }
 
 }
