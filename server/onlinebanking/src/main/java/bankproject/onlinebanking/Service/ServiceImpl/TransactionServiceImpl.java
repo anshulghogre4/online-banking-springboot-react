@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.data.domain.Sort;
 import bankproject.onlinebanking.Model.BankAccount;
 import bankproject.onlinebanking.Model.Transactions;
 import bankproject.onlinebanking.Repository.TransactionRepository;
@@ -72,7 +72,8 @@ public class TransactionServiceImpl implements TransactionService{
 
     @Override
     public List<Transactions> findAll() {
-        return transactionRepository.findAll();
+        
+        return transactionRepository.findAll(Sort.by(Sort.Direction.DESC, "transactionDate", "transactionTime"));
     }
 
     @Override
@@ -85,6 +86,6 @@ public class TransactionServiceImpl implements TransactionService{
         return transactionRepository.getCurrentTransaction(accountno);
     }
 
-
+ 
 
 }
