@@ -118,8 +118,8 @@ const AdminTransaction = () => {
                             onClick={getAllTransactions}>Transactions</button>
 
                         <form className='inline ml-10' onSubmit={getAllAccTransactions}>
-                            <label for="accno">Account No : </label>
-                            <input className='rounded-full mx-1' type="text" name="accno" id="accno" placeholder="Account No" onChange={handleChange} minlength="8" maxlength="8" />
+                            <label htmlFor="accno">Account No : </label>
+                            <input className='rounded-full mx-1' type="text" name="accno" id="accno" placeholder="Account No" onChange={handleChange} minLength="8" maxLength="8" />
                             <button className="ml-2 w-[12rem] p-2 bg-[#f1f2f6] font-semibold rounded hover:bg-slate-600 hover:text-[#f1f2f6] bg-[#f1f2f6] duration-[0.5s]transition-all"
                                 type="submit" id="submit">Find By Account No</button>
                         </form>
