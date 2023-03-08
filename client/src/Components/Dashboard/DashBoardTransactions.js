@@ -83,9 +83,9 @@ const DashBoardTransactions = () => {
             <section className='h-[80vh] bg-gray-600 border pt-[2rem]'>
 
 
-                <div className='relative flex flex-row justify-around items-center'>
+                <div className='relative flex flex-row justify-around items-top'>
 
-                    <div className=' flex flex-col justify-center items-center gap-4'>
+                    <div className=' flex flex-col gap-4'>
                         <h3 className='text-[1.2rem] text-[#f1f2f6]'>Operations</h3>
                         <NavLink to={"/dashboard/balance"} ><button className='w-[10rem] p-2 bg-[#f1f2f6] font-semibold rounded '>Check balance</button></NavLink>
                         <NavLink to={"/dashboard/trx"} ><button className='w-[10rem] p-2 bg-[#f1f2f6] font-semibold rounded '>Transfer Amount</button></NavLink>
