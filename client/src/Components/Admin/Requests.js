@@ -6,12 +6,14 @@ import { useBankingSystem } from "../Context/UserContext"
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import NavbarDashboardAdmin from './NavbarDashboardAdmin.js'
+import Male from '../../assets/images/Male.png'
+import Female from '../../assets/images/Female.png'
 
 const Requests = () => {
 
     const navigateTo = useNavigate();
 
-    const {BASE_URL, userDetails, gettingAUser} = useBankingSystem();
+    const { BASE_URL, userDetails, gettingAUser } = useBankingSystem();
 
     const [usersDetails, setUsersDetails] = useState();
 
@@ -154,43 +156,87 @@ const Requests = () => {
                                                                 <button className="close" onClick={close}>
                                                                     &times;
                                                                 </button>
-                                                                <div className="header"> {user.firstname} </div>
+                                                                <div className="header text-left ml-10 " > Profile </div>
                                                                 <div className="content">
                                                                     {user.userdetails ?
                                                                         <div>
-                                                                            <table className="border-collapse border border-slate-400 ...">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th className="border border-slate-900 ...">Birth Date</th>
-                                                                                        <th className="border border-slate-900 ...">Age</th>
-                                                                                        <th className="border border-slate-900 ...">User Name</th>
-                                                                                        <th className="border border-slate-900 ...">Gender</th>
-                                                                                        <th className="border border-slate-900 ...">Adhaar</th>
-                                                                                        <th className="border border-slate-900 ...">Mobile</th>
-                                                                                        <th className="border border-slate-900 ...">Pan</th>
-                                                                                        <th className="border border-slate-900 ...">Address</th>
-                                                                                        <th className="border border-slate-900 ...">City</th>
-                                                                                        <th className="border border-slate-900 ...">Area Pin</th>
-                                                                                        <th className="border border-slate-900 ...">State</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody>
+                                                                            <section class="pt-1 bg-blueGray-50">
+                                                                                <div class="w-auto px-1 mx-auto">
+                                                                                    <div class="relative flex flex-col min-w-0 break-words bg-white w-auto shadow-xl rounded-lg">
+                                                                                        <div class="px-1">
+                                                                                            <div class="flex flex-wrap justify-center">
+                                                                                                <div class="w-[20vw] px-4 flex justify-center">
+                                                                                                    <img className='rounded-full w-32' src={user.userdetails.gender == "F" ? Female : Male} />
 
-                                                                                    <td className="border border-slate-900 ...">{user.firstname + " " + user.lastname}</td>
-                                                                                    <td className="border border-slate-900 ...">{user.userdetails.dateOfBirth}</td>
-                                                                                    <td className="border border-slate-900 ...">{user.userdetails.age}</td>
-                                                                                    <td className="border border-slate-900 ...">{user.userdetails.gender}</td>
-                                                                                    <td className="border border-slate-900 ...">{user.userdetails.adhaar}</td>
-                                                                                    <td className="border border-slate-900 ...">{user.userdetails.mobile}</td>
-                                                                                    <td className="border border-slate-900 ...">{user.userdetails.pan}</td>
-                                                                                    <td className="border border-slate-900 ...">{user.userdetails.address}</td>
-                                                                                    <td className="border border-slate-900 ...">{user.userdetails.city}</td>
-                                                                                    <td className="border border-slate-900 ...">{user.userdetails.pin}</td>
-                                                                                    <td className="border border-slate-900 ...">{user.userdetails.state}</td>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div>
+                                                                                                <div class="text-center mt-1">
+                                                                                                    <h3 class="text-xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
+                                                                                                        {user.firstname + " " + user.lastname}
+                                                                                                    </h3>
+                                                                                                </div>
+                                                                                                <div class="w-full px-4 text-center mt-1">
+                                                                                                    <div class="flex justify-center py-1 lg:pt-1 pt-2">
+                                                                                                        <div class="mr-4 px-3 text-center">
+                                                                                                            <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
+                                                                                                                ({user.userdetails.dateOfBirth})
+                                                                                                            </span>
+                                                                                                            <span class="text-sm text-blueGray-400">Birthdate</span>
+                                                                                                        </div>
+                                                                                                        <div class="mr-4 px-3 text-center">
+                                                                                                            <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
+                                                                                                                {user.userdetails.gender}
+                                                                                                            </span>
+                                                                                                            <span class="text-sm text-blueGray-400">Gender</span>
+                                                                                                        </div>
+                                                                                                        <div class="lg:mr-4 px-3 text-center">
+                                                                                                            <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
+                                                                                                                {user.userdetails.age}
+                                                                                                            </span>
+                                                                                                            <span class="text-sm text-blueGray-400">Age</span>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
 
-                                                                                </tbody>
-                                                                            </table>
+                                                                                            <div class="text-center mt-1">
+                                                                                                <h3 class="text-xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
+                                                                                                    <span>Aadhar No. :  </span> {user.userdetails.adhaar}
+                                                                                                </h3>
+                                                                                                <h3 class="text-xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
+                                                                                                    <span>PAN No. :  </span> {user.userdetails.pan}
+                                                                                                </h3>
+                                                                                                <h3 class="text-xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
+                                                                                                    <span>Mobile No. :  </span> {user.userdetails.mobile}
+                                                                                                </h3>
 
+                                                                                                <h3 class="text-xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
+                                                                                                    <span>Email :  </span> {user.email}
+                                                                                                </h3>
+
+                                                                                                <div class="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                                                                                                    <i class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
+                                                                                                    Address : <span>{user.userdetails.address}</span>
+                                                                                                </div>
+                                                                                                <div class="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                                                                                                    <i class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
+                                                                                                    City : <span>{user.userdetails.city}</span>
+                                                                                                </div>
+                                                                                                <div class="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                                                                                                    <i class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
+                                                                                                    State : <span>{user.userdetails.state}</span>
+                                                                                                </div>
+                                                                                                <div class="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                                                                                                    <i class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
+                                                                                                    Area Pin : <span>{user.userdetails.pin}</span>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </section>
                                                                         </div>
                                                                         :
                                                                         <div>
@@ -198,12 +244,6 @@ const Requests = () => {
                                                                         </div>}
                                                                 </div>
                                                                 <div className="actions">
-                                                                    <Popup
-                                                                        trigger={<button className="button"> </button>}
-                                                                        position="top center"
-                                                                        nested>
-                                                                        <span>Second pop up</span>
-                                                                    </Popup>
                                                                     <button
                                                                         className="button"
                                                                         onClick={() => {
@@ -231,11 +271,11 @@ const Requests = () => {
                         :
                         <div>
                             <h1 className='ml-10 text-red-500 text-base text-center'>No Pending Requests</h1>
-                           
+
                         </div>
                     }
-                </div>
-            </section>
+                </div >
+            </section >
         </>
     )
 }
