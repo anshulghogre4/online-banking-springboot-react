@@ -18,8 +18,8 @@ import AddBeneficiary from './Components/Beneficiary/AddBeneficiary';
 import SeeUserBeneficiaries from './Components/Beneficiary/SeeUserBeneficiaries';
 
 import AdminTransaction from './Components/Transaction/AdminTransaction';
-
-
+import DashboardAdmin from './Components/Admin/DashboardAdmin';
+import Requests from './Components/Admin/Requests';
 
 function App() {
 
@@ -70,11 +70,12 @@ function App() {
       <Route path='/profile' element={<Profile/>}/>
       <Route path='/about' element={<AboutUs/>}/>
       <Route path='/error'element={<ErrorPage/>}/>
-      <Route path='/admin' element={<Admin/>}/>
-      <Route path='/admin/accounts' element={<Accounts/>}/>
+      <Route path='/admin/dashboard' element={<DashboardAdmin/>}/>
+      <Route path='/admin/dashboard/accounts' element={<Accounts/>}/>
       <Route path='/dashboard/trx/seebene' element={<SeeUserBeneficiaries/>}/>
       <Route path='/dashboard/trx/addbene' element={<AddBeneficiary/>}/>
-      <Route path='/admin/transactions' element={<AdminTransaction/>}/>
+      <Route path='/admin/dashboard/transactions' element={<AdminTransaction/>}/>
+      <Route path='/admin/dashboard/requests' element={<Requests/>}/>
 
       </Routes>
   );

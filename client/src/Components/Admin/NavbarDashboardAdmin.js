@@ -1,15 +1,24 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-
+import logo from "../../assets/images/yolo.jpeg"
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-hot-toast';
 const NavbarDashboardAdmin = () => {
-  return (
-    <nav className='navbar  flex flex-row justify-between mx-auto items-center h-[20vh] bg-gray-300 mx-auto px-[7rem]'>
-        <div><h1 className='text-[2rem] font-semibold'>Admin</h1></div>
+  const navigateTo = useNavigate();
 
-              <div>
-            <NavLink className="abc hover:bg-slate-600 hover:text-[#f1f2f6] bg-[#f1f2f6] py-[1rem] px-[2.5rem] rounded-lg text-xl duration-[0.5s]transition-all font-semibold">...</NavLink >
-        </div>
-    </nav>
+  const handleSignOut = ()=>{
+    sessionStorage.clear();
+    navigateTo("/login");
+    toast.success("SignOut Successfull!");
+}
+
+
+  return (
+    <nav className='navbar  flex flex-row justify-between mx-auto items-center h-[16vh] bg-blue-700 mx-auto px-[7rem]'>
+      <img src={logo} className="logo w-[8rem] rounded-sm" alt="yolobank" />
+      <div>  <h1 className='text-[2rem] font-semibold text-white'>Admin</h1> </div>
+      <button className=' hover:bg-slate-600 hover:text-[#f1f2f6] bg-[#f1f2f6] py-[1rem] px-[2.5rem] rounded-lg text-xl duration-[0.5s]transition-all font-semibold' onClick={handleSignOut}>Sign Out</button>
+      </nav>
   )
 }
 
