@@ -13,6 +13,7 @@ const Login = () => {
       // extracting and using context API hereusing destructuring
       const {BASE_URL, userDetails, gettingAUser} = useBankingSystem();
   
+      const TOKEN_EXPIRY_DURATION =  15 * 60 * 1000; // 15 minutes session
      
         const submitLogin = async (e) =>{
             
@@ -34,6 +35,20 @@ const Login = () => {
             // save token in session storage
            sessionStorage.setItem("jwtToken", resp.data.jwtToken);
            sessionStorage.setItem("userId", resp.data.user.userId);
+
+
+           //session timeout
+
+            setTimeout(() => {
+           
+                sessionStorage.removeItem('jwtToken');
+            // Redirect the user to the login page
+                navigateTo("/login");
+
+                toast.error("session timed out ,please re login");
+              }, TOKEN_EXPIRY_DURATION);
+
+
            if (resp.status === 200) {
             if (resp.data.user.role === "ADMIN") {
               navigateTo("/admin");

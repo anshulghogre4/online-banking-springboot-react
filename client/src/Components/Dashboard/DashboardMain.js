@@ -10,13 +10,13 @@ import { useNavigate, NavLink } from 'react-router-dom'
 
 const DashboardMain = () => {
 
-  const navigateTo = useNavigate();
+  // const navigateTo = useNavigate();
  
-  useEffect(()=>{
-      if(!sessionStorage.getItem("jwtToken")){
-        navigateTo("/login")
-      }
-  },[])
+  // useEffect(()=>{
+  //     if(!sessionStorage.getItem("jwtToken")){
+  //       navigateTo("/login")
+  //     }
+  // },[])
 
   const { BASE_URL, userDetails, setUser: setUserDetails } = useBankingSystem();
 

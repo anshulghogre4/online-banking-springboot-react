@@ -43,7 +43,7 @@ export const UserContextProvider=({children}) =>{
     }
         useEffect(()=>{
             if(!sessionStorage.getItem("jwtToken")){
-                navigateTo("/login")
+                navigateTo("/")
               }
             gettingAUser();
         },[])
