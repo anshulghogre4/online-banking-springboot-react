@@ -20,6 +20,7 @@ import SeeUserBeneficiaries from './Components/Beneficiary/SeeUserBeneficiaries'
 import AdminTransaction from './Components/Transaction/AdminTransaction';
 import DashboardAdmin from './Components/Admin/DashboardAdmin';
 import Requests from './Components/Admin/Requests';
+import Protected from './Components/Protected/Protected';
 
 function App() {
 
@@ -62,18 +63,16 @@ function App() {
       <Route path='/login' element={<Login/>}/>
       <Route path='/signup' element={<Register />}/>
       <Route path='/dashboard' element={<Dashboard/>}/>
-      <Route path='/dashboard/balance' element={<DashBoardBalance/>}/>
-      <Route path='/dashboard/Stmt' element={<DashBoardTransactions/>}/>
-      <Route path='/dashboard/trx' element={<DashboardTransferMoney
-      //  gettingAUser={gettingAUser} userData={userData} 
-        />}/>
+      <Route path='/dashboard/balance' element={<Protected Component={DashBoardBalance}/>}/>
+      <Route path='/dashboard/Stmt' element={<Protected Component={DashBoardTransactions}/>}/>
+      <Route path='/dashboard/trx' element={ <Protected Component={DashBoardTransactions}/>}/>
       <Route path='/profile' element={<Profile/>}/>
       <Route path='/about' element={<AboutUs/>}/>
       <Route path='/error'element={<ErrorPage/>}/>
       <Route path='/admin/dashboard' element={<DashboardAdmin/>}/>
       <Route path='/admin/dashboard/accounts' element={<Accounts/>}/>
-      <Route path='/dashboard/trx/seebene' element={<SeeUserBeneficiaries/>}/>
-      <Route path='/dashboard/trx/addbene' element={<AddBeneficiary/>}/>
+      <Route path='/dashboard/trx/seebene' element={ <Protected Component={SeeUserBeneficiaries}/>}/>
+      <Route path='/dashboard/trx/addbene' element={<Protected Component={AddBeneficiary}/>}/>
       <Route path='/admin/dashboard/transactions' element={<AdminTransaction/>}/>
       <Route path='/admin/dashboard/requests' element={<Requests/>}/>
 
