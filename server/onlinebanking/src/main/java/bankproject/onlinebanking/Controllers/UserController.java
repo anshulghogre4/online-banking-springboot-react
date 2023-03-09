@@ -7,8 +7,10 @@ import java.util.UUID;
 import bankproject.onlinebanking.Execptions.UserNotFoundException;
 import bankproject.onlinebanking.Model.User;
 import bankproject.onlinebanking.Model.UserDetail;
+import bankproject.onlinebanking.Service.MailService;
 import bankproject.onlinebanking.Service.ProfileService;
 import bankproject.onlinebanking.Service.SignUpService;
+import net.bytebuddy.utility.RandomString;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +33,9 @@ public class UserController {
 
     @Autowired
     private ProfileService profileService;
+
+    @Autowired
+    private MailService mailService;
 
     @GetMapping("/users")
     public ResponseEntity<List<User>> allUsers() {
@@ -95,6 +100,29 @@ public class UserController {
         } else
             return new ResponseEntity<String>("Request Not Changed!", HttpStatus.EXPECTATION_FAILED);
 
+    }
+
+    @PostMapping("/forget-password")
+    public ResponseEntity<?> sendForgetPassword(@RequestBody User theUser) {
+        if (signUpService.findByEmail(theUser.getEmail()) == null) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        String token = RandomString.make(30);
+        signUpService.updateResetPasswordToken(token, theUser.getEmail());
+        String resetPasswordLink = "http://localhost:3000/reset-password?token=" + token;
+        mailService.sendMail(theUser.getEmail(), resetPasswordLink);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/reset-password/{token}")
+    public ResponseEntity<?> resetPassword(@RequestBody User theUser, @PathVariable String token) {
+        User users = signUpService.findByResetPasswordToken(token);
+        if (users == null) {
+
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        signUpService.updatePassword(theUser.getPassword(), token);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

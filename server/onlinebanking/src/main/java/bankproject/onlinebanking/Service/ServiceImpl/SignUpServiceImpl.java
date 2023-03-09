@@ -65,25 +65,25 @@ public class SignUpServiceImpl implements SignUpService {
         return false;
     }
 
-    // @Override
-    // public User findByResetPasswordToken(String token) {
-    // return userRepo.findByResetPasswordToken(token);
-    // }
+    @Override
+    public User findByResetPasswordToken(String token) {
+        return userRepo.findByResetPasswordToken(token);
+    }
 
-    // @Override
-    // public void updateResetPasswordToken(String token, String email) {
-    // User theUser = userRepo.findByEmail(email);
-    // theUser.setResetPasswordToken(token);
-    // userRepo.save(theUser);
-    // }
+    @Override
+    public void updateResetPasswordToken(String token, String email) {
+        User theUser = userRepo.findByEmail(email);
+        theUser.setResetPasswordToken(token);
+        userRepo.save(theUser);
+    }
 
-    // @Override
-    // public void updatePassword(String password, String token) {
-    // User theUser = userRepo.findByResetPasswordToken(token);
-    // theUser.setPassword(passwordEncoded.encode(password));
-    // theUser.setResetPasswordToken(null);
-    // userRepo.save(theUser);
-    // }
+    @Override
+    public void updatePassword(String password, String token) {
+        User theUser = userRepo.findByResetPasswordToken(token);
+        theUser.setPassword(passwordEncoded.encode(password));
+        theUser.setResetPasswordToken(null);
+        userRepo.save(theUser);
+    }
 
     @Override
     public User findByOTP(String otp) {

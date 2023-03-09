@@ -22,6 +22,8 @@ import DashboardAdmin from './Components/Admin/DashboardAdmin';
 import Requests from './Components/Admin/Requests';
 import Protected from './Components/Protected/Protected';
 import RegisterOTPVerification from './Components/Registration/RegisterOTPVerification';
+import ForgotPassword from './Components/Registration/ForgotPassword';
+import ResetPassword from './Components/Registration/ResetPassword';
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
       <Route path='/login' element={<Login/>}/>
       <Route path='/signup' element={<Register />}/>
       <Route path='/signup/otp' element={<RegisterOTPVerification/>}/>
+      <Route path='/forgot-password' element={<ForgotPassword/>}/>
+      <Route path='/reset-password' element={<ResetPassword/>}/>
       <Route path='/dashboard' element={<Dashboard/>}/>
       <Route path='/dashboard/balance' element={<Protected Component={DashBoardBalance}/>}/>
       <Route path='/dashboard/Stmt' element={<Protected Component={DashBoardTransactions}/>}/>

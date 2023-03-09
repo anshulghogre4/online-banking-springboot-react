@@ -24,7 +24,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     public User findByEmail(String email);
 
-    // public User findByResetPasswordToken(String token);
+    public User findByResetPasswordToken(String token);
 
     public User findByotp(String otp);
 
@@ -35,9 +35,5 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Modifying
     @Query(value = "DELETE FROM userdata WHERE email= :email", nativeQuery = true)
     void deleteUser(String email);
-
-    // @Query(value = "select * from userdata where userdetails_userdetailsid =
-    // :userDetailId", nativeQuery = true)
-    // public Boolean searchWithUserDetailId(int userDetailId);
 
 }
