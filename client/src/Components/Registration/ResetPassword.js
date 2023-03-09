@@ -7,14 +7,7 @@ import { useNavigate } from 'react-router-dom'
 const ResetPassword = () => {
     const [password, setPassword] = useState();
     const [comfirmPassword, setComfirmPassword] = useState();
-
-    console.log(password, " lol ", comfirmPassword);
-
-
     const navigateTo = useNavigate();
-
-
-
 
     const {BASE_URL} = useBankingSystem();
 

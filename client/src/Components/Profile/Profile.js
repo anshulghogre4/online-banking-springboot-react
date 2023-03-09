@@ -38,14 +38,15 @@ const Profile = () => {
 
   const navigateTo = useNavigate();
 
+  useEffect(()=>{
+    if(!sessionStorage.getItem("jwtToken")){
+      navigateTo("/")
+    }
+  },[])
+
+
   useEffect(() => {
-   
-      if(!sessionStorage.getItem("jwtToken")){
-        navigateTo("/")
-      }
-    
   setExistedUser(userDetails)
-    
   }, [userDetails])
 
 
@@ -154,6 +155,7 @@ const Profile = () => {
 
     if (profileResp.status === 200) {
       toast.success("Profile Successfully Created,Please Relogin and Request for Account opening!");
+      sessionStorage.clear();
       navigateTo("/login")
 
     } else {
@@ -224,6 +226,7 @@ const Profile = () => {
 
     if (profileResp.status === 200) {
       toast.success("Profile Successfully Updated,Please Relogin and Request for Account opening!");
+      sessionStorage.clear();
       navigateTo("/login")
 
     } else {

@@ -9,7 +9,7 @@ const Protected = ({Component}) => {
       if(!sessionStorage.getItem("jwtToken")){
         navigateTo("/")
       }
-        if (userDetails?.accounts?.length == 0){
+        if ( userDetails?.accounts === null || userDetails?.accounts?.length == 0){
             navigateTo("/dashboard");
         }
     },[userDetails])

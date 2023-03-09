@@ -13,17 +13,17 @@ const DashboardMain = () => {
   const navigateTo = useNavigate();
   const { BASE_URL, userDetails, setUser: setUserDetails } = useBankingSystem();
 
-  
+  useEffect(() => {
+    if(!sessionStorage.getItem("jwtToken")){
+      navigateTo("/")
+    }
+  }, [])
 
-  console.log(userDetails?.userId);
-  
   let accountNo = 0;
   const role = userDetails?.role;
   if (role == "ADMIN") {
     navigateTo("/admin/dashboard");
   }
-
-
   if (userDetails?.accounts?.length == 0) {
     console.log("@@@@@@@@@@@ Empty null")
   }
@@ -33,14 +33,11 @@ const DashboardMain = () => {
     console.log("@@@@@@@@@@@ not null accno : " + accountNo)
   }
 
+ 
+
   console.log("account no :" + accountNo);
 
-  useEffect(() => {
-    if(!sessionStorage.getItem("jwtToken")){
-      navigateTo("/")
-    }
-  }, [userDetails])
-
+  
 
 
   const handleAccountOpnReq = async (e) => {

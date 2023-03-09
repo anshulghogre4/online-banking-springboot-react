@@ -37,8 +37,8 @@ export const UserContextProvider=({children}) =>{
             }
         })
         
-        
         setUser(resp.data);
+        
 
     }
         useEffect(()=>{
