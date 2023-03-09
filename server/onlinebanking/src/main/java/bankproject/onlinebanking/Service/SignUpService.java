@@ -28,9 +28,9 @@ public interface SignUpService {
 
     // // public void updatePassword(String password, String token);
 
-    // // public User findByOTP(String otp);
+    public User findByOTP(String otp);
 
-    // // public void updateStatus(String otp);
+    public void updateIsEmailVerified(String otp);
 
     // // void updateOtp(String otp, String email);
 
@@ -40,6 +40,6 @@ public interface SignUpService {
 
     public void save(User theUser);
 
-    //public List<User> getAllReq();
+    // public List<User> getAllReq();
 
 }

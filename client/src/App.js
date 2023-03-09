@@ -21,47 +21,16 @@ import AdminTransaction from './Components/Transaction/AdminTransaction';
 import DashboardAdmin from './Components/Admin/DashboardAdmin';
 import Requests from './Components/Admin/Requests';
 import Protected from './Components/Protected/Protected';
+import RegisterOTPVerification from './Components/Registration/RegisterOTPVerification';
 
 function App() {
-
-
-  // const BASE_URL = "http://localhost:8081";
-
-  // const [userData, setUserData]= useState();
-
-  //   const setUser = (details => {
-  //       console.log("Main Pagal Hu: ", details);
-  //       setUserData(details)
-  //   })
-
-  //   const gettingAUser = async () =>{
-
-  //       const userid = sessionStorage.getItem("userId");
-
-  //       const resp = await axios.get(`${BASE_URL}/api/v1/user/auser/`,{
-  //           params:{
-  //               userid
-  //           }
-  //       })
-
-        
-  //       setUser(resp.data);
-
-  //   }
-  //       useEffect(()=>{
-  //           gettingAUser();
-  //       },[])
-
-
-
-  
-
   return (
     
     <Routes>
       <Route path="/" element = {<LandingPage/>}/>
       <Route path='/login' element={<Login/>}/>
       <Route path='/signup' element={<Register />}/>
+      <Route path='/signup/otp' element={<RegisterOTPVerification/>}/>
       <Route path='/dashboard' element={<Dashboard/>}/>
       <Route path='/dashboard/balance' element={<Protected Component={DashBoardBalance}/>}/>
       <Route path='/dashboard/Stmt' element={<Protected Component={DashBoardTransactions}/>}/>

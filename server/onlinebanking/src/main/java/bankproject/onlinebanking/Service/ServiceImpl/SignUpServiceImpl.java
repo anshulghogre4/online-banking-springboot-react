@@ -85,17 +85,10 @@ public class SignUpServiceImpl implements SignUpService {
     // userRepo.save(theUser);
     // }
 
-    // @Override
-    // public User findByOTP(String otp) {
-    // return userRepo.findByotp(otp);
-    // }
-
-    // @Override
-    // public void updateStatus(String otp) {
-    // // TODO Auto-generated method stub
-    // throw new UnsupportedOperationException("Unimplemented method
-    // 'updateStatus'");
-    // }
+    @Override
+    public User findByOTP(String otp) {
+        return userRepo.findByotp(otp);
+    }
 
     // @Override
     // public void updateOtp(String otp, String email) {
@@ -119,8 +112,16 @@ public class SignUpServiceImpl implements SignUpService {
         userRepo.save(theUser);
     }
 
+    @Override
+    public void updateIsEmailVerified(String otp) {
+        User theUser = userRepo.findByotp(otp);
+        theUser.setEmailVerified(true);
+        theUser.setOtp(null);
+        userRepo.save(theUser);
+    }
+
     // @Override
     // public List<User> getAllReq() {
-    //    return userRepo.findAllByReq();
-    // } 
+    // return userRepo.findAllByReq();
+    // }
 }

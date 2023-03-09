@@ -6,33 +6,22 @@ import { toast } from 'react-hot-toast'
 import { useNavigate, NavLink } from 'react-router-dom'
 
 
-//need to create checks for every page in dashboard for account no, if account no is present then only permit user to reach that URI else navigate back to dashboard
+
 
 const DashboardMain = () => {
 
-  // const navigateTo = useNavigate();
- 
-  // useEffect(()=>{
-  //     if(!sessionStorage.getItem("jwtToken")){
-  //       navigateTo("/login")
-  //     }
-  // },[])
-
+  const navigateTo = useNavigate();
   const { BASE_URL, userDetails, setUser: setUserDetails } = useBankingSystem();
 
   
 
   console.log(userDetails?.userId);
-  //console.log(userDetails.accounts[0].accountno);
+  
   let accountNo = 0;
-
-
-  // const role = userDetails?.role;
-
-  // const navigateTo = useNavigate();
-  // if (role == "ADMIN") {
-  //   navigateTo("/admin");
-  // }
+  const role = userDetails?.role;
+  if (role == "ADMIN") {
+    navigateTo("/admin/dashboard");
+  }
 
 
   if (userDetails?.accounts?.length == 0) {
@@ -47,7 +36,9 @@ const DashboardMain = () => {
   console.log("account no :" + accountNo);
 
   useEffect(() => {
-    
+    if(!sessionStorage.getItem("jwtToken")){
+      navigateTo("/")
+    }
   }, [userDetails])
 
 

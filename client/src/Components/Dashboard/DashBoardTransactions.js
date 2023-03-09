@@ -71,6 +71,11 @@ const DashBoardTransactions = () => {
     }
 
     useEffect(() => {
+        
+            if(!sessionStorage.getItem("jwtToken")){
+              navigateTo("/")
+            }
+         
         getAllAccTransactions();
 
     }, []);

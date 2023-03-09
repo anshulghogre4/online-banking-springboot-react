@@ -54,10 +54,10 @@ const Register = () => {
             const resp = await axios.post(`${BASE_URL}/api/v1/signup`, data);
               
               console.log(resp);
-              
+              sessionStorage.setItem("userId", resp.data.userId);
               if (resp.status === 200) {
-                navigateTo("/login")
-                toast.success("Registration Successfull,Please Login!");
+                navigateTo("/signup/otp")
+                toast.success("Registration Successfull,Please Verify Email!");
           }else{
             toast.error("Invalid Credentials");
           }

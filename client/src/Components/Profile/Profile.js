@@ -39,7 +39,11 @@ const Profile = () => {
   const navigateTo = useNavigate();
 
   useEffect(() => {
-
+   
+      if(!sessionStorage.getItem("jwtToken")){
+        navigateTo("/")
+      }
+    
   setExistedUser(userDetails)
     
   }, [userDetails])

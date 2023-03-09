@@ -53,6 +53,9 @@ const Requests = () => {
     };
 
     useEffect(() => {
+        if(!sessionStorage.getItem("jwtToken")){
+            navigateTo("/")
+          }
         console.log("Welcome to useeffect!");
     }, [usersDetails, accountDetails, approveReq]);
 

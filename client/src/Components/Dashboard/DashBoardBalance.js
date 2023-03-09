@@ -48,7 +48,11 @@ const DashBoardBalance = () => {
   }
 
   useEffect(() => {
-    console.log("Welcome to useeffect!");
+    
+      if(!sessionStorage.getItem("jwtToken")){
+        navigateTo("/")
+      }
+    
     checkbal();
   }, []);
 

@@ -23,14 +23,21 @@ const Login = () => {
               email,
               password
             };
+
+
+            
              const resp = await axios.post(`${BASE_URL}/api/v1/login`, data);
 
             console.log(resp);
             
-              //Setting the ContextAPI state so that it can be used anywhere in the component tree
-          
-            //testing the set ContextAPI state here
-            console.log("login successfull for user: ",userDetails);
+            if (resp.data.user.emailVerified === false) {
+              toast.error("Email is not verified!");
+              navigateTo("/signup/otp");
+              return;
+            }
+
+
+           
 
             // save token in session storage
            sessionStorage.setItem("jwtToken", resp.data.jwtToken);

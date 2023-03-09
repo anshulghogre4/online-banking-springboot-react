@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import axios from '../Utills/AxiosWithJWT.js';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
@@ -11,7 +11,11 @@ const AddBeneficiary = () => {
     
 
     const navigateTo = useNavigate();
-
+    useEffect(()=>{
+      if(!sessionStorage.getItem("jwtToken")){
+        navigateTo("/")
+      }
+    },[])
 
     const [userBeneficiary,setUserBeneficiary] = useState({
         beneaccountno : "",

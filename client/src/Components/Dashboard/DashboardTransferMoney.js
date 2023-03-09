@@ -36,6 +36,11 @@ const DashboardTransferMoney = () => {
 }
 
     useEffect(()=>{
+        
+            if(!sessionStorage.getItem("jwtToken")){
+              navigateTo("/")
+            }
+          
         getUserBeneficiaries();
     },[userDetails])
 

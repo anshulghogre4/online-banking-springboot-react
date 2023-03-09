@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import axios from '../Utills/AxiosWithJWT.js'
 import { toast } from 'react-hot-toast'
@@ -9,6 +9,13 @@ import NavbarDashboardAdmin from '../Admin/NavbarDashboardAdmin.js'
 const AdminTransaction = () => {
 
     const navigateTo = useNavigate();
+
+    useEffect(()=>{
+        if(!sessionStorage.getItem("jwtToken")){
+          navigateTo("/")
+        }
+      },[])
+
 
     const { BASE_URL, userDetails, setUser } = useBankingSystem();
 

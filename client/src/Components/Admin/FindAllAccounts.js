@@ -69,6 +69,9 @@ const Accounts = () => {
     };
 
     useEffect(() => {
+        if(!sessionStorage.getItem("jwtToken")){
+            navigateTo("/")
+          }
         console.log("Welcome to useeffect!");
 
     }, []);

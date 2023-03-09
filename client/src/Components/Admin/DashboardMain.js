@@ -26,6 +26,9 @@ const DashboardMain = () => {
   };
 
   useEffect(() => {
+    if(!sessionStorage.getItem("jwtToken")){
+      navigateTo("/")
+    }
     adminProfile();
   }, []);
 

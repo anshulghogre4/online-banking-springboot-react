@@ -47,7 +47,7 @@ public class WebSecurityConfig {
         http.csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/signup", "/api/v1/login")
+                .antMatchers("/api/v1/signup", "/api/v1/login", "/api/v1/otp")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

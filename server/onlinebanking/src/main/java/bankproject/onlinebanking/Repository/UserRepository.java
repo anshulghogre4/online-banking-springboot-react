@@ -26,7 +26,8 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     // public User findByResetPasswordToken(String token);
 
-    // public User findByotp(String otp);
+    public User findByotp(String otp);
+
     @Query(value = "select * from userdata where userid = '079b8412-6517-484b-bb85-13f782aacc22'", nativeQuery = true)
     public User getUserWithId();
 

@@ -67,14 +67,14 @@ public class User implements UserDetails {
     @Column(name = "createdate")
     private Date createdDate;
 
-    // @Column(name = "resetPasswordToken")
-    // private String resetPasswordToken;
+    @Column(name = "resetPasswordToken")
+    private String resetPasswordToken;
 
-    // @Column
-    // private boolean emailVerified;
+    @Column
+    private boolean emailVerified;
 
-    // @Column(name = "otp")
-    // public String otp;
+    @Column(name = "otp")
+    public String otp;
 
     @Transient
     public String token;
@@ -126,14 +126,6 @@ public class User implements UserDetails {
 
         return true;
     }
-
-    // public boolean isEmailVerified() {
-    // return emailVerified;
-    // }
-
-    // public void setEmailverified(boolean emailVerified) {
-    // this.emailVerified = emailVerified;
-    // }
 
     // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     // @JsonManagedReference(value = "user-loan")

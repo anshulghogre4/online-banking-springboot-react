@@ -25,6 +25,11 @@ const SeeUserBeneficiaries = () => {
 
 
     useEffect(()=>{
+      
+        if(!sessionStorage.getItem("jwtToken")){
+          navigateTo("/")
+        }
+      
         getUserBeneficiaries();
         
     },[userDetails]);

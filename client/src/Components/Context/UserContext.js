@@ -36,15 +36,12 @@ export const UserContextProvider=({children}) =>{
                 userid
             }
         })
-
+        
         
         setUser(resp.data);
 
     }
         useEffect(()=>{
-            if(!sessionStorage.getItem("jwtToken")){
-                navigateTo("/")
-              }
             gettingAUser();
         },[])
 
