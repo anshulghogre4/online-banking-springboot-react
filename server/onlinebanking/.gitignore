@@ -5,7 +5,7 @@ target/
 !**/src/test/**/target/
 
 ### hiding application properties###
-/server/onlinebanking/src/main/resources/application.properties
+*\server\onlinebanking\src\main\resources\application.properties
 
 ### STS ###
 .apt_generated
