@@ -4,6 +4,7 @@ import { useBankingSystem } from "../Context/UserContext.js"
 import axios from "../Utills/AxiosWithJWT.js"
 import { toast } from 'react-hot-toast';
 import { useNavigate } from "react-router-dom"
+import NavbarDashboard from '../Dashboard/NavbarDashboard.js';
 
 const Profile = () => {
 
@@ -43,7 +44,6 @@ const Profile = () => {
       navigateTo("/")
     }
   },[])
-
 
   useEffect(() => {
   setExistedUser(userDetails)
@@ -178,6 +178,7 @@ const Profile = () => {
     const { userdetails } = existedUser;
 
     console.log("adhaar length ",userdetails?.adhaar?.length);
+    console.log("adhaar length ",userdetails?.adhaar);
     console.log("pan length ",userdetails?.pan?.length);
     console.log("mobile length ",userdetails?.mobile?.length);
 
@@ -243,6 +244,8 @@ const Profile = () => {
   if (!existedUser?.userdetails?.userdetailsid) {
 
     return (
+        <> 
+          <NavbarDashboard/>
 
       <form onSubmit={handleCreateProfile} className="bg-white p-6 rounded-lg flex flex-col">
         <div className="flex flex-wrap -mx-3 mb-6">
@@ -442,6 +445,7 @@ const Profile = () => {
 
 
       </form>
+      </>
     )
 
 

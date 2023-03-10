@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import bankproject.onlinebanking.Model.User;
 
 import bankproject.onlinebanking.Repository.UserRepository;
-
+import bankproject.onlinebanking.Requests.ChangePasswordReq;
 import bankproject.onlinebanking.Service.SignUpService;
 
 @Service
@@ -120,8 +120,20 @@ public class SignUpServiceImpl implements SignUpService {
         userRepo.save(theUser);
     }
 
-    // @Override
-    // public List<User> getAllReq() {
-    // return userRepo.findAllByReq();
-    // }
+    @Override
+    public Boolean changePassword(String userId, ChangePasswordReq changePasswordReq) {
+        User user = userRepo.findById(userId).get();
+
+        try {
+            if (passwordEncoded.matches(changePasswordReq.getOldPassword(), user.getPassword())) {
+                user.setPassword(passwordEncoded.encode(changePasswordReq.getNewPassWord()));
+                userRepo.save(user);
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

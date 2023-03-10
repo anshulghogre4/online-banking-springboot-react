@@ -14,10 +14,11 @@ const DashboardMain = () => {
   const { BASE_URL, userDetails, setUser: setUserDetails, gettingAUser } = useBankingSystem();
 
   useEffect(() => {
-    gettingAUser();
+    
     if(!sessionStorage.getItem("jwtToken")){
       navigateTo("/")
     }
+    gettingAUser();
   }, [])
 
   let accountNo = 0;
@@ -25,7 +26,7 @@ const DashboardMain = () => {
   if (role == "ADMIN") {
     navigateTo("/admin/dashboard");
   }
-  if (userDetails?.accounts?.length == 0) {
+  if (userDetails?.accounts?.length === 0 ) {
     console.log("@@@@@@@@@@@ Empty null")
   }
   else {
@@ -70,7 +71,7 @@ const DashboardMain = () => {
   
 
 
-  if (accountNo == 0) {
+  if (  accountNo === undefined || accountNo === 0 ) {
     return (
       <section className='  h-[80vh]  border ' >
         <div className='dash_hero flex flex-row justify-around items-center pt-[1rem]

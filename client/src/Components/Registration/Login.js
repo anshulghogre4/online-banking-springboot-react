@@ -29,7 +29,7 @@ const Login = () => {
              const resp = await axios.post(`${BASE_URL}/api/v1/login`, data);
 
             console.log(resp);
-            
+
             if (resp.data.user.emailVerified === false) {
               toast.error("Email is not verified!");
               navigateTo("/signup/otp");
@@ -43,15 +43,16 @@ const Login = () => {
            sessionStorage.setItem("jwtToken", resp.data.jwtToken);
            sessionStorage.setItem("userId", resp.data.user.userId);
 
+             gettingAUser();
+
             setTimeout(() => {
            
-                sessionStorage.removeItem('jwtToken');
+                sessionStorage.clear();
             // Redirect the user to the login page
               navigateTo("/login");
               toast.error("session timed out ,please re login");
               console.log("session timed out");
               }, TOKEN_EXPIRY_DURATION);
-
 
            if (resp.status === 200) {
             if (resp.data.user.role === "ADMIN") {
@@ -62,7 +63,7 @@ const Login = () => {
            
             
             toast.success("Login Successfull!");
-            gettingAUser();
+            
            } 
            
            

@@ -7,6 +7,7 @@ import java.util.UUID;
 import bankproject.onlinebanking.Execptions.UserNotFoundException;
 import bankproject.onlinebanking.Model.User;
 import bankproject.onlinebanking.Model.UserDetail;
+import bankproject.onlinebanking.Requests.ChangePasswordReq;
 import bankproject.onlinebanking.Service.MailService;
 import bankproject.onlinebanking.Service.ProfileService;
 import bankproject.onlinebanking.Service.SignUpService;
@@ -123,6 +124,17 @@ public class UserController {
         }
         signUpService.updatePassword(theUser.getPassword(), token);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/change-password/{userId}")
+    public ResponseEntity<?> changePassword(@PathVariable String userId,
+            @RequestBody ChangePasswordReq changePasswordReq) {
+        boolean success = signUpService.changePassword(userId, changePasswordReq);
+        if (success) {
+            return ResponseEntity.ok("Password changed successfully");
+        } else {
+            return ResponseEntity.badRequest().body("Invalid current password");
+        }
     }
 
 }

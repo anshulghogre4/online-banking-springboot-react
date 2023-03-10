@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 import bankproject.onlinebanking.Model.User;
+import bankproject.onlinebanking.Requests.ChangePasswordReq;
 
 public interface SignUpService {
 
@@ -27,6 +28,8 @@ public interface SignUpService {
     public void updateResetPasswordToken(String token, String email);
 
     public void updatePassword(String password, String token);
+
+    public Boolean changePassword(String userId, ChangePasswordReq changePasswordReq);
 
     public User findByOTP(String otp);
 
