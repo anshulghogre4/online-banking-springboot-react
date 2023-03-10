@@ -177,9 +177,10 @@ const Profile = () => {
 
     const { userdetails } = existedUser;
 
-    console.log("adhaar length ",userdetails?.adhaar?.length);
-    console.log("adhaar length ",userdetails?.adhaar);
+    console.log("adhaar length ",typeof(userdetails?.adhaar));
+    
     console.log("pan length ",userdetails?.pan?.length);
+    console.log("pan length ",typeof(userdetails?.pan));
     console.log("mobile length ",userdetails?.mobile?.length);
 
     const data = {

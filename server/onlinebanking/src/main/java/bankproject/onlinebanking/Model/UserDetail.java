@@ -40,7 +40,7 @@ public class UserDetail {
     private String pin;
     private String state;
 
-    private Long adhaar;
+    private String adhaar;
 
     private String mobile;
 
@@ -52,7 +52,6 @@ public class UserDetail {
     @Column(name = "birthdate")
     public Date dateOfBirth;
 
-    
     @OneToOne
     @JsonBackReference
     private User user;
