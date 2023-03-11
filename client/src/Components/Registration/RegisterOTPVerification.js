@@ -3,12 +3,16 @@ import axios from 'axios'
 import { Await, useNavigate } from 'react-router-dom'
 import { useBankingSystem } from '../Context/UserContext'
 import { toast } from 'react-hot-toast'
+import  SyncLoader from "react-spinners/SyncLoader"
 
 
 const RegisterOTPVerification = () => {
 
     const navigateTo =useNavigate();
      const [otp, setOtp] = useState();
+     const [otpCount, setOtpCount] = useState(0);
+     const [isLoading, setIsLoading] = useState(false);
+      const maxOtpCount = 3;
         const {BASE_URL, userDetails} =useBankingSystem();
 
         useEffect(()=>{
@@ -22,7 +26,6 @@ const RegisterOTPVerification = () => {
             const data ={
                 otp
             }
-
             const resp =  await axios.post(`${BASE_URL}/api/v1/otp`,data);
             console.log(resp);
             if (resp.status === 200) {
@@ -34,14 +37,46 @@ const RegisterOTPVerification = () => {
 
         }
 
+        const userId = sessionStorage.getItem("userId");
 
+        
+        const handleResendOTP = async () =>{
 
+          if (otpCount < maxOtpCount) {
+            setIsLoading(true)
+              const resp = await axios.post(`${BASE_URL}/api/v1/resend-otp/${userId}`)
+              if (resp.status === 200) {
+                toast.success("OTP sent succefully");
+                setIsLoading(false)
+              }else{
+                toast.error("Unkown Error occured");
+                setIsLoading(false)
+              }
+              setOtpCount(otpCount+1);
+          }else{
+            toast.error("You have reached the maximum number of OTPs that can be sent.");
+            return
+          }
+          }
+              
 
-
+    
 
   return (
     <>
-      
+        {isLoading ? (
+        <div className='flex flex-row justify-center items-center  h-[100vh]'>
+           <SyncLoader
+          margin={10}
+          size={20}
+          speedMultiplier={1}
+           color={"#5145CD"}
+           loading={isLoading}
+           aria-label="Loading Spinner"
+           data-testid="loader"
+         />
+         </div>
+    ) : (
 <div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-12">
   <div className="relative bg-white px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-lg rounded-2xl">
     <div className="mx-auto flex w-full max-w-md flex-col space-y-16">
@@ -71,7 +106,7 @@ const RegisterOTPVerification = () => {
               </div>
 
               <div className="flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500">
-                <p>Didn't recieve code?</p> <a className="flex flex-row items-center text-blue-600" href="http://" target="_blank" rel="noopener noreferrer">Resend</a>
+                <p>Didn't recieve code?</p> <a onClick={handleResendOTP} className="flex flex-row items-center text-blue-600" href="#"  rel="noopener noreferrer">Resend</a>
               </div>
             </div>
           </div>
@@ -80,6 +115,8 @@ const RegisterOTPVerification = () => {
     </div>
   </div>
 </div>
+    )
+}
     </>
   )
 }

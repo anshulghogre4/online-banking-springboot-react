@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,6 +62,19 @@ public class SignUpController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         signUpService.updateIsEmailVerified(theUser.getOtp());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/resend-otp/{userId}")
+    public ResponseEntity<?> resendOTP(@PathVariable String userId) {
+
+        User user = signUpService.findById(userId);
+        String otp = RandomString.make(6);
+        user.setOtp(otp);
+        signUpService.save(user);
+        mailService.transactionMail(user.getEmail(), "Registration OTP code",
+                "This is 6 digit otp code: " + otp + "\n\n Click here to verify: http://localhost:3000/signup/otp"
+                        + "\n\nThank you.");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

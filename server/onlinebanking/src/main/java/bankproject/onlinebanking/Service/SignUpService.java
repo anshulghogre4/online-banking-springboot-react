@@ -33,6 +33,8 @@ public interface SignUpService {
 
     public User findByOTP(String otp);
 
+    public User findById(String userId);
+
     public void updateIsEmailVerified(String otp);
 
     // // void updateOtp(String otp, String email);

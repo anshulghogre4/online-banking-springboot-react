@@ -42,7 +42,7 @@ function App() {
       <Route path='/dashboard' element={<Dashboard/>}/>
       <Route path='/dashboard/balance' element={<Protected Component={DashBoardBalance}/>}/>
       <Route path='/dashboard/Stmt' element={<Protected Component={DashBoardTransactions}/>}/>
-      <Route path='/dashboard/trx' element={ <Protected Component={DashBoardTransactions}/>}/>
+      <Route path='/dashboard/trx' element={ <Protected Component={DashboardTransferMoney}/>}/>
       <Route path='/profile' element={<Profile/>}/>
       <Route path='/about' element={<AboutUs/>}/>
       <Route path='/error'element={<ErrorPage/>}/>

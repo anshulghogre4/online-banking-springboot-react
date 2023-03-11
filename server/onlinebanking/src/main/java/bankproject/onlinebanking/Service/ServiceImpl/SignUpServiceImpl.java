@@ -136,4 +136,12 @@ public class SignUpServiceImpl implements SignUpService {
         return false;
     }
 
+    @Override
+    public User findById(String userId) {
+
+        User theUser = userRepo.findById(userId).get();
+
+        return theUser;
+    }
+
 }

@@ -3,12 +3,13 @@ import axios from "axios"
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import { useBankingSystem } from '../Context/UserContext'
+import  SyncLoader from "react-spinners/SyncLoader"
 
 
 const ForgotPassword = () => {
 
         const [email, setEmail] = useState();
-
+        const [isLoading, setIsLoading] = useState(false);
 
     const {BASE_URL} = useBankingSystem();
 
@@ -19,12 +20,16 @@ const ForgotPassword = () => {
             const data ={
                 email
             }
-
-        const resp =  await axios.post(`${BASE_URL}/api/v1/user/forget-password`, data);
+            setIsLoading(true);
+            const resp =  await axios.post(`${BASE_URL}/api/v1/user/forget-password`, data);
             console.log(resp);
 
             if (resp.status === 200) {
                     toast.success("Reset password link has been sent to your email!")
+                    setIsLoading(false);
+            }else{
+                toast.error("Unkown error occured!")
+                    setIsLoading(false);
             }
         
     }
@@ -33,6 +38,19 @@ const ForgotPassword = () => {
 
   return (
     <div>
+        {isLoading ? (
+        <div className='flex flex-row justify-center items-center  h-[100vh]'>
+           <SyncLoader
+          margin={10}
+          size={20}
+          speedMultiplier={1}
+           color={"#5145CD"}
+           loading={isLoading}
+           aria-label="Loading Spinner"
+           data-testid="loader"
+         />
+         </div>
+    ) : (
         <section className=' flex flex-col items-center justify-center h-[100vh]'>
         <div class="max-w-sm  ">
             <h1 class="mb-2 text-center text-sm font-semibold text-gray-900">Reset your password</h1>
@@ -48,6 +66,8 @@ const ForgotPassword = () => {
             </form>
         </div>
         </section>
+    )
+}
     </div>
   )
 }

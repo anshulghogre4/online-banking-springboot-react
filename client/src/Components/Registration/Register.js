@@ -75,13 +75,17 @@ const Register = () => {
     <>
 
 {isLoading ? (
+        <div className='flex flex-row justify-center items-center  h-[100vh]'>
            <SyncLoader
+          margin={10}
+          size={20}
+          speedMultiplier={1}
            color={"#5145CD"}
            loading={isLoading}
-           size={150}
            aria-label="Loading Spinner"
            data-testid="loader"
          />
+         </div>
     ) : (
 
     <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
