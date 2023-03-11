@@ -9,7 +9,7 @@ import { toast } from 'react-hot-toast'
 const DashBoardBalance = () => {
 
   const navigateTo = useNavigate();
-  const { BASE_URL, userDetails, setUser: setUserDetails,  } = useBankingSystem();
+  const { BASE_URL, userDetails, setUser: setUserDetails, gettingAUser } = useBankingSystem();
   const [balance, setBalance] = useState(0);
   let accountNo = 0;
   let userName = null;
@@ -25,8 +25,8 @@ const DashBoardBalance = () => {
   { }
 
   const checkbal = async (e) => {
-
-    while (accountNo == 0) {
+     gettingAUser();
+    while (accountNo === 0) {
       console.log("im whilel loop");
       accountNo = userDetails?.accounts[0]?.accountno;
     }
