@@ -3,6 +3,7 @@ import {NavLink, useNavigate} from "react-router-dom"
 import  axios from "axios" 
 import {toast} from "react-hot-toast"
 import  {useBankingSystem} from "../Context/UserContext"
+import  SyncLoader from "react-spinners/SyncLoader"
 
 const Register = () => {
 
@@ -11,6 +12,7 @@ const Register = () => {
 
         
         const [isLoading, setIsLoading] = useState(false);
+        
         const [userDetails,setUserDetails] = useState({
           firstname : "",
           lastname : "",
@@ -18,7 +20,7 @@ const Register = () => {
           password : ""
         })
 
-      
+        
 
         let user,uservalue;
 
@@ -52,22 +54,36 @@ const Register = () => {
            //alert("password should be atleast of 8 characters!");
            return;
           }
-
+            setIsLoading(true);
             const resp = await axios.post(`${BASE_URL}/api/v1/signup`, data);
               
               console.log(resp);
                sessionStorage.setItem("userId", resp.data.userId);
+
               if (resp.status === 200) {
                 navigateTo("/signup/otp")
                 toast.success("Registration Successfull,Please Verify Email!");
+                setIsLoading(false);
           }else{
             toast.error("Invalid Credentials");
+            setIsLoading(false);
           }
 
          } 
 
   return (
     <>
+
+{isLoading ? (
+           <SyncLoader
+           color={"#5145CD"}
+           loading={isLoading}
+           size={150}
+           aria-label="Loading Spinner"
+           data-testid="loader"
+         />
+    ) : (
+
     <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
     <div className="text-center text-2xl font-bold">Sign up</div>
     <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -177,6 +193,8 @@ const Register = () => {
       </div>
     </div>
   </div>
+    )
+}
 </>
   )
 }

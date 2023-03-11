@@ -9,7 +9,7 @@ import { toast } from 'react-hot-toast'
 const DashBoardBalance = () => {
 
   const navigateTo = useNavigate();
-  const { BASE_URL, userDetails, setUser: setUserDetails } = useBankingSystem();
+  const { BASE_URL, userDetails, setUser: setUserDetails,  } = useBankingSystem();
   const [balance, setBalance] = useState(0);
   let accountNo = 0;
   let userName = null;
@@ -35,7 +35,7 @@ const DashBoardBalance = () => {
 
       const resp = await axios.get(`${BASE_URL}/account/checkbal/${accountNo}`);
 
-      setBalance(resp.data[0].balance);
+      setBalance(resp?.data[0]?.balance);
       console.log(resp);
     }
     catch (error) {
