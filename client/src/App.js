@@ -47,7 +47,7 @@ function App() {
       <Route path='/dashboard/trx' element={ <Protected Component={DashboardTransferMoney}/>}/>
       <Route path='/profile' element={<Profile/>}/>
       <Route path='/about' element={<AboutUs/>}/>
-      <Route path='/error'element={<ErrorPage/>}/>
+      <Route path='*'element={<ErrorPage/>}/>
       <Route path='/admin/dashboard' element={<DashboardAdmin/>}/>
       <Route path='/admin/dashboard/accounts' element={<Accounts/>}/>
       <Route path='/dashboard/trx/seebene' element={ <Protected Component={SeeUserBeneficiaries}/>}/>
