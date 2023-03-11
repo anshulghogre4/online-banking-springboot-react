@@ -9,7 +9,8 @@ const Register = () => {
         const {BASE_URL} = useBankingSystem();
         const navigateTo = useNavigate();
 
-
+        
+        const [isLoading, setIsLoading] = useState(false);
         const [userDetails,setUserDetails] = useState({
           firstname : "",
           lastname : "",
@@ -51,10 +52,11 @@ const Register = () => {
            //alert("password should be atleast of 8 characters!");
            return;
           }
+
             const resp = await axios.post(`${BASE_URL}/api/v1/signup`, data);
               
               console.log(resp);
-              // sessionStorage.setItem("userId", resp.data.userId);
+               sessionStorage.setItem("userId", resp.data.userId);
               if (resp.status === 200) {
                 navigateTo("/signup/otp")
                 toast.success("Registration Successfull,Please Verify Email!");
