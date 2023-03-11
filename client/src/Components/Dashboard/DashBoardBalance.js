@@ -24,6 +24,8 @@ const DashBoardBalance = () => {
   catch
   { }
 
+
+  
   const checkbal = async (e) => {
      gettingAUser();
     while (accountNo === 0) {

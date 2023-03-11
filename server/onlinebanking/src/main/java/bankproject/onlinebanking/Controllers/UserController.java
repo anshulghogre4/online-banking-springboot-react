@@ -1,10 +1,12 @@
 package bankproject.onlinebanking.Controllers;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import bankproject.onlinebanking.Execptions.UserNotFoundException;
+import bankproject.onlinebanking.Model.Mail;
 import bankproject.onlinebanking.Model.User;
 import bankproject.onlinebanking.Model.UserDetail;
 import bankproject.onlinebanking.Requests.ChangePasswordReq;
@@ -135,6 +137,13 @@ public class UserController {
         } else {
             return ResponseEntity.badRequest().body("Invalid current password");
         }
+    }
+
+    @PostMapping("/mail")
+    public ResponseEntity<?> sendMail(@RequestBody Mail theMail) {
+        theMail.setSentDate(new Date(System.currentTimeMillis()));
+        mailService.send(theMail);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

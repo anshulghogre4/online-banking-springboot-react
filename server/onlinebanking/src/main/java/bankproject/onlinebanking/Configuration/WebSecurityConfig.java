@@ -48,7 +48,8 @@ public class WebSecurityConfig {
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/api/v1/signup", "/api/v1/login", "/api/v1/otp", "/api/v1/user/forget-password",
-                        "/api/v1/user/reset-password/{token}", "/api/v1/user/auser", "/api/v1/resend-otp/{userId}")
+                        "/api/v1/user/reset-password/{token}", "/api/v1/user/auser", "/api/v1/resend-otp/{userId}",
+                        "/api/v1/user/mail")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

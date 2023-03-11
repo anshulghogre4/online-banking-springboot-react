@@ -25,6 +25,7 @@ import RegisterOTPVerification from './Components/Registration/RegisterOTPVerifi
 import ForgotPassword from './Components/Registration/ForgotPassword';
 import ResetPassword from './Components/Registration/ResetPassword';
 import ChangePassword from './Components/Registration/ChangePassword';
+import ContactUs from './Components/ContactUs/ContactUs';
 
 
 
@@ -33,6 +34,7 @@ function App() {
     
     <Routes>
       <Route path="/" element = {<LandingPage/>}/>
+      <Route path="/contactUs" element = {<ContactUs/>}/>
       <Route path='/login' element={<Login/>}/>
       <Route path='/signup' element={<Register />}/>
       <Route path='/signup/otp' element={<RegisterOTPVerification/>}/>
