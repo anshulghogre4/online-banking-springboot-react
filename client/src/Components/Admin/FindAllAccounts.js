@@ -11,7 +11,8 @@ import Female from '../../assets/images/Female.png'
 
 
 const Accounts = () => {
-
+    const token = sessionStorage.getItem("jwtToken");
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
     const navigateTo = useNavigate();
 
     const { BASE_URL, userDetails, setUser } = useBankingSystem();

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import dashimg from "../../assets/images/Welcome_dashboard.png"
 import { toast } from 'react-hot-toast'
+import axios from 'axios'
 import { useNavigate, NavLink } from 'react-router-dom'
 import { useBankingSystem } from "../Context/UserContext"
 
@@ -8,7 +9,8 @@ import { useBankingSystem } from "../Context/UserContext"
 
 
 const DashboardMain = () => {
-
+  const token = sessionStorage.getItem("jwtToken");
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
   const navigateTo = useNavigate();
   const { BASE_URL, userDetails, gettingAUser } = useBankingSystem();
 

@@ -13,7 +13,7 @@ const Login = () => {
       // extracting and using context API hereusing destructuring
       const {BASE_URL, userDetails, gettingAUser} = useBankingSystem();
   
-      const TOKEN_EXPIRY_DURATION = 10*60*1000;
+      const TOKEN_EXPIRY_DURATION = 15*60*1000;
      
         const submitLogin = async (e) =>{
             
@@ -46,7 +46,6 @@ const Login = () => {
              gettingAUser();
 
             setTimeout(() => {
-           
                 sessionStorage.clear();
             // Redirect the user to the login page
               navigateTo("/login");

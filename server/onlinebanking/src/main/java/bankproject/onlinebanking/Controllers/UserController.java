@@ -1,21 +1,31 @@
 package bankproject.onlinebanking.Controllers;
 
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import javax.servlet.http.HttpServletResponse;
 
 import bankproject.onlinebanking.Execptions.UserNotFoundException;
 import bankproject.onlinebanking.Model.Mail;
 import bankproject.onlinebanking.Model.User;
 import bankproject.onlinebanking.Model.UserDetail;
 import bankproject.onlinebanking.Requests.ChangePasswordReq;
+import bankproject.onlinebanking.Requests.ImageResponse;
+import bankproject.onlinebanking.Service.FileService;
 import bankproject.onlinebanking.Service.MailService;
 import bankproject.onlinebanking.Service.ProfileService;
 import bankproject.onlinebanking.Service.SignUpService;
+import io.jsonwebtoken.io.IOException;
+
 import net.bytebuddy.utility.RandomString;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -39,6 +50,14 @@ public class UserController {
 
     @Autowired
     private MailService mailService;
+
+    @Autowired
+    private FileService fileService;
+
+    @Value("${user.profile.image.path}")
+    private String imageUploadPath;
+
+    private Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/users")
     public ResponseEntity<List<User>> allUsers() {
@@ -145,5 +164,34 @@ public class UserController {
         mailService.send(theMail);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    // upload user image
+    @PostMapping("/image/{userId}")
+    public ResponseEntity<ImageResponse> uploadUserImage(@RequestParam("userImage") MultipartFile userImage,
+            @PathVariable String userId) throws IOException, java.io.IOException {
+        String imageName = fileService.uploadImage(imageUploadPath, userImage);
+        User user = signUpService.findById(userId);
+        user.setImageName(imageName);
+        signUpService.save(user);
+
+        ImageResponse imageResponse = ImageResponse.builder().imageName(imageName).success(true)
+                .message("image is uploaded successfully ").status(HttpStatus.OK).build();
+        return new ResponseEntity<>(imageResponse, HttpStatus.OK);
+
+    }
+
+    // serve user image
+
+    // @GetMapping(value = "/image/{userId}")
+    // public void serveUserImage(@PathVariable String userId, HttpServletRespo
+    // se response) throws IOException {
+    // User user = signUpService.findById(userId);
+    // logger.info("User image name : {} ", user.getImageName());
+    // InputStream resource = fileService.getResource(imageUploadPa
+    // h, user.getImageName());
+    // response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+    // StreamUtils.copy(resource, response.getOutputStream());
+
+    // }
 
 }

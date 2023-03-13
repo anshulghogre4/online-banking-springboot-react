@@ -10,6 +10,8 @@ import Male from '../../assets/images/Male.png'
 import Female from '../../assets/images/Female.png'
 
 const Requests = () => {
+    const token = sessionStorage.getItem("jwtToken");
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
     const navigateTo = useNavigate();
 

@@ -76,6 +76,9 @@ public class User implements UserDetails {
     @Column(name = "otp")
     public String otp;
 
+    @Column(name = "user_image_name")
+    private String imageName;
+
     @Transient
     public String token;
 

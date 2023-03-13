@@ -3,7 +3,10 @@ import { NavLink } from 'react-router-dom'
 import logo from "../../assets/images/yolo.jpeg"
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast';
+import axios from 'axios';
 const NavbarDashboardAdmin = () => {
+  const token = sessionStorage.getItem("jwtToken");
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
   const navigateTo = useNavigate();
 
   const handleSignOut = ()=>{
