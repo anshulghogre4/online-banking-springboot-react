@@ -27,7 +27,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -182,16 +184,15 @@ public class UserController {
 
     // serve user image
 
-    // @GetMapping(value = "/image/{userId}")
-    // public void serveUserImage(@PathVariable String userId, HttpServletRespo
-    // se response) throws IOException {
-    // User user = signUpService.findById(userId);
-    // logger.info("User image name : {} ", user.getImageName());
-    // InputStream resource = fileService.getResource(imageUploadPa
-    // h, user.getImageName());
-    // response.setContentType(MediaType.IMAGE_JPEG_VALUE);
-    // StreamUtils.copy(resource, response.getOutputStream());
+    @GetMapping(value = "/image/{userId}")
+    public void serveUserImage(@PathVariable String userId, HttpServletResponse response)
+            throws IOException, java.io.IOException {
+        User user = signUpService.findById(userId);
+        logger.info("User image name : {} ", user.getImageName());
+        InputStream resource = fileService.getResource(imageUploadPath, user.getImageName());
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        StreamUtils.copy(resource, response.getOutputStream());
 
-    // }
+    }
 
 }
