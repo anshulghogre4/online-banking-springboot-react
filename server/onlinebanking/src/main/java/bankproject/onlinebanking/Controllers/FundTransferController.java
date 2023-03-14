@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import bankproject.helper.Helper;
 import bankproject.onlinebanking.Model.BankAccount;
 import bankproject.onlinebanking.Model.Transactions;
 import bankproject.onlinebanking.Service.AccountService;
 import bankproject.onlinebanking.Service.BeneficiariesService;
 import bankproject.onlinebanking.Service.FundTransferService;
 import bankproject.onlinebanking.Service.TransactionService;
+import bankproject.onlinebanking.helper.Helper;
 
 @RestController
 @RequestMapping(path = "/fund")
@@ -58,6 +58,12 @@ public class FundTransferController {
                 newTransactions.setTransactionDate(Helper.dateStamp());
                 newTransactions.setTransactionTime(Helper.timeStamp());
                 newTransactions.setTransactionStatus("Declined");
+
+
+                newTransactions.setSenderBal(accountService.findByAccountNo(bankaccountno).getBalance());
+                newTransactions.setReceiverBal(accountService.findByAccountNo(toAccount).getBalance());
+
+
                 transactionService.save(newTransactions);
                 return new ResponseEntity<>(transactionService.getCurrentTransaction(senderAccount.getAccountno()),
                         HttpStatus.NOT_ACCEPTABLE);
@@ -72,6 +78,10 @@ public class FundTransferController {
                 newTransactions.setTransactionDate(Helper.dateStamp());
                 newTransactions.setTransactionTime(Helper.timeStamp());
                 newTransactions.setTransactionStatus("Insufficient Bal");
+
+                newTransactions.setSenderBal(accountService.findByAccountNo(bankaccountno).getBalance());
+                newTransactions.setReceiverBal(accountService.findByAccountNo(toAccount).getBalance());
+
                 transactionService.save(newTransactions);
                 return new ResponseEntity<>(transactionService.getCurrentTransaction(senderAccount.getAccountno()),
                         HttpStatus.NOT_ACCEPTABLE);
@@ -95,6 +105,10 @@ public class FundTransferController {
                 newTransactions.setTransactionStatus("Completed");
                 accountService.updateAccount(senderAccount);
                 accountService.updateAccount(receiverAccount);
+
+                newTransactions.setSenderBal(accountService.findByAccountNo(bankaccountno).getBalance());
+                newTransactions.setReceiverBal(accountService.findByAccountNo(toAccount).getBalance());
+
                 transactionService.save(newTransactions);
                 System.out.println("---------------------------entry pointinfinite_______________________________");
                 return new ResponseEntity<Transactions>(
