@@ -22,8 +22,14 @@ public class Transactions {
     @Column
     private long fromAccount;
 
+    @Column 
+    private double senderBal;
+
     @Column
     private long toAccount;
+
+    @Column 
+    private double receiverBal;
 
     @Column
     private Double amount;

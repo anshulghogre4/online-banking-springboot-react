@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import bankproject.helper.Helper;
 import bankproject.onlinebanking.Model.BankAccount;
 import bankproject.onlinebanking.Model.Transactions;
 import bankproject.onlinebanking.Model.User;
@@ -35,6 +34,7 @@ import bankproject.onlinebanking.Repository.UserRepository;
 import bankproject.onlinebanking.Service.AccountService;
 import bankproject.onlinebanking.Service.SignUpService;
 import bankproject.onlinebanking.Service.TransactionService;
+import bankproject.onlinebanking.helper.Helper;
 import lombok.AllArgsConstructor;
 
 //

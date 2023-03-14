@@ -70,9 +70,9 @@ const Accounts = () => {
     };
 
     useEffect(() => {
-        if(!sessionStorage.getItem("jwtToken")){
+        if (!sessionStorage.getItem("jwtToken")) {
             navigateTo("/")
-          }
+        }
         console.log("Welcome to useeffect!");
 
     }, []);
@@ -135,7 +135,7 @@ const Accounts = () => {
                             <table className="ml-2 mt-5 mr-10 w-full text-sm text-left text-gray-500 dark:text-gray-400 text-center">
                                 <thead className="text-xs p-8 m-8 text-gray-700 uppercase bg-gray-80 dark:bg-gray-700 dark:text-gray-400">
                                     <tr className="mt-0 mb-2 p-8 mr-20 text-[1rem] font-medium leading-tight text-primary">
-                                        <th>User Id</th>
+                                        <th>Account No</th>
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Role</th>
@@ -148,7 +148,10 @@ const Accounts = () => {
                                 <tbody>
                                     {usersDetails && usersDetails.map((user) =>
                                         <tr key={user.userId}>
-                                            <td>{user.userId}</td>
+
+
+                                            <td>{user.accounts[0]?.accountno}</td>
+
                                             <td>{user.firstname} {user.lastname}</td>
                                             <td>{user.email}</td>
                                             <td>{user.role}</td>
