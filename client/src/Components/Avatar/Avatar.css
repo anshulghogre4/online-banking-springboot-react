@@ -1,0 +1,5 @@
+.defaultClass {
+    @apply w-[150px] h-[150px] object-cover rounded-[75px] border-[solid] border-2 border-gray-500;
+  }
+  
+

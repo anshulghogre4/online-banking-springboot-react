@@ -23,30 +23,7 @@ public class FileServiceImpl implements FileService {
     private Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
 
     @Override
-    public String uploadImage(String path, MultipartFile file) throws IOException {
-
-        // // File name
-        // String name = file.getOriginalFilename();
-        // // abc.png
-
-        // // random name generate file
-        // String randomID = UUID.randomUUID().toString();
-        // String fileName1 = randomID.concat(name.substring(name.lastIndexOf(".")));
-
-        // // Full path
-        // String filePath = path + File.separator + fileName1;
-
-        // // create folder if not created
-        // File f = new File(path);
-        // if (!f.exists()) {
-        // f.mkdir();
-        // }
-
-        // // file copy
-
-        // Files.copy(file.getInputStream(), Paths.get(filePath));
-
-        // return fileName1;
+    public String uploadFile(MultipartFile file, String path) throws IOException {
 
         // abc.png
         String originalFilename = file.getOriginalFilename();
@@ -80,10 +57,9 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public InputStream getResource(String path, String fileName) throws FileNotFoundException {
-        String fullPath = path + File.separator + fileName;
+    public InputStream getResource(String path, String name) throws FileNotFoundException {
+        String fullPath = path + File.separator + name;
         InputStream inputStream = new FileInputStream(fullPath);
-        // db logic to return inpustream
         return inputStream;
     }
 

@@ -5,6 +5,7 @@ import axios from "../Utills/AxiosWithJWT.js"
 import { toast } from 'react-hot-toast';
 import { useNavigate, NavLink } from "react-router-dom"
 import NavbarDashboard from '../Dashboard/NavbarDashboard.js';
+import Avatar from '../Avatar/Avatar.js';
 
 const Profile = () => {
 
@@ -250,6 +251,9 @@ const Profile = () => {
 
     return (
         <> 
+          
+
+
           <nav className='navbar  flex flex-row justify-between mx-auto items-center h-[20vh] bg-gray-300 mx-auto px-[7rem]'>
         <div><h1 className='text-[1rem] font-semibold'>This Is Profile Section</h1></div>
               <div className='flex flex-row items-center justify-center space-x-4'>
@@ -261,6 +265,7 @@ const Profile = () => {
         </div>
     </nav>
 
+      <Avatar/>
       <form onSubmit={handleCreateProfile} className="bg-white p-6 rounded-lg flex flex-col">
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full px-3">
@@ -478,6 +483,7 @@ const Profile = () => {
       
       </div>
   </nav>
+  <Avatar/>
       <form onSubmit={handleUpdateProfile} className="bg-white p-6 rounded-lg flex flex-col">
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full px-3">

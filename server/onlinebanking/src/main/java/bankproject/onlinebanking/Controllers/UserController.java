@@ -1,6 +1,6 @@
 package bankproject.onlinebanking.Controllers;
 
-import java.io.InputStream;
+import java.io.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -18,10 +18,7 @@ import bankproject.onlinebanking.Service.FileService;
 import bankproject.onlinebanking.Service.MailService;
 import bankproject.onlinebanking.Service.ProfileService;
 import bankproject.onlinebanking.Service.SignUpService;
-import io.jsonwebtoken.io.IOException;
-
 import net.bytebuddy.utility.RandomString;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -169,16 +166,15 @@ public class UserController {
 
     // upload user image
     @PostMapping("/image/{userId}")
-    public ResponseEntity<ImageResponse> uploadUserImage(@RequestParam("userImage") MultipartFile userImage,
-            @PathVariable String userId) throws IOException, java.io.IOException {
-        String imageName = fileService.uploadImage(imageUploadPath, userImage);
+    public ResponseEntity<ImageResponse> uploadUserImage(@RequestParam("image") MultipartFile image,
+            @PathVariable String userId) throws IOException {
+        String imageName = fileService.uploadFile(image, imageUploadPath);
         User user = signUpService.findById(userId);
         user.setImageName(imageName);
         signUpService.save(user);
-
         ImageResponse imageResponse = ImageResponse.builder().imageName(imageName).success(true)
-                .message("image is uploaded successfully ").status(HttpStatus.OK).build();
-        return new ResponseEntity<>(imageResponse, HttpStatus.OK);
+                .message("image is uploaded successfully ").status(HttpStatus.CREATED).build();
+        return new ResponseEntity<>(imageResponse, HttpStatus.CREATED);
 
     }
 
@@ -186,7 +182,7 @@ public class UserController {
 
     @GetMapping(value = "/image/{userId}")
     public void serveUserImage(@PathVariable String userId, HttpServletResponse response)
-            throws IOException, java.io.IOException {
+            throws IOException {
         User user = signUpService.findById(userId);
         logger.info("User image name : {} ", user.getImageName());
         InputStream resource = fileService.getResource(imageUploadPath, user.getImageName());
