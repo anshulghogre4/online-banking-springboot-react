@@ -111,18 +111,20 @@ const AboutUs = () => {
             <div className=" flex flex-col justify-center">
               <h2 className="text-[1.5rem] font-semibold ">My Contribution</h2>
               <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad
-                libero facilis nesciunt, doloribus explicabo dolore aliquam
-                inventore porro cumque aspernatur.
-              </p>
+                In this project I designed backend layers for transactions, account, Fundtransfer like controller, 
+                services and repository. Also designed frontend pages for the backend functionality using react-js.
+                Also contributed for to connect backend with frontend. <br/>
+                Technologies used: SpringBoot, java, mysql, react, html, tailwind-css, nodejs, etc.
+              </p> 
             </div>
 
             <div className=" flex flex-col justify-center">
               <h2 className="text-[1.5rem] font-semibold ">My Learnings</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Ratione, a itaque. Enim tempore magni adipisci ullam omnis odio
-                nesciunt aliquid?
+                I learned lot of things from this project like UI design, three tier architecture, springboot, security etc.
+                The git & github platform helps us to develope this project remotely and also for contribution of the team members.
+                I learned all the functionality of the github. The most interesting part is the connect backend with frontend that I understand 
+                during this project.
               </p>
             </div>
           </div>
