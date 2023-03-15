@@ -4,6 +4,18 @@ import NavbarDashboard from './NavbarDashboard'
 import axios from '../Utills/AxiosWithJWT.js'
 import { toast } from 'react-hot-toast'
 import { useBankingSystem } from "../Context/UserContext"
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { SelectButton } from 'primereact/selectbutton';
+import { InputText } from 'primereact/inputtext';
+import { FilterMatchMode } from 'primereact/api';
+import "primereact/resources/themes/lara-light-indigo/theme.css";     
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";                                         
+        
+
+
+
 
 const DashBoardTransactions = () => {
 
@@ -14,6 +26,15 @@ const DashBoardTransactions = () => {
     const [accno, setAccno] = useState(0);
 
     const [transactionDetails, setTransactionDetails] = useState();
+    const [sizeOptions] = useState([
+        { label: 'Small', value: 'small' },
+        { label: 'Normal', value: 'normal' },
+        { label: 'Large', value: 'large' }
+    ]);
+    const [size, setSize] = useState(sizeOptions[1].value);
+    const [filters, setFilters] = useState({
+        global: { value: null, matchMode: FilterMatchMode.CONTAINS } })
+ 
 
     const setTransaction = (details => {
         console.log("Main phir bhi pagal hu!", details)
@@ -80,12 +101,25 @@ const DashBoardTransactions = () => {
 
     }, []);
 
+
+
+    const columns = [
+        { dataField: "transactionId", text: "Tr_Id" },
+        { dataField: "transactionDate", text: "Date", sort: true },
+        { dataField: "transactionTime", text: "Time", sort: true },
+   
+    ]
+
+
+
+
+
     return (
         <div>
             <NavbarDashboard />
 
 
-            <section className='h-[80vh] bg-gray-600 border pt-[2rem]'>
+            <section className='min-h-[150vh] bg-gray-600 border pt-[2rem]'>
 
 
                 <div className='relative flex flex-row justify-around items-top'>
@@ -103,19 +137,77 @@ const DashBoardTransactions = () => {
 
                         <div className="shadow-md sm:rounded-lg bg-white h-[60vh]">
 
-                            <table className='border-collapse bg-grey-light h-[98%]'>
-                                <thead className="p-1 mt-2 ml-2 flex items-center w-max" >
-                                    <tr >
-                                        <th className="border border-slate-300 w-16 ">Tr_Id</th>
-                                        <th className="border border-slate-300 w-24">Date</th>
-                                        <th className="border border-slate-300 w-20">Time</th>
-                                        <th className="border border-slate-300 w-24">Acc No</th>
-                                        <th className="border border-slate-300 w-28">Credit</th>
-                                        <th className="border border-slate-300 w-28">Debit</th>
-                                        <th className="border border-slate-300 w-28">Bal</th>
-                                        <th className="border border-slate-300 w-12">Cr/Dt</th>
-                                        <th className="border border-slate-300 w-32">Description</th>
-                                        <th className="border border-slate-300 w-24">Status</th>
+                                            <div className="flex justify-center items-center py-4">
+                                    <SelectButton value={size} onChange={(e) => setSize(e.value)} options={sizeOptions} />
+                                </div>
+
+                                <div className='px-4 pb-4'>
+                                <span className="p-input-icon-left">
+                    <i className="pi pi-search" />
+                                    <InputText onInput={(e)=>{
+                                        setFilters({global:{value: e.target.value, matchMode:FilterMatchMode.CONTAINS},})
+                                    }}
+                                    placeholder="Keyword Search"
+                                    />
+                                    </span>
+                                </div>
+        <DataTable value={transactionDetails}  paginator rows={5} rowsPerPageOptions={[5, 10]} stripedRows showGridlines size={size} sortMode="multiple" tableStyle={{ minWidth: '20rem' }}
+            paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+            currentPageReportTemplate="{first} to {last} of {totalRecords}" 
+            filters={filters}
+        >
+                                    <Column field="transactionId" sortable header="Tr_ID" />
+                                    <Column field="transactionDate" sortable header="Date" />
+                                    <Column field="transactionTime" sortable header="Time" />
+                                    <Column field="fromAccount" header="From Account" body={(rowData) => {
+                                return <span className="text-center">{ rowData.fromAccount != accno ? rowData.fromAccount : rowData.toAccount}</span>;
+                            }}></Column>
+                                    <Column field="amount" header="Credit" body={(rowData) => {
+                                return rowData.fromAccount === accno ? (
+                                    <span className="text-right text-red-400 content-end">-</span>
+                                ) : (
+                                    <span className="text-right text-green-400 content-end">{rowData.amount} &#8377;</span>
+                                );
+                            }}></Column>
+
+                        <Column field="amount" header="Dedit" body={(rowData) => {
+                                return rowData.fromAccount === accno ? (
+                                    <span className="text-right text-red-400 content-end">-{rowData.amount} &#8377;</span>
+                                ) : (
+                                    <span className="text-right text-green-400 content-end">-</span>
+                                );
+                            }}></Column>
+
+                        <Column field="balance" header="Balance" body={transaction => (
+                            <span className={`text-right content-end ${transaction.fromAccount == accno ? 'text-red-400' : 'text-green-400'}`}>
+                            {transaction.fromAccount == accno ? transaction.senderBal : transaction.receiverBal} &#8377;
+                            </span>
+                        )} /> 
+                                <Column field="transactionStatus" header="Cr/Dt" body={(rowData) =>
+                            rowData.transactionStatus !== "Completed" ?
+                            <span className="text-red-400">Failed</span> :
+                            rowData.fromAccount === accno ? "Dt" : "Cr"} />
+                                <Column field="description" header="Description" /> 
+
+                                <Column field="transactionStatus" header="Transaction Status" body={(rowData) =>
+                            rowData.transactionStatus === 'Completed' ?
+                            <span className="text-green-400">Completed</span> :
+                            <span className="text-red-600">{rowData.transactionStatus}</span>
+                                } />                                      
+                                    </DataTable> 
+                            {/* <table className='border-collapse bg-grey-light h-[98%]'>
+                                <thead class="p-1 mt-2 ml-2 flex items-center w-max" >
+                                    <tr>
+                                        <th class="border border-slate-300 w-16 ">Tr_Id</th>
+                                        <th class="border border-slate-300 w-24">Date</th>
+                                        <th class="border border-slate-300 w-20">Time</th>
+                                        <th class="border border-slate-300 w-24">Acc No</th>
+                                        <th class="border border-slate-300 w-28">Credit</th>
+                                        <th class="border border-slate-300 w-28">Debit</th>
+                                        <th class="border border-slate-300 w-28">Bal</th>
+                                        <th class="border border-slate-300 w-12">Cr/Dt</th>
+                                        <th class="border border-slate-300 w-32">Description</th>
+                                        <th class="border border-slate-300 w-24">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody className="p-1 ml-2 overflow-y-auto flex flex-col h-[90%] w-auto" >
@@ -162,14 +254,22 @@ const DashBoardTransactions = () => {
                                         </tr>
                                     )}
                                 </tbody>
-                            </table>
+                            </table> */}
 
                         </div>
+
+                               
+
+
 
 
                     </div>
                 </div>
             </section>
+
+                                            
+
+
 
         </div>
     )
