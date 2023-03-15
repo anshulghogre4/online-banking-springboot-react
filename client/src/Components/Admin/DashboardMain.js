@@ -4,6 +4,7 @@ import { toast } from 'react-hot-toast'
 import axios from 'axios'
 import { useNavigate, NavLink } from 'react-router-dom'
 import { useBankingSystem } from "../Context/UserContext"
+import Accs from './Accs'
 
 
 
@@ -56,8 +57,10 @@ const DashboardMain = () => {
 
         <div className='flex flex-col items-end'>
           <h1 className='text-[1.2rem] text-gray-900 dark:text-white' >Hello</h1>
-          <h2 className="text-3xl font-semibold text-gray-900 dark:text-white">{adminname}</h2>
-
+          <h2 className="text-3xl font-semibold text-gray-900 dark:text-white pb-8">{adminname}</h2>
+          <div>
+            <Accs />
+          </div>
         </div>
       </div>
 
