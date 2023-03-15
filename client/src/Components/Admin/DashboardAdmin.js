@@ -5,6 +5,8 @@ import DashboardMain from './DashboardMain'
 import { useNavigate } from 'react-router-dom'
 import { useBankingSystem } from "../Context/UserContext"
 import NavbarDashboardAdmin from './NavbarDashboardAdmin'
+import Accs from './Accs'
+
 
 
 
@@ -25,6 +27,7 @@ const DashboardAdmin = () => {
       <img src='' />
       <NavbarDashboardAdmin />
       <DashboardMain />
+  
     </div>
   )
 

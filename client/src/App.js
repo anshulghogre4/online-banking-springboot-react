@@ -54,7 +54,7 @@ function App() {
       <Route path='/dashboard/trx/addbene' element={<Protected Component={AddBeneficiary}/>}/>
       <Route path='/admin/dashboard/transactions' element={<AdminTransaction/>}/>
       <Route path='/admin/dashboard/requests' element={<Requests/>}/>
-
+  
       </Routes>
   );
 }

@@ -104,28 +104,28 @@ const DashBoardTransactions = () => {
                         <div className="shadow-md sm:rounded-lg bg-white h-[60vh]">
 
                             <table className='border-collapse bg-grey-light h-[98%]'>
-                                <thead class="p-1 mt-2 ml-2 flex items-center w-max" >
-                                    <tr>
-                                        <th class="border border-slate-300 w-16 ">Tr_Id</th>
-                                        <th class="border border-slate-300 w-24">Date</th>
-                                        <th class="border border-slate-300 w-20">Time</th>
-                                        <th class="border border-slate-300 w-24">Acc No</th>
-                                        <th class="border border-slate-300 w-28">Credit</th>
-                                        <th class="border border-slate-300 w-28">Debit</th>
-                                        <th class="border border-slate-300 w-28">Bal</th>
-                                        <th class="border border-slate-300 w-12">Cr/Dt</th>
-                                        <th class="border border-slate-300 w-32">Description</th>
-                                        <th class="border border-slate-300 w-24">Status</th>
+                                <thead className="p-1 mt-2 ml-2 flex items-center w-max" >
+                                    <tr >
+                                        <th className="border border-slate-300 w-16 ">Tr_Id</th>
+                                        <th className="border border-slate-300 w-24">Date</th>
+                                        <th className="border border-slate-300 w-20">Time</th>
+                                        <th className="border border-slate-300 w-24">Acc No</th>
+                                        <th className="border border-slate-300 w-28">Credit</th>
+                                        <th className="border border-slate-300 w-28">Debit</th>
+                                        <th className="border border-slate-300 w-28">Bal</th>
+                                        <th className="border border-slate-300 w-12">Cr/Dt</th>
+                                        <th className="border border-slate-300 w-32">Description</th>
+                                        <th className="border border-slate-300 w-24">Status</th>
                                     </tr>
                                 </thead>
-                                <tbody class="p-1 ml-2 overflow-y-auto flex flex-col h-[90%] w-auto" >
+                                <tbody className="p-1 ml-2 overflow-y-auto flex flex-col h-[90%] w-auto" >
                                     {transactionDetails && transactionDetails.map((transaction) =>
                                         <tr key={transaction.transactionId} className="text-center">
-                                            <td class="  border border-slate-300 w-16">{transaction.transactionId}</td>
-                                            <td class="border border-slate-300 w-24">{transaction.transactionDate}</td>
-                                            <td class="border border-slate-300 w-20">{transaction.transactionTime}</td>
-                                            <td className="border border-slate-300 w-24">{ transaction.fromAccount != accno ? transaction.fromAccount : transaction.toAccount}</td>
-                                            <td class="border border-slate-300 w-28">
+                                            <td className="  border border-slate-300 w-16">{transaction.transactionId}</td>
+                                            <td className="border border-slate-300 w-24">{transaction.transactionDate}</td>
+                                            <td className="border border-slate-300 w-20">{transaction.transactionTime}</td>
+                                            <td className="border border-slate-300 w-24">{transaction.fromAccount != accno ? transaction.fromAccount : transaction.toAccount}</td>
+                                            <td className="border border-slate-300 w-28">
 
                                                 {transaction.fromAccount == accno ?
                                                     <span className="text-right text-red-400 content-end">-</span>
@@ -133,7 +133,7 @@ const DashBoardTransactions = () => {
                                                     <span className="text-right text-green-400 content-end">{transaction.amount} &#8377;</span>}
                                             </td>
 
-                                            <td class="border border-slate-300 w-28">
+                                            <td className="border border-slate-300 w-28">
 
                                                 {transaction.fromAccount == accno ?
                                                     <span className="text-right text-red-400 content-end">{-transaction.amount} &#8377;</span>
@@ -141,23 +141,22 @@ const DashBoardTransactions = () => {
                                                     <span className="text-right text-green-400 content-end">-</span>}
                                             </td>
 
-
-                                            <td class="border border-slate-300 w-28">
+                                            <td className="border border-slate-300 w-28">
                                                 {transaction.fromAccount == accno ?
                                                     <span className="text-right text-red-400 content-end">{transaction.senderBal} &#8377;</span>
                                                     :
                                                     <span className="text-right text-green-400 content-end">{transaction.receiverBal} &#8377;</span>}
                                             </td>
 
-                                            <td class="border border-slate-300 w-12">
+                                            <td className="border border-slate-300 w-12">
                                                 {transaction.transactionStatus != "Completed" ?
                                                     <span className="text-red-400">Failed</span> :
                                                     transaction.fromAccount == accno ? "Dt" : "Cr"}
 
 
                                             </td>
-                                            <td class="border border-slate-300 w-32">{transaction.description}</td>
-                                            <td class="border border-slate-300 w-24">{transaction.transactionStatus == 'Completed' ?
+                                            <td className="border border-slate-300 w-32">{transaction.description}</td>
+                                            <td className="border border-slate-300 w-24">{transaction.transactionStatus == 'Completed' ?
                                                 <span className="text-green-400">Completed</span> :
                                                 <span className="text-red-600">{transaction.transactionStatus}</span>}</td>
                                         </tr>
