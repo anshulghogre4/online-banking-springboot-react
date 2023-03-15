@@ -33,8 +33,9 @@ function Accs() {
     ]);
     const [size, setSize] = useState(sizeOptions[1].value);
     const [filters, setFilters] = useState({
-        global: { value: null, matchMode: FilterMatchMode.CONTAINS }
+        global: { value: null, matchMode: FilterMatchMode.CONTAINS },    
     })
+
 
     
 
@@ -85,6 +86,9 @@ function Accs() {
 
     }, []);
 
+  
+
+
     return (
         <>
 
@@ -99,22 +103,30 @@ function Accs() {
                     <span className="p-input-icon-left">
                         <i className="pi pi-search" />
                         <InputText onInput={(e) => {
-                            setFilters({ global: { value: e.target.value, matchMode: FilterMatchMode.CONTAINS }, })
+                            setFilters({ global: { value: e.target.value, matchMode: FilterMatchMode.CONTAINS },
+                          })
                         }}
-                            placeholder="Keyword Search"
+                     placeholder="Keyword Search"
                         />
                     </span>
                 </div>
-                    <DataTable value={usersDetails} paginator rows={5} rowsPerPageOptions={[5, 10]} stripedRows showGridlines size={size} sortMode="multiple" tableStyle={{ minWidth: '20rem' }}
+                    <DataTable value={usersDetails} 
+                        paginator 
+                        rows={5}
+                        rowsPerPageOptions={[5, 10]}      
+                        stripedRows 
+                        showGridlines 
+                        size={size} 
+                        sortMode="multiple" 
+                        tableStyle={{ minWidth: '20rem' }}
                         paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
                         currentPageReportTemplate="{first} to {last} of {totalRecords}"
-                        filters={filters}
-                        
-                        
-                    >
-        <Column field="0"  body={( rowData, props )=>{ return rowData.accounts[props.field].accountno} }   header="Account Number" 
-         sortable
-         ></Column>
+                        filters={filters}>
+                        <Column 
+                        field="accounts"  
+                        body={( rowData)=>{ return rowData.accounts[0].accountno} }  
+                        header="Account Number" 
+                        sortable/>
                         <Column field="userId" sortable header="UseId" />
                         <Column field="firstname" sortable header="First Name" />
                         <Column field="lastname" sortable header="Last Name" />
@@ -125,7 +137,9 @@ function Accs() {
             </div>
 
 
+        
 
+           
 
 
 
